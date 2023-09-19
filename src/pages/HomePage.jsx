@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
-import HeroHome from "../components/HeroHome";
+import HeroHome from "../components/homePage/HeroHome";
 import JobsSection from "../components/homePage/JobsSection";
 
 const HomePage = () => {
