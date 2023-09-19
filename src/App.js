@@ -1,10 +1,10 @@
 import ForgotPassword from "./pages/ForgotPassword";
 import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return <div className="App">
-    {/* <SignIn /> */}
-    <ForgotPassword /> 
+    <SignUp />
   </div>;
 }
 
