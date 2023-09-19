@@ -1,8 +1,10 @@
+import ForgotPassword from "./pages/ForgotPassword";
 import SignIn from "./pages/SignIn";
 
 function App() {
   return <div className="App">
-    <SignIn />
+    {/* <SignIn /> */}
+    <ForgotPassword /> 
   </div>;
 }
 
