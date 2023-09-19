@@ -81,3 +81,35 @@ export const teams = [
     ],
   },
 ];
+
+export const resp = [
+  "Setting up campaigns for direct advertisers as well as In-house products in Google Ad Manager, managing it and finding opportunities to optimize it.",
+  "Work directly with the Branding & Collaboration team to negotiate, plan and execute campaigns, including testing, implementation delivery, and optimization of campaigns.",
+  "Monitor for all campaigns that go live for timely delivery and maximum ROI.",
+  "Identity top performing Pre bid partners and onboarding them in in our Ad Stack",
+  "Identification of new business/revenue growth opportunities.",
+  "Manage Pre bid partners with daily monitoring of performance and identify opportunities to increase performance.",
+  "Collaboration with accounts team to ensure timely payments from Pre bid partners",
+  "Monthly/Quarterly performance review for programmatic revenue channels",
+  "Scaling new revenue streams like Server Side Bidding, In-stream and mobile traffic monetization",
+];
+
+export const req = [
+  "Must have experience in Pre bid and Google Ad Manager working and Private Marketplace deals(PMPs)",
+  "Complete Knowledge of Operations and Reporting in Google Ad Management",
+  "Excellent communication and people management skills",
+  "Should be good in Strategic planning and Partnership",
+  "Hands-on experience with Microsoft Excel & Ad Operations",
+  "Strong understanding of programmatic advertising and open auctions in general.",
+  "Job Location: 9th Floor, A - 143, Sovereign Corporate Towers, Sector-136, Noida, Uttar Pradesh, India",
+];
+
+export const bene = [
+  "Additional benefits up to 1.5 Lac (Health Insurance by ICICI Bank and Meals, beverages, and other refreshments provided by the employer during office hours)",
+  "Health Insurance coverage is up to 5 Lacs.",
+  "Flexible working hours",
+  "5 days working",
+  "Leave encashment",
+  "Casual Dress Code",
+  "​Work-life Balance",
+];
