@@ -2,8 +2,6 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -73,21 +71,19 @@ export default function ForgotPassword() {
                 name="email"
                 autoComplete="email"
                 autoFocus
-                variant="outlined" // Added this line
+                variant="outlined"
               />
 
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, width: "100%" }} // Added width: '100%'
+                sx={{ mt: 3, mb: 2, width: "100%" }}
               >
                 Submit
               </Button>
             </Box>
           </Box>
-          {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
-
           <Box
             marginTop={5}
             textAlign="center"

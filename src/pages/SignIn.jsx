@@ -82,7 +82,6 @@ export default function SignIn() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                //   className=" justify-end"
               />
               <Grid container>
                 <Grid
@@ -110,8 +109,6 @@ export default function SignIn() {
               </Button>
             </Box>
           </Box>
-          {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
-
           <Box
             marginTop={5}
             textAlign="center"
