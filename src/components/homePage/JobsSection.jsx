@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { teams } from "../data/data";
+import { teams } from "../../data/data";
 
 const JobsSection = () => {
   const [jobsAvailable, setJobsAvailable] = useState({
