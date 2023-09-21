@@ -3,9 +3,9 @@ const User = require("../models/user.js");
 const { sendError } = require("../utils/utils");
 
 exports.signUp = async (req, res) => {
-//   console.log("abc");
+  //   console.log("abc");
   const { name, email, password, confirmPassword } = req.body;
-//   console.log(req.body);
+  //   console.log(req.body);
   const oldUser = await User.findOne({ email });
 
   if (oldUser) {
@@ -30,5 +30,23 @@ exports.signUp = async (req, res) => {
       name: newUser.name,
       email: newUser.email,
     },
+  });
+};
+
+exports.signIn = async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) return sendError(res, "Email/Password mismatch!");
+
+  const matched = await user.comparePassword(password);
+  if (!matched) return sendError(res, "Email/Password mismatch!");
+
+  const { _id, name, role } = user;
+
+  // const jwtToken = jwt.sign({ userId: _id }, process.env.JWT_SECRET);
+
+  res.json({
+    user: { id: _id, name, email, role },
   });
 };
