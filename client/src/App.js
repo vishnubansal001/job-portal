@@ -1,3 +1,4 @@
+import Openings from "./admin/Openings";
 import ForgotPassword from "./pages/ForgotPassword";
 import HomePage from "./pages/HomePage";
 import Job from "./pages/Job";
@@ -9,7 +10,7 @@ function App() {
     <div className="App">
       {/* <SignUp /> */}
       {/* <HomePage /> */}
-      <Job />
+      <Openings />
     </div>
   );
 }
