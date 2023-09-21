@@ -1,6 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { signUp, signIn, forgetPassword } = require("../controllers/user");
+const {
+  signUp,
+  signIn,
+  forgetPassword,
+  resetPassword,
+  sendResetPasswordTokenStatus,
+} = require("../controllers/user");
 const {
   userValidator,
   validate,
@@ -18,6 +24,12 @@ router.post(
   validate,
   isValidPassResetToken,
   resetPassword
+);
+router.post("/resend-email-verification-token", resendEmailVerificationToken);
+router.post(
+  "/verify-pass-reset-token",
+  isValidPassResetToken,
+  sendResetPasswordTokenStatus
 );
 
 module.exports = router;
