@@ -1,14 +1,16 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.js");
-const { sendError, generateRandomByte } = require("../utils/utils");
+const {
+  sendError,
+  generateRandomByte,
+  generateOTP,
+} = require("../utils/utils");
 const PasswordResetToken = require("../models/passwordResetToken");
 const EmailVerificationToken = require("../models/emailVerificationToken");
 const { isValidObjectId } = require("mongoose");
 
 exports.signUp = async (req, res) => {
-  //   console.log("abc");
   const { name, email, password, confirmPassword } = req.body;
-  //   console.log(req.body);
   const oldUser = await User.findOne({ email });
 
   if (oldUser) {
@@ -85,19 +87,7 @@ exports.forgetPassword = async (req, res) => {
   });
   await newPasswordResetToken.save();
 
-  // const resetPasswordUrl = `http://localhost:3000/auth/reset-password?token=${token}&id=${user._id}`;
-
-  // const transport = generateMailTransporter();
-
-  // transport.sendMail({
-  //   from: "security@reviewapp.com",
-  //   to: user.email,
-  //   subject: "Reset Password Link",
-  //   html: `
-  //     <p>Click here to reset password</p>
-  //     <a href='${resetPasswordUrl}'>Change Password</a>
-  //   `,
-  // });
+  // email sending code
 
   res.json({ message: "Link sent to your email!" });
 };
@@ -118,18 +108,7 @@ exports.resetPassword = async (req, res) => {
 
   await PasswordResetToken.findByIdAndDelete(req.resetToken._id);
 
-  // const transport = generateMailTransporter();
-
-  // transport.sendMail({
-  //   from: "security@reviewapp.com",
-  //   to: user.email,
-  //   subject: "Password Reset Successfully",
-  //   html: `
-  //     <h1>Password Reset Successfully</h1>
-  //     <p>Now you can use new password.</p>
-
-  //   `,
-  // });
+  // email sending code
 
   res.json({
     message: "Password reset successfully, now you can use new password.",
@@ -161,14 +140,7 @@ exports.verifyEmail = async (req, res) => {
 
   await EmailVerificationToken.findByIdAndDelete(token._id);
 
-  //   var transport = generateMailTransporter();
-
-  //   transport.sendMail({
-  //     from: "verification@reviewapp.com",
-  //     to: user.email,
-  //     subject: "Welcome Email",
-  //     html: "<h1>Welcome to our app and thanks for choosing us.</h1>",
-  //   });
+  // email sending code
   const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
   res.json({
@@ -181,5 +153,41 @@ exports.verifyEmail = async (req, res) => {
       role: user.role,
     },
     message: "Your email is verified.",
+  });
+};
+
+exports.resendEmailVerificationToken = async (req, res) => {
+  const { userId } = req.body;
+
+  const user = await User.findById(userId);
+  if (!user) return sendError(res, "user not found!");
+
+  if (user.isVerified)
+    return sendError(res, "This email id is already verified!");
+
+  const alreadyHasToken = await EmailVerificationToken.findOne({
+    owner: userId,
+  });
+  if (alreadyHasToken)
+    return sendError(
+      res,
+      "Only after one hour you can request for another token!"
+    );
+
+  // generate 6 digit otp
+  let OTP = generateOTP();
+
+  // store otp inside our db
+  const newEmailVerificationToken = new EmailVerificationToken({
+    owner: user._id,
+    token: OTP,
+  });
+
+  await newEmailVerificationToken.save();
+
+  // email sending code
+
+  res.json({
+    message: "New OTP has been sent to your registered email accout.",
   });
 };

@@ -6,6 +6,7 @@ const {
   forgetPassword,
   resetPassword,
   sendResetPasswordTokenStatus,
+  resendEmailVerificationToken,
 } = require("../controllers/user");
 const {
   userValidator,
