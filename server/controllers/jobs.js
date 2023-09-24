@@ -34,7 +34,7 @@ exports.postData = async (req, res) => {
       firstName,
       lastName,
       email,
-      mobile:number,
+      mobile: number,
       street,
       state,
       city,
