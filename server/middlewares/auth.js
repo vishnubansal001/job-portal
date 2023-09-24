@@ -1,6 +1,6 @@
 const User = require("../models/user");
-const { sendError } = require("../utils/helper");
 const jwt = require("jsonwebtoken");
+const { sendError } = require("../utils/utils");
 
 exports.isAuth = async (req, res, next) => {
 

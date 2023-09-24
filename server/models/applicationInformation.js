@@ -56,4 +56,4 @@ const applicationInfoSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Application", applicationInfoSchema);
+module.exports = mongoose.model("Applications", applicationInfoSchema);
