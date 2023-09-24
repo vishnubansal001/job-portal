@@ -4,6 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const userRouter = require("./routes/user.js");
 const jobRouter = require("./routes/job.js");
+const adminRouter = require("./routes/admin.js");
 
 const app = express();
 require("dotenv").config();
@@ -23,7 +24,8 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/auth/user", userRouter);
-app.use("/", jobRouter);
+app.use("/jobs", jobRouter);
+app.use("/admin", adminRouter);
 
 app.get("/", (req, res) => {
   res.send(`Heyy`);
