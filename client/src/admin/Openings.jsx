@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
-import ParentCheckbox from './ParentCheckBox';
-import { teams } from '../data/data';
+import React, { useState } from "react";
+import ParentCheckbox from "./ParentCheckBox";
+import { teams } from "../data/data";
 
 const Openings = () => {
   const [selectedData, setSelectedData] = useState([]);
 
-  const handleCheckboxChange = (name, isChecked) => {
-    if (isChecked) {
-      setSelectedData([...selectedData, name]);
+  const handleCheckboxChange = (name, isChecked, isParent) => {
+    if (isParent) {
+      // const childrenNames = teams
+      //   .find((group) => group.name === name)
+      //   .positions.map((child) => `${name}-${child.name}`);
+      // if (isChecked) {
+      //   setSelectedData([...selectedData, ...childrenNames]);
+      // } else {
+      //   setSelectedData(
+      //     selectedData.filter((item) => !childrenNames.includes(item))
+      //   );
+      // }
     } else {
-      setSelectedData(selectedData.filter(item => item !== name));
+      if (isChecked) {
+        console.log("iuwegdhjg")
+        setSelectedData([...selectedData, name]);
+      } else {
+        setSelectedData(selectedData.filter((item) => item !== name));
+      }
     }
   };
 
@@ -20,7 +34,9 @@ const Openings = () => {
           key={index}
           name={group.name}
           children={group.positions}
-          onCheckboxChange={handleCheckboxChange}
+          onCheckboxChange={(name, isChecked) =>
+            handleCheckboxChange(name, isChecked, true)
+          }
         />
       ))}
       <div>
@@ -31,6 +47,9 @@ const Openings = () => {
           ))}
         </ul>
       </div>
+      <button onClick={() => console.log(selectedData)}>
+        Print Selected Data
+      </button>
     </div>
   );
 };
