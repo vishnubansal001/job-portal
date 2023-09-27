@@ -14,14 +14,18 @@ import { useNavigate } from "react-router-dom";
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+  const [formData, setFormData] = React.useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
     });
   };
+
   const navigate = useNavigate();
 
   return (
@@ -74,6 +78,8 @@ export default function SignIn() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={handleChange}
+                value={formData.email}
               />
               <TextField
                 margin="normal"
@@ -84,6 +90,8 @@ export default function SignIn() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleChange}
+                value={formData.password}
               />
               <Grid container>
                 <Grid
