@@ -9,6 +9,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
@@ -21,6 +22,7 @@ export default function SignIn() {
       password: data.get("password"),
     });
   };
+  const navigate = useNavigate();
 
   return (
     <div className="bg-[#f5f6fa] w-full h-full min-h-[100vh] flex flex-col justify-center items-center">
@@ -90,9 +92,10 @@ export default function SignIn() {
                   sx={{ display: "flex", justifyContent: "flex-end" }}
                 >
                   <Link
-                    href="#"
                     variant="body2"
+                    onClick={() => navigate("/forgot-pass")}
                     sx={{ textDecoration: "none" }}
+                    className="cursor-pointer hover:underline"
                   >
                     Forgot password?
                   </Link>
@@ -118,7 +121,13 @@ export default function SignIn() {
           >
             <Typography variant="body1">
               Do not have an account?{" "}
-              <span style={{ color: "blue" }}>Create an account</span>
+              <span
+                style={{ color: "blue" }}
+                onClick={() => navigate("/sign-up")}
+                className="cursor-pointer hover:underline"
+              >
+                Create an account
+              </span>
             </Typography>
           </Box>
         </Container>
@@ -130,7 +139,9 @@ export default function SignIn() {
         gap={3}
         marginTop={3}
       >
-        <Typography variant="h5" color={"#5c6575"}>Powered By VB</Typography>
+        <Typography variant="h5" color={"#5c6575"}>
+          Powered By VB
+        </Typography>
       </Box>
     </div>
   );

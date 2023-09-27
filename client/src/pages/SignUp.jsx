@@ -7,6 +7,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
@@ -19,6 +20,8 @@ export default function SignUp() {
       password: data.get("password"),
     });
   };
+
+  const navigate = useNavigate();
 
   return (
     <div className="bg-[#f5f6fa] w-full h-full min-h-[100vh] flex flex-col justify-center items-center">
@@ -121,7 +124,13 @@ export default function SignUp() {
           >
             <Typography variant="body1">
               Already have an account?{" "}
-              <span style={{ color: "blue" }}>Login</span>
+              <span
+                style={{ color: "blue" }}
+                onClick={() => navigate("/sign-in")}
+                className="cursor-pointer hover:underline"
+              >
+                Login
+              </span>
             </Typography>
           </Box>
         </Container>

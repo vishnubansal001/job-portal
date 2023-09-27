@@ -7,6 +7,7 @@ import Job from "./pages/Job";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import { Route, Routes } from "react-router-dom";
+import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
   return (
@@ -15,29 +16,19 @@ function App() {
       <Route exact path="/sign-up" element={<SignUp />}></Route>
       <Route exact path="/forgot-pass" element={<ForgotPassword />}></Route>
       <Route path="/" element={<PrivateRoute />}>
-        <Header />
         <Route path="/" element={<HomePage />} />
-        <Footer />
       </Route>
-      <Route path="/job" element={<PrivateRoute />}>
-        <Header />
-        <Route path="/job" element={<Job />} />
-        <Footer />
+      <Route path="/job/:teamName/:jobName" element={<PrivateRoute />}>
+        <Route path="/job/:teamName/:jobName" element={<Job />} />
       </Route>
       <Route path="/job-form" element={<PrivateRoute />}>
-        <Header />
         <Route path="/job-form" element={<Openings />} />
-        <Footer />
       </Route>
       <Route path="/job-openings" element={<PrivateRoute />}>
-        <Header />
         <Route path="/job-openings" element={<Openings />} />
-        <Footer />
       </Route>
       <Route path="/applications" element={<PrivateRoute />}>
-        <Header />
         <Route path="/applications" element={<Openings />} />
-        <Footer />
       </Route>
       {/* <Route path="*" element={<NotFound />} /> */}
     </Routes>

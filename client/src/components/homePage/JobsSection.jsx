@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { teams } from "../../data/data";
+import { useNavigate } from "react-router-dom";
 
 const JobsSection = () => {
   const [jobsAvailable, setJobsAvailable] = useState({
@@ -40,6 +41,7 @@ const JobsSection = () => {
     logisticsExec: true,
     logisticsHead: true,
   });
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-auto px-20">
@@ -71,7 +73,16 @@ const JobsSection = () => {
                             key={ind}
                             className="w-full border-2 border-gray-300 rounded-[20px] px-4 py-8"
                           >
-                            <h1>{pos.name}</h1>
+                            <h1
+                              className="hover:underline hover:text-blue-600 cursor-pointer select-none"
+                              onClick={() =>
+                                navigate(
+                                  `/job/${item.name.toLocaleLowerCase()}/${pos.name.toLocaleLowerCase()}`
+                                )
+                              }
+                            >
+                              {pos.name}
+                            </h1>
                           </div>
                         )
                     )}

@@ -1,7 +1,7 @@
 import React from "react";
 import { bene, req, resp } from "../../data/data";
 
-const Description = () => {
+const Description = ({jobName,teamName}) => {
   return (
     <div className="flex flex-col justify-center items-center w-full h-auto px-10">
       <div className="flex flex-col md:w-[70%] w-[90%] justify-center items-start gap-8 py-14">
