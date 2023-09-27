@@ -7,19 +7,27 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { forgetPassword } from "../api/auth";
 
 const defaultTheme = createTheme();
 
 export default function ForgotPassword() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+  const [email, setEmail] = useState("");
 
+  const handleChange = ({ target }) => {
+    const { value } = target;
+    setEmail(value);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // if (!isValidEmail(email)){}
+    // return updateNotification("error", "Invalid email!");
+
+    const { error, message } = await forgetPassword(email);
+    // if (error) return updateNotification("error", error);
+
+    // updateNotification("success", message);
+  };
   return (
     <div className="bg-[#f5f6fa] w-full h-full min-h-[100vh] flex flex-col justify-center items-center">
       <Box
@@ -71,6 +79,8 @@ export default function ForgotPassword() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={handleChange}
+                value={email}
                 variant="outlined"
               />
 
@@ -78,6 +88,7 @@ export default function ForgotPassword() {
                 type="submit"
                 fullWidth
                 variant="contained"
+                onClick={handleSubmit}
                 sx={{ mt: 3, mb: 2, width: "100%" }}
               >
                 Submit
