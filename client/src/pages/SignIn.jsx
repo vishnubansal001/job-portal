@@ -10,6 +10,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks";
+import { isValidEmail } from "../utils/validator";
 
 const defaultTheme = createTheme();
 
@@ -18,12 +20,33 @@ export default function SignIn() {
     email: "",
     password: "",
   });
+  const { handleLogin, authInfo } = useAuth();
+  const { isPending, isLoggedIn } = authInfo;
 
   const handleChange = (event) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     });
+  };
+
+  const validateUserInfo = ({ email, password }) => {
+    if (!email.trim()) return { ok: false, error: "Email is missing!" };
+    if (!isValidEmail(email)) return { ok: false, error: "Invalid email!" };
+
+    if (!password.trim()) return { ok: false, error: "Password is missing!" };
+    if (password.length < 8)
+      return { ok: false, error: "Password must be 8 characters long!" };
+
+    return { ok: true };
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { ok, error } = validateUserInfo(userInfo);
+
+    // if (!ok) return updateNotification("error", error);
+    handleLogin(formData.email, formData.password);
   };
 
   const navigate = useNavigate();
@@ -115,6 +138,7 @@ export default function SignIn() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                disabled={isPending}
               >
                 Sign In
               </Button>
