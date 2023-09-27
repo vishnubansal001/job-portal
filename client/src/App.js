@@ -9,6 +9,7 @@ import SignUp from "./pages/SignUp";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./routes/PrivateRoute";
 import Application from "./pages/Application";
+import Recommendations from "./pages/Recommendations";
 
 function App() {
   return (
@@ -23,13 +24,13 @@ function App() {
         <Route path="/job/:teamName/:jobName" element={<Job />} />
       </Route>
       <Route path="/job-form" element={<PrivateRoute />}>
-        <Route path="/job-form" element={<Openings />} />
+        <Route path="/job-form" element={<Application />} />
       </Route>
       <Route path="/job-openings" element={<PrivateRoute />}>
         <Route path="/job-openings" element={<Openings />} />
       </Route>
       <Route path="/applications" element={<PrivateRoute />}>
-        <Route path="/applications" element={<Application />} />
+        <Route path="/applications" element={<Recommendations />} />
       </Route>
       {/* <Route path="*" element={<NotFound />} /> */}
     </Routes>
