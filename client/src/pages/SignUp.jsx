@@ -8,20 +8,72 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks";
+import { isValidEmail } from "../utils/validator";
 
 const defaultTheme = createTheme();
 
+const validateUserInfo = ({ name, email, password }) => {
+  const isValidName = /^[a-z A-Z]+$/;
+
+  if (!name.trim()) return { ok: false, error: "Name is missing!" };
+  if (!isValidName.test(name)) return { ok: false, error: "Invalid name!" };
+
+  if (!email.trim()) return { ok: false, error: "Email is missing!" };
+  if (!isValidEmail(email)) return { ok: false, error: "Invalid email!" };
+
+  if (!password.trim()) return { ok: false, error: "Password is missing!" };
+  if (password.length < 8)
+    return { ok: false, error: "Password must be 8 characters long!" };
+
+  if (!confirmPassword.trim())
+    return { ok: false, error: "Confirm Password is missing!" };
+  if (confirmPassword.length < 8)
+    return { ok: false, error: "Confirm Password must be 8 characters long!" };
+
+  if (password.trim().toString() !== confirmPassword.trim().toString()) {
+    return { ok: false, error: "confirm password and password don't match" };
+  }
+  return { ok: true };
+};
+
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = ({ target }) => {
+    const { value, name } = target;
+    setFormData({ ...userInfo, [name]: value });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { ok, error } = validateUserInfo(userInfo);
+
+    // if (!ok) return updateNotification("error", error);
+
+    const response = await createUser(userInfo);
+    if (response.error) return console.log(response.error);
+
+    // navigate("/auth/verification", {
+    //   state: { user: response.user },
+    //   replace: true,
+    // });
+  };
+
+  const { authInfo } = useAuth();
+  const { isLoggedIn } = authInfo;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // we want to move our user to somewhere else
+    if (isLoggedIn) navigate("/");
+  }, [isLoggedIn]);
 
   return (
     <div className="bg-[#f5f6fa] w-full h-full min-h-[100vh] flex flex-col justify-center items-center">
@@ -73,6 +125,8 @@ export default function SignUp() {
                 name="name"
                 autoComplete="name"
                 autoFocus
+                onChange={handleChange}
+                value={formData.name}
               />
               <TextField
                 margin="normal"
@@ -83,6 +137,8 @@ export default function SignUp() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={handleChange}
+                value={formData.email}
               />
               <TextField
                 margin="normal"
@@ -93,6 +149,8 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleChange}
+                value={formData.password}
               />
               <TextField
                 margin="normal"
@@ -103,6 +161,8 @@ export default function SignUp() {
                 type="password"
                 id="cPassword"
                 autoComplete="current-password"
+                onChange={handleChange}
+                value={formData.confirmPassword}
               />
 
               <Button
@@ -110,6 +170,7 @@ export default function SignUp() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 2, mb: 2 }}
+                onClick={handleSubmit}
               >
                 Sign Up
               </Button>
