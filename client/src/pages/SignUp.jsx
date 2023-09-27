@@ -10,10 +10,11 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks";
 import { isValidEmail } from "../utils/validator";
+import { createUser } from "../api/auth";
 
 const defaultTheme = createTheme();
 
-const validateUserInfo = ({ name, email, password }) => {
+const validateUserInfo = ({ name, email, password,confirmPassword }) => {
   const isValidName = /^[a-z A-Z]+$/;
 
   if (!name.trim()) return { ok: false, error: "Name is missing!" };
@@ -39,7 +40,7 @@ const validateUserInfo = ({ name, email, password }) => {
 
 export default function SignUp() {
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = React.useState({
     name: "",
     email: "",
     password: "",
@@ -48,29 +49,26 @@ export default function SignUp() {
 
   const handleChange = ({ target }) => {
     const { value, name } = target;
-    setFormData({ ...userInfo, [name]: value });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { ok, error } = validateUserInfo(userInfo);
+    const { ok, error } = validateUserInfo(formData);
 
     // if (!ok) return updateNotification("error", error);
 
-    const response = await createUser(userInfo);
+    const response = await createUser(formData);
     if (response.error) return console.log(response.error);
 
-    // navigate("/auth/verification", {
-    //   state: { user: response.user },
-    //   replace: true,
-    // });
+    navigate("/");
   };
 
   const { authInfo } = useAuth();
   const { isLoggedIn } = authInfo;
   const navigate = useNavigate();
 
-  useEffect(() => {
+  React.useEffect(() => {
     // we want to move our user to somewhere else
     if (isLoggedIn) navigate("/");
   }, [isLoggedIn]);
@@ -156,10 +154,10 @@ export default function SignUp() {
                 margin="normal"
                 required
                 fullWidth
-                name="cPassword"
+                name="confirmPassword"
                 label="Confirm Password"
                 type="password"
-                id="cPassword"
+                id="confirmPassword"
                 autoComplete="current-password"
                 onChange={handleChange}
                 value={formData.confirmPassword}

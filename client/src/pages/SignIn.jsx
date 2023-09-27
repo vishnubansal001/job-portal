@@ -43,7 +43,7 @@ export default function SignIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { ok, error } = validateUserInfo(userInfo);
+    const { ok, error } = validateUserInfo(formData);
 
     // if (!ok) return updateNotification("error", error);
     handleLogin(formData.email, formData.password);
