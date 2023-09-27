@@ -8,6 +8,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./routes/PrivateRoute";
+import Application from "./pages/Application";
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
         <Route path="/job-openings" element={<Openings />} />
       </Route>
       <Route path="/applications" element={<PrivateRoute />}>
-        <Route path="/applications" element={<Openings />} />
+        <Route path="/applications" element={<Application />} />
       </Route>
       {/* <Route path="*" element={<NotFound />} /> */}
     </Routes>
