@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
-import { getUsersData } from "../api/applications";
+import { getCsvFile, getUsersData } from "../api/applications";
 
 const Recommendations = () => {
   const [users, setUsers] = useState();
@@ -38,6 +38,13 @@ const Recommendations = () => {
     // link.download();
     link.click();
   };
+
+  const handleClickCsv = async () => {
+    const url = await getCsvFile();
+    var link = document.createElement('a');
+    link.href = url;
+    link.click();
+  }
   return (
     <div>
       <Header />
@@ -115,6 +122,15 @@ const Recommendations = () => {
               ))}
             </tbody>
           </table>
+
+          <div className="flex flex-col justify-center items-center mt-5">
+          <button
+            onClick={() => handleClickCsv()}
+            className="px-7 text-lg font-semibold capitalize text-white py-3 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-blue-600 hover:bg-blue-800 hover:text-white rounded-[12px]"
+          >
+            Download Excel Sheet
+          </button>
+          </div>
         </div>
       </section>
       <Footer />

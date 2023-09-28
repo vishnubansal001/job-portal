@@ -10,3 +10,11 @@ export const getUsersData = async () => {
   }
 };
 
+export const getCsvFile = async () => {
+    try {
+      const { data } = await client.get(`/admin/get-csv`);
+      return data.url;
+    } catch (error) {
+      return catchError(error);
+    }
+  };
