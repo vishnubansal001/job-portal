@@ -10,13 +10,18 @@ import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./routes/PrivateRoute";
 import Application from "./pages/Application";
 import Recommendations from "./pages/Recommendations";
+import ConfirmPassword from "./pages/ConfirmPassword";
+import EmailVerification from "./pages/EmailVerification";
 
 function App() {
   return (
     <Routes>
       <Route exact path="/sign-in" element={<SignIn />}></Route>
       <Route exact path="/sign-up" element={<SignUp />}></Route>
-      <Route exact path="/forgot-pass" element={<ForgotPassword />}></Route>
+      {/* <Route exact path="/forgot-pass" element={<ForgotPassword />}></Route> */}
+      <Route path="/verification" element={<EmailVerification />} />
+      <Route path="/forget-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ConfirmPassword />} />
       <Route path="/" element={<PrivateRoute />}>
         <Route path="/" element={<HomePage />} />
       </Route>
