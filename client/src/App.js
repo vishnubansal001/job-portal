@@ -16,18 +16,13 @@ import EmailVerification from "./pages/EmailVerification";
 function App() {
   return (
     <Routes>
+      <Route path="/" element={<HomePage />} />
       <Route exact path="/sign-in" element={<SignIn />}></Route>
       <Route exact path="/sign-up" element={<SignUp />}></Route>
-      {/* <Route exact path="/forgot-pass" element={<ForgotPassword />}></Route> */}
       <Route path="/verification" element={<EmailVerification />} />
       <Route path="/forget-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ConfirmPassword />} />
-      <Route path="/" element={<PrivateRoute />}>
-        <Route path="/" element={<HomePage />} />
-      </Route>
-      <Route path="/job/:teamName/:jobName" element={<PrivateRoute />}>
-        <Route path="/job/:teamName/:jobName" element={<Job />} />
-      </Route>
+      <Route path="/job/:teamName/:jobName" element={<Job />} />
       <Route path="/job-form" element={<PrivateRoute />}>
         <Route path="/job-form" element={<Application />} />
       </Route>
