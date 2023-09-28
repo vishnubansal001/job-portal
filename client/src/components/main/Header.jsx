@@ -14,12 +14,17 @@ import AdbIcon from "@mui/icons-material/Adb";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks";
 
 const pages = [
   { name: "Home", link: "/" },
   { name: "Jobs", link: "/" },
 ];
 
+const adminPages = [
+  { name: "Openings", link: "/openings" },
+  { name: "Applications", link: "/applications" },
+];
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -32,6 +37,9 @@ function Header() {
   };
   const navigate = useNavigate();
 
+  const { authInfo } = useAuth();
+  const { isLoggedIn } = authInfo;
+  const isAdmin = authInfo.profile?.role === "admin";
   return (
     <AppBar position="sticky">
       <Container maxWidth="xl">
@@ -95,6 +103,20 @@ function Header() {
                   </Typography>
                 </MenuItem>
               ))}
+              {isAdmin && (
+                <>
+                  {adminPages.map((page, index) => (
+                    <MenuItem key={index} onClick={handleCloseNavMenu}>
+                      <Typography
+                        textAlign="center"
+                        onClick={() => navigate(`${page.link}`)}
+                      >
+                        {page.name}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </>
+              )}
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -130,6 +152,22 @@ function Header() {
                 {page.name}
               </Button>
             ))}
+            {isAdmin && (
+              <>
+                {adminPages.map((page, index) => (
+                  <Button
+                    key={index}
+                    onClick={() => {
+                      handleCloseNavMenu();
+                      navigate(`${page.link}`);
+                    }}
+                    sx={{ my: 2, color: "white", display: "block" }}
+                  >
+                    {page.name}
+                  </Button>
+                ))}
+              </>
+            )}
           </Box>
 
           <div className="flex flex-row items-center justify-center gap-3">
@@ -158,21 +196,38 @@ function Header() {
               <InstagramIcon />
             </Box>
 
-            <Box sx={{ flexGrow: 0 }}>
-              <Avatar
-                alt="Vishnu Bansal"
-                sx={{
-                  cursor: "pointer",
-                  bgcolor: "orange",
-                  textAlign: "center",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                VB
-              </Avatar>
-            </Box>
+            {isLoggedIn ? (
+              <Box sx={{ flexGrow: 0 }}>
+                <Avatar
+                  alt="Vishnu Bansal"
+                  sx={{
+                    cursor: "pointer",
+                    bgcolor: "orange",
+                    textAlign: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  VB
+                </Avatar>
+              </Box>
+            ) : (
+              <div className="flex gap-3">
+                <button
+                  onClick={() => navigate("/sign-in")}
+                  className="px-7 text-lg font-semibold capitalize py-3 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-gray-600 hover:bg-gray-300 hover:text-black rounded-[12px]"
+                >
+                  sign in
+                </button>
+                <button
+                  onClick={() => navigate("/sign-up")}
+                  className="px-7 text-lg font-semibold capitalize py-3 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-gray-600 hover:bg-gray-300 hover:text-black rounded-[12px]"
+                >
+                  sign up
+                </button>
+              </div>
+            )}
           </div>
         </Toolbar>
       </Container>
