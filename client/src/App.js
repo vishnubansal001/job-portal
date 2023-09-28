@@ -12,8 +12,15 @@ import Application from "./pages/Application";
 import Recommendations from "./pages/Recommendations";
 import ConfirmPassword from "./pages/ConfirmPassword";
 import EmailVerification from "./pages/EmailVerification";
+import { useAuth } from "./hooks";
+import AdminNavigator from "./navigator/AdminNavigator";
 
 function App() {
+  const { authInfo } = useAuth();
+  // console.log(authInfo);
+  const isAdmin = authInfo.profile?.role === "admin";
+  // console.log(isAdmin);
+  if (isAdmin) return <AdminNavigator />;
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
@@ -25,12 +32,6 @@ function App() {
       <Route path="/job/:teamName/:jobName" element={<Job />} />
       <Route path="/job-form" element={<PrivateRoute />}>
         <Route path="/job-form" element={<Application />} />
-      </Route>
-      <Route path="/job-openings" element={<PrivateRoute />}>
-        <Route path="/job-openings" element={<Openings />} />
-      </Route>
-      <Route path="/applications" element={<PrivateRoute />}>
-        <Route path="/applications" element={<Recommendations />} />
       </Route>
       {/* <Route path="*" element={<NotFound />} /> */}
     </Routes>
