@@ -111,6 +111,34 @@ exports.forgetPassword = async (req, res) => {
   });
   await newPasswordResetToken.save();
 
+  const resetPasswordUrl = `http://localhost:3000/reset-password?token=${token}&id=${user._id}`;
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.USER_EMAIL,
+      pass: process.env.USER_PASSWORD,
+    },
+  });
+
+  var mailOptions = {
+    from: process.env.USER_EMAIL,
+    to: email,
+    subject: "Reset Password Link",
+    html: `
+      <p>Click here to reset password</p>
+      <a href='${resetPasswordUrl}'>Change Password</a>
+    `,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.send(info);
+    }
+  });
+
   // email sending code
 
   res.json({ message: "Link sent to your email!" });
@@ -133,6 +161,29 @@ exports.resetPassword = async (req, res) => {
   await PasswordResetToken.findByIdAndDelete(req.resetToken._id);
 
   // email sending code
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.USER_EMAIL,
+      pass: process.env.USER_PASSWORD,
+    },
+  });
+
+  var mailOptions = {
+    from: process.env.USER_EMAIL,
+    to: user.email,
+    subject: "Password Reset Successfully",
+    text: `Now you can use new password`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.send(info);
+    }
+  });
 
   res.json({
     message: "Password reset successfully, now you can use new password.",
@@ -165,6 +216,30 @@ exports.verifyEmail = async (req, res) => {
   await EmailVerificationToken.findByIdAndDelete(token._id);
 
   // email sending code
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.USER_EMAIL,
+      pass: process.env.USER_PASSWORD,
+    },
+  });
+
+  var mailOptions = {
+    from: process.env.USER_EMAIL,
+    to: email,
+    subject: "Welcome Email",
+    text: `Welcome to our app and thanks for choosing us.`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.send(info);
+    }
+  });
+
   const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
   res.json({
@@ -210,6 +285,29 @@ exports.resendEmailVerificationToken = async (req, res) => {
   await newEmailVerificationToken.save();
 
   // email sending code
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.USER_EMAIL,
+      pass: process.env.USER_PASSWORD,
+    },
+  });
+
+  var mailOptions = {
+    from: process.env.USER_EMAIL,
+    to: email,
+    subject: "Verification Token",
+    text: `Your Verification Token is ${OTP}`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.send(info);
+    }
+  });
 
   res.json({
     message: "New OTP has been sent to your registered email accout.",
