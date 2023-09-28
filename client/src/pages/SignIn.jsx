@@ -10,46 +10,51 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks";
+import { useAuth, useNotification } from "../hooks";
 import { isValidEmail } from "../utils/validator";
 
 const defaultTheme = createTheme();
 
+const validateUserInfo = ({ email, password }) => {
+  if (!email.trim()) return { ok: false, error: "Email is missing!" };
+  if (isValidEmail(email)) return { ok: false, error: "Invalid email!" };
+
+  if (!password.trim()) return { ok: false, error: "Password is missing!" };
+  if (password.length < 8) return { ok: false, error: "Password must be 8 characters long!" };
+
+  return { ok: true };
+};
+
 export default function SignIn() {
-  const [formData, setFormData] = React.useState({
+  const [userInfo, setUserInfo] = React.useState({
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
+  const { updateNotification } = useNotification();
   const { handleLogin, authInfo } = useAuth();
   const { isPending, isLoggedIn } = authInfo;
 
-  const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const validateUserInfo = ({ email, password }) => {
-    if (!email.trim()) return { ok: false, error: "Email is missing!" };
-    if (!isValidEmail(email)) return { ok: false, error: "Invalid email!" };
-
-    if (!password.trim()) return { ok: false, error: "Password is missing!" };
-    if (password.length < 8)
-      return { ok: false, error: "Password must be 8 characters long!" };
-
-    return { ok: true };
+  const handleChange = ({ target }) => {
+    const { value, name } = target;
+    setUserInfo({ ...userInfo, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { ok, error } = validateUserInfo(formData);
+    const { ok, error } = validateUserInfo(userInfo);
 
-    // if (!ok) return updateNotification("error", error);
-    handleLogin(formData.email, formData.password);
+    if (!ok) return updateNotification("error", error);
+    handleLogin(userInfo.email, userInfo.password);
   };
 
-  const navigate = useNavigate();
+  React.useEffect(() => {
+    // we want to move our user to somewhere else
+    if (isLoggedIn) navigate("/");
+  }, [isLoggedIn]);
+
+  const {email,password} = userInfo;
 
   return (
     <div className="bg-[#f5f6fa] w-full h-full min-h-[100vh] flex flex-col justify-center items-center">
@@ -102,7 +107,7 @@ export default function SignIn() {
                 autoComplete="email"
                 autoFocus
                 onChange={handleChange}
-                value={formData.email}
+                value={email}
               />
               <TextField
                 margin="normal"
@@ -114,7 +119,7 @@ export default function SignIn() {
                 id="password"
                 autoComplete="current-password"
                 onChange={handleChange}
-                value={formData.password}
+                value={password}
               />
               <Grid container>
                 <Grid
