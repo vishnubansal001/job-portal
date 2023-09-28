@@ -227,7 +227,7 @@ exports.verifyEmail = async (req, res) => {
 
   var mailOptions = {
     from: process.env.USER_EMAIL,
-    to: email,
+    to: user.email,
     subject: "Welcome Email",
     text: `Welcome to our app and thanks for choosing us.`,
   };
@@ -243,7 +243,7 @@ exports.verifyEmail = async (req, res) => {
   const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
   res.json({
-    user: {
+    userData: {
       id: user._id,
       name: user.name,
       email: user.email,

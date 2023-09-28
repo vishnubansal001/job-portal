@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { resendEmailVerificationToken, verifyUserEmail } from "../api/auth";
-import { useAuth } from "../hooks";
+import { useAuth, useNotification } from "../hooks";
 import { MuiOtpInput } from "mui-one-time-password-input";
 
 const OTP_LENGTH = 6;
@@ -18,11 +18,19 @@ const isValidOTP = (otp) => {
 };
 
 export default function EmailVerification() {
+  const [otp, setOtp] = React.useState("");
+
+  console.log(otp);
+
+  const handleChange = (newValue) => {
+    setOtp(newValue);
+  };
+
   const { isAuth, authInfo } = useAuth();
   const { isLoggedIn, profile } = authInfo;
   const isVerified = profile?.isVerified;
 
-  // //   const { updateNotification } = useNotification();
+  const { updateNotification } = useNotification();
 
   const { state } = useLocation();
   const user = state?.user;
@@ -32,44 +40,33 @@ export default function EmailVerification() {
   const handleOTPResend = async () => {
     const { error, message } = await resendEmailVerificationToken(user.id);
 
-    //     // if (error) return updateNotification("error", error);
+    if (error) return updateNotification("error", error);
 
-    //     // updateNotification("success", message);
+    updateNotification("success", message);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //     // if (!isValidOTP(otp)) return updateNotification("error", "invalid OTP");
+    if (!isValidOTP(otp)) return updateNotification("error", "invalid OTP");
 
-    //     // submit otp
-    const {
-      error,
-      message,
-      user: userResponse,
-    } = await verifyUserEmail({
-      OTP: otp.join(""),
+    // submit otp
+    const { error, message, userData } = await verifyUserEmail({
+      OTP: otp.toString(),
       userId: user.id,
     });
-    // if (error) return updateNotification("error", error);
+    if (error) return updateNotification("error", error);
 
-    //     // updateNotification("success", message);
-    localStorage.setItem("auth-token", userResponse.token);
+    updateNotification("success", message);
+    console.log(userData);
+    localStorage.setItem("auth-token", userData.token);
     isAuth();
   };
 
-    useEffect(() => {
-      if (!user) navigate("/not-found");
-      if (isLoggedIn && isVerified) navigate("/");
-    }, [user, isLoggedIn, isVerified]);
-
-  // if(!user) return null;
-
-  const [otp, setOtp] = React.useState("");
-
-  const handleChange = (newValue) => {
-    setOtp(newValue);
-  };
+  useEffect(() => {
+    if (!user) navigate("/not-found");
+    if (isLoggedIn && isVerified) navigate("/");
+  }, [user, isLoggedIn, isVerified]);
 
   return (
     <FormContainer>
