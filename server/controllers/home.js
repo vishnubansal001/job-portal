@@ -5,7 +5,12 @@ exports.getJobs = async (req, res) => {
     const firstJob = await Jobs.find();
 
     if (firstJob.length !== 0) {
-      return res.json({ jobs: firstJob[0].jobs });
+      const result = firstJob[0]?.jobs?.map((item) => ({
+        name:item.name,
+        positions:item.positions,
+      }));
+      console.log(result);
+      return res.json({ jobs: result });
     } else {
       return res.json({ jobs: [] });
     }
