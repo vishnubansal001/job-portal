@@ -8,6 +8,8 @@ const {
 const PasswordResetToken = require("../models/passwordResetToken");
 const EmailVerificationToken = require("../models/emailVerificationToken");
 const { isValidObjectId } = require("mongoose");
+const nodemailer = require("nodemailer");
+require("dotenv").config();
 
 exports.signUp = async (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
@@ -20,9 +22,8 @@ exports.signUp = async (req, res) => {
     return sendError(res, "Confirm password and password don't match");
   }
 
-  const emailDomain = email?.split("@")[1];
-
-  if (emailDomain !== "chitkara.edu.in") {
+  const isValid = /^[a-zA-Z]+[0-9]{4}\.be12@chitkara\.edu\.in$/;
+  if (isValid.test(email.trim())) {
     return sendError(res, "Please Enter Chitkara email address");
   }
 
@@ -37,6 +38,29 @@ exports.signUp = async (req, res) => {
   });
 
   await newEmailVerificationToken.save();
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.USER_EMAIL,
+      pass: process.env.USER_PASSWORD,
+    },
+  });
+
+  var mailOptions = {
+    from: process.env.USER_EMAIL,
+    to: email,
+    subject: "Verification Token",
+    text: `Your Verification Token is ${OTP}`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.send(info);
+    }
+  });
 
   res.status(201).json({
     user: {
