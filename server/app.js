@@ -11,6 +11,11 @@ const nodemailer = require("nodemailer");
 const app = express();
 require("dotenv").config();
 const port = 8000;
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
 const mongoUrl = process.env.MONGO_URI;
 mongoose
@@ -28,7 +33,7 @@ app.use(cors());
 app.use("/user", userRouter);
 app.use("/jobs", jobRouter);
 app.use("/admin", adminRouter);
-app.use("/home",homeRouter);
+app.use("/home", homeRouter);
 
 app.get("/", (req, res) => {
   // const transporter = nodemailer.createTransport({

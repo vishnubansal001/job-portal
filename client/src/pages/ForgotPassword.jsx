@@ -12,7 +12,7 @@ import { forgetPassword } from "../api/auth";
 const defaultTheme = createTheme();
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = React.useState("");
 
   const handleChange = ({ target }) => {
     const { value } = target;

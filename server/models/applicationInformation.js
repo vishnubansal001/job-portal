@@ -54,6 +54,18 @@ const applicationInfoSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  rollNumber: {
+    type: String,
+    required: true,
+  },
+  branch: {
+    type: String,
+    required: true,
+  },
+  year: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Applications", applicationInfoSchema);

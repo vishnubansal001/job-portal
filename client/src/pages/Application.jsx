@@ -9,13 +9,14 @@ import {
 } from "@mui/material";
 import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
+import { sendApplication } from "../api/application";
 
 const Application = () => {
   const [formValues, setFormValues] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    mobileNumber: "",
+    number: "",
     rollNumber: "",
     branch: "",
     year: "",
@@ -26,7 +27,7 @@ const Application = () => {
     country: "",
     linkedIn: "",
     github: "",
-    photo: null,
+    picture: null,
     resume: null,
   });
 
@@ -46,9 +47,11 @@ const Application = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Perform form submission logic here
+    const { error, res } = await sendApplication(formValues);
+    // if (error) return updateNotification("error", error);
+    console.log(error);
     console.log(formValues);
   };
 
@@ -60,7 +63,7 @@ const Application = () => {
           <Box sx={{ mb: 2 }}>
             <Typography variant="h4">User Details</Typography>
           </Box>
-          <form onSubmit={handleSubmit}>
+          <form encType="multipart/form-data" onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -205,22 +208,22 @@ const Application = () => {
               <Grid item xs={12}>
                 <input
                   type="file"
-                  name="photo"
+                  name="picture"
                   id="photo-input"
-                  className="hidden"
+                  // className="hidden"
                   accept=".jpg,.jpeg,.png"
                   onChange={handleFileChange}
                 />
                 <label htmlFor="photo-input">
-                  <Button component="span" variant="outlined">
+                  {/* <Button component="span" variant="outlined"> */}
                     Upload Photo
-                  </Button>
+                  {/* </Button> */}
                 </label>
-                {formValues.photo && (
+                {/* {formValues.picture && (
                   <Typography sx={{ mt: 1 }}>
-                    Selected file: {formValues.photo.name}
+                    Selected file: {formValues.picture.name}
                   </Typography>
-                )}
+                )} */}
               </Grid>
               <Grid item xs={12}>
                 <input
@@ -229,18 +232,18 @@ const Application = () => {
                   id="resume-input"
                   accept=".pdf,.doc,.docx"
                   onChange={handleFileChange}
-                  className="hidden"
+                  // className="hidden"
                 />
                 <label htmlFor="resume-input">
-                  <Button component="span" variant="outlined">
+                  {/* <Button component="span" variant="outlined"> */}
                     Upload Resume
-                  </Button>
+                  {/* </Button> */}
                 </label>
-                {formValues.resume && (
+                {/* {formValues.resume && (
                   <Typography sx={{ mt: 1 }}>
                     Selected file: {formValues.resume.name}
                   </Typography>
-                )}
+                )} */}
               </Grid>
               <Grid item xs={12}>
                 <Button type="submit" variant="contained" color="primary">

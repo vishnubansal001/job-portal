@@ -10,6 +10,9 @@ exports.postData = async (req, res) => {
       email,
       number,
       street,
+      rollNumber,
+      branch,
+      year,
       state,
       city,
       zip,
@@ -17,7 +20,7 @@ exports.postData = async (req, res) => {
       linkedIn,
       github,
     } = req.body;
-    console.log(req.files);
+    console.log(req);
     const picture = req.files["picture"][0];
     const resume = req.files["resume"][0];
 
@@ -35,6 +38,9 @@ exports.postData = async (req, res) => {
       lastName,
       email,
       mobile: number,
+      rollNumber,
+      branch,
+      year,
       street,
       state,
       city,
