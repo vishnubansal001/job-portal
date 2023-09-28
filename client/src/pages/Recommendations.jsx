@@ -5,19 +5,6 @@ import { getCsvFile, getUsersData } from "../api/applications";
 
 const Recommendations = () => {
   const [users, setUsers] = useState();
-  // const users = [
-  //   {
-  //     name: "jsdhfiks",
-  //     email: "sleikdhtiedxoiesdkjtfodlx",
-  //     branch: "psro",
-  //     year: "psro",
-  //     rollNumber: "psro",
-  //     mobile: "dlxikchgodr jk",
-  //     applied: "sorihjdcgoidrj",
-  //     link: "https://storage.googleapis.com/job-portal-2d63d.appspot.com/modified-1695810769657.pdf?GoogleAccessId=firebase-adminsdk-2ou1i%40job-portal-2d63d.iam.gserviceaccount.com&Expires=1710210774&Signature=hyOx09XA9fv3lyY7nMLDHdTWD8F03wFpIKUEi4%2Bf3FzhG42cjR6ciBEtJ1noAJpZNO5SxuAqrvrp6WexbSx%2Bu8S1wfVL38z75On8FSHydeu%2Bb1iuRMEz%2FQcNzCuKMAc2eYGO66H1OmveMGxBfeCXI7P5frgxGiNe0m2AiWs5Yn%2F6qkVPDPFI3jsy%2BOQfVHEGac7Lk0QdYFuqdHT9TRBLT18C5HipJd5nQgfgwTFcr5xQ4%2FftQ%2Byf3DPVZnQ1GeHg4eo7clhEI0jNNA7yoNTDZkc1lK16F1C1XoK0Zs9gdL%2B%2FK%2FEs%2Ba4jTshUrvERnHhjuKBLikMX5ryStPo9q2ngcA%3D%3D",
-  //   },
-  // ];
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,10 +28,10 @@ const Recommendations = () => {
 
   const handleClickCsv = async () => {
     const url = await getCsvFile();
-    var link = document.createElement('a');
+    var link = document.createElement("a");
     link.href = url;
     link.click();
-  }
+  };
   return (
     <div>
       <Header />
@@ -124,12 +111,12 @@ const Recommendations = () => {
           </table>
 
           <div className="flex flex-col justify-center items-center mt-5">
-          <button
-            onClick={() => handleClickCsv()}
-            className="px-7 text-lg font-semibold capitalize text-white py-3 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-blue-600 hover:bg-blue-800 hover:text-white rounded-[12px]"
-          >
-            Download Excel Sheet
-          </button>
+            <button
+              onClick={() => handleClickCsv()}
+              className="px-7 text-lg font-semibold capitalize text-white py-3 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-blue-600 hover:bg-blue-800 hover:text-white rounded-[12px]"
+            >
+              Download Excel Sheet
+            </button>
           </div>
         </div>
       </section>
