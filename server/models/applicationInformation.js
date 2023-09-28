@@ -66,6 +66,10 @@ const applicationInfoSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  appliedFor: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Applications", applicationInfoSchema);
