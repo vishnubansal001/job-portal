@@ -8,25 +8,30 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { forgetPassword } from "../api/auth";
+import { useNotification } from "../hooks";
+import { isValidEmail } from "../utils/validator";
 
 const defaultTheme = createTheme();
 
 export default function ForgotPassword() {
   const [email, setEmail] = React.useState("");
 
+  const { updateNotification } = useNotification();
+
   const handleChange = ({ target }) => {
     const { value } = target;
     setEmail(value);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (!isValidEmail(email)){}
-    // return updateNotification("error", "Invalid email!");
+    if (isValidEmail(email))
+      return updateNotification("error", "Invalid email!");
 
     const { error, message } = await forgetPassword(email);
-    // if (error) return updateNotification("error", error);
+    if (error) return updateNotification("error", error);
 
-    // updateNotification("success", message);
+    updateNotification("success", message);
   };
   return (
     <div className="bg-[#f5f6fa] w-full h-full min-h-[100vh] flex flex-col justify-center items-center">

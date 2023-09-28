@@ -129,7 +129,7 @@ export default function SignIn() {
                 >
                   <Link
                     variant="body2"
-                    onClick={() => navigate("/forgot-pass")}
+                    onClick={() => navigate("/forget-password")}
                     sx={{ textDecoration: "none" }}
                     className="cursor-pointer hover:underline"
                   >
