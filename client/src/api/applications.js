@@ -9,3 +9,4 @@ export const getUsersData = async () => {
     return catchError(error);
   }
 };
+
