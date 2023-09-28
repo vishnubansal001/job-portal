@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { resendEmailVerificationToken, verifyUserEmail } from "../api/auth";
 import { useAuth } from "../hooks";
+import { MuiOtpInput } from "mui-one-time-password-input";
 
 const OTP_LENGTH = 6;
 
@@ -17,64 +18,31 @@ const isValidOTP = (otp) => {
 };
 
 export default function EmailVerification() {
-  const [otp, setOtp] = useState(new Array(OTP_LENGTH).fill(""));
-  const [activeOtpIndex, setActiveOtpIndex] = useState(0);
-
   const { isAuth, authInfo } = useAuth();
   const { isLoggedIn, profile } = authInfo;
   const isVerified = profile?.isVerified;
 
-  const inputRef = useRef();
-  //   const { updateNotification } = useNotification();
+  // //   const { updateNotification } = useNotification();
 
   const { state } = useLocation();
   const user = state?.user;
 
   const navigate = useNavigate();
 
-  const focusNextInputField = (index) => {
-    setActiveOtpIndex(index + 1);
-  };
-
-  const focusPrevInputField = (index) => {
-    let nextIndex;
-    const diff = index - 1;
-    nextIndex = diff !== 0 ? diff : 0;
-
-    setActiveOtpIndex(nextIndex);
-  };
-
-  const handleOtpChange = ({ target }, index) => {
-    const { value } = target;
-    const newOtp = [...otp];
-    newOtp[index] = value.substring(value.length - 1, value.length);
-
-    if (!value) focusPrevInputField(index);
-    else focusNextInputField(index);
-
-    setOtp([...newOtp]);
-  };
-
   const handleOTPResend = async () => {
     const { error, message } = await resendEmailVerificationToken(user.id);
 
-    // if (error) return updateNotification("error", error);
+    //     // if (error) return updateNotification("error", error);
 
-    // updateNotification("success", message);
-  };
-
-  const handleKeyDown = ({ key }, index) => {
-    if (key === "Backspace") {
-      focusPrevInputField(index);
-    }
+    //     // updateNotification("success", message);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // if (!isValidOTP(otp)) return updateNotification("error", "invalid OTP");
+    //     // if (!isValidOTP(otp)) return updateNotification("error", "invalid OTP");
 
-    // submit otp
+    //     // submit otp
     const {
       error,
       message,
@@ -85,21 +53,23 @@ export default function EmailVerification() {
     });
     // if (error) return updateNotification("error", error);
 
-    // updateNotification("success", message);
+    //     // updateNotification("success", message);
     localStorage.setItem("auth-token", userResponse.token);
     isAuth();
   };
-
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, [activeOtpIndex]);
 
     useEffect(() => {
       if (!user) navigate("/not-found");
       if (isLoggedIn && isVerified) navigate("/");
     }, [user, isLoggedIn, isVerified]);
 
-  if(!user) return null;
+  // if(!user) return null;
+
+  const [otp, setOtp] = React.useState("");
+
+  const handleChange = (newValue) => {
+    setOtp(newValue);
+  };
 
   return (
     <FormContainer>
@@ -107,7 +77,7 @@ export default function EmailVerification() {
         <form
           onSubmit={handleSubmit}
           className={
-            "dark:bg-secondary bg-white drop-shadow-lg rounded p-6 space-y-6"
+            "dark:bg-secondary bg-white drop-shadow-lg rounded p-6 space-y-6 w-[50%]"
           }
         >
           <div>
@@ -116,25 +86,17 @@ export default function EmailVerification() {
               OTP has been sent to your email
             </p>
           </div>
-
-          <div className="flex justify-center items-center space-x-4">
-            {otp.map((_, index) => {
-              return (
-                <input
-                  ref={activeOtpIndex === index ? inputRef : null}
-                  key={index}
-                  type="number"
-                  value={otp[index] || ""}
-                  onChange={(e) => handleOtpChange(e, index)}
-                  onKeyDown={(e) => handleKeyDown(e, index)}
-                  className="w-12 h-12 border-2 dark:border-dark-subtle border-light-subtle dark:focus:border-white focus:border-primary rounded bg-transparent outline-none text-center dark:text-black text-primary font-semibold text-xl spin-button-none"
-                />
-              );
-            })}
+          <div className="flex justify-center items-center">
+            <MuiOtpInput
+              value={otp}
+              length={6}
+              onChange={handleChange}
+              className="space-x-4"
+            />
           </div>
 
           <div>
-            <Submit value="Verify Account" />
+            <Submit value="Verify Account" onClick={handleSubmit} />
             <button
               onClick={handleOTPResend}
               type="button"
@@ -159,27 +121,13 @@ function FormContainer({ children }) {
 
 function Container({ children, className }) {
   return (
-    <div className={"max-w-screen-xl mx-auto " + className}>{children}</div>
-  );
-}
-
-function FormInput({ name, label, placeholder, ...rest }) {
-  return (
-    <div className="flex flex-col-reverse">
-      <input
-        autoComplete="on"
-        id={name}
-        name={name}
-        className="bg-transparent rounded border-2 dark:border-dark-subtle border-light-subtle w-full text-lg outline-none dark:focus:border-white focus:border-primary p-1 dark:text-black peer transition"
-        placeholder={placeholder}
-        {...rest}
-      />
-      <label
-        className="font-semibold dark:text-dark-subtle text-light-subtle dark:peer-focus:text-black peer-focus:text-primary transition self-start"
-        htmlFor={name}
-      >
-        {label}
-      </label>
+    <div
+      className={
+        "max-w-screen-xl mx-auto flex flex-col items-center justify-center" +
+        className
+      }
+    >
+      {children}
     </div>
   );
 }
