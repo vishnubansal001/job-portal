@@ -1,7 +1,9 @@
 import React from "react";
 import { bene, req, resp } from "../../data/data";
+import { useNavigate } from "react-router-dom";
 
-const Description = ({jobName,teamName}) => {
+const Description = ({ jobName, teamName }) => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col justify-center items-center w-full h-auto px-10">
       <div className="flex flex-col md:w-[70%] w-[90%] justify-center items-start gap-8 py-14">
@@ -59,6 +61,9 @@ const Description = ({jobName,teamName}) => {
         <button
           type="submit"
           className="px-7 text-lg font-semibold capitalize py-3 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-blue-600 hover:bg-blue-700 rounded-[12px] text-white"
+          onClick={() =>
+            navigate(`/job-form?teamName=${teamName}&jobName=${jobName}`)
+          }
         >
           I'm Interested
         </button>
