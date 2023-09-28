@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { resetPassword, verifyPasswordResetToken } from "../api/auth";
+import { useNotification } from "../hooks";
 
 export default function ConfirmPassword() {
   const [password, setPassword] = useState({
@@ -13,7 +14,7 @@ export default function ConfirmPassword() {
   const token = searchParams.get("token");
   const id = searchParams.get("id");
 
-  // const { updateNotification } = useNotification();
+  const { updateNotification } = useNotification();
   const navigate = useNavigate();
 
   // isValid,  !isValid
@@ -26,13 +27,13 @@ export default function ConfirmPassword() {
     const { error, valid } = await verifyPasswordResetToken(token, id);
     setIsVerifying(false);
     if (error) {
-      navigate("/auth/reset-password", { replace: true });
-      // return updateNotification("error", error);
+      navigate("/reset-password", { replace: true });
+      return updateNotification("error", error);
     }
 
     if (!valid) {
       setIsValid(false);
-      return navigate("/auth/reset-password", { replace: true });
+      return navigate("/reset-password", { replace: true });
     }
 
     setIsValid(true);
@@ -46,14 +47,14 @@ export default function ConfirmPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // if (!password.one.trim())
-    //   return updateNotification("error", "Password is missing!");
+    if (!password.one.trim())
+      return updateNotification("error", "Password is missing!");
 
-    // if (password.one.trim().length < 8)
-    //   return updateNotification("error", "Password must be 8 characters long!");
+    if (password.one.trim().length < 8)
+      return updateNotification("error", "Password must be 8 characters long!");
 
-    // if (password.one !== password.two)
-    //   return updateNotification("error", "Password do not match!");
+    if (password.one !== password.two)
+      return updateNotification("error", "Password do not match!");
 
     const { error, message } = await resetPassword({
       newPassword: password.one,
@@ -61,9 +62,9 @@ export default function ConfirmPassword() {
       token,
     });
 
-    // if (error) return updateNotification("error", error);
+    if (error) return updateNotification("error", error);
 
-    // updateNotification("success", message);
+    updateNotification("success", message);
     navigate("/sign-in", { replace: true });
   };
 
@@ -72,7 +73,7 @@ export default function ConfirmPassword() {
       <FormContainer>
         <Container>
           <div className="flex space-x-2 items-center">
-            <h1 className="text-4xl font-semibold dark:text-white text-primary">
+            <h1 className="text-4xl font-semibold text-primary">
               Please wait we are verifying your token!
             </h1>
             {/* <ImSpinner3 className="animate-spin text-4xl dark:text-white text-primary" /> */}
@@ -85,7 +86,7 @@ export default function ConfirmPassword() {
     return (
       <FormContainer>
         <Container>
-          <h1 className="text-4xl font-semibold dark:text-white text-primary">
+          <h1 className="text-4xl font-semibold text-primary">
             Sorry the token is invalid!
           </h1>
         </Container>
@@ -139,12 +140,12 @@ function FormInput({ name, label, placeholder, ...rest }) {
         autoComplete="on"
         id={name}
         name={name}
-        className="bg-transparent rounded border-2 dark:border-dark-subtle border-light-subtle w-full text-lg outline-none dark:focus:border-white focus:border-primary p-1 dark:text-white peer transition"
+        className="bg-transparent rounded border-2 dark:border-dark-subtle border-light-subtle w-full text-lg outline-none focus:border-primary p-1 dark:text-black peer transition"
         placeholder={placeholder}
         {...rest}
       />
       <label
-        className="font-semibold dark:text-dark-subtle text-light-subtle dark:peer-focus:text-white peer-focus:text-primary transition self-start"
+        className="font-semibold dark:text-dark-subtle text-light-subtle peer-focus:text-primary transition self-start"
         htmlFor={name}
       >
         {label}
@@ -157,7 +158,7 @@ function Submit({ value, busy, type, onClick }) {
   return (
     <button
       type={type || "submit"}
-      className="w-full rounded dark:bg-white bg-secondary dark:text-secondary text-white hover:bg-opacity-90 transition font-semibold text-lg cursor-pointer h-10 flex items-center justify-center"
+      className="w-full rounded dark:bg-white bg-secondary dark:text-secondary text-black hover:bg-opacity-90 transition font-semibold text-lg cursor-pointer h-10 flex items-center justify-center"
       onClick={onClick}
     >
       { value}
@@ -167,7 +168,7 @@ function Submit({ value, busy, type, onClick }) {
 
 function Title({ children }) {
   return (
-    <h1 className="text-xl dark:text-white text-secondary font-semibold text-center">
+    <h1 className="text-xl dark:text-black text-secondary font-semibold text-center">
       {children}
     </h1>
   );
