@@ -8,20 +8,20 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks";
+import { useAuth, useNotification } from "../hooks";
 import { isValidEmail } from "../utils/validator";
 import { createUser } from "../api/auth";
 
 const defaultTheme = createTheme();
 
-const validateUserInfo = ({ name, email, password,confirmPassword }) => {
+const validateUserInfo = ({ name, email, password, confirmPassword }) => {
   const isValidName = /^[a-z A-Z]+$/;
 
   if (!name.trim()) return { ok: false, error: "Name is missing!" };
   if (!isValidName.test(name)) return { ok: false, error: "Invalid name!" };
 
   if (!email.trim()) return { ok: false, error: "Email is missing!" };
-  if (!isValidEmail(email)) return { ok: false, error: "Invalid email!" };
+  if (isValidEmail(email)) return { ok: false, error: "Invalid email!" };
 
   if (!password.trim()) return { ok: false, error: "Password is missing!" };
   if (password.length < 8)
@@ -39,39 +39,45 @@ const validateUserInfo = ({ name, email, password,confirmPassword }) => {
 };
 
 export default function SignUp() {
-
-  const [formData, setFormData] = React.useState({
+  const [userInfo, setUserInfo] = React.useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
 
+  const navigate = useNavigate();
+  const { authInfo } = useAuth();
+  const { isLoggedIn } = authInfo;
+
+  const { updateNotification } = useNotification();
+
   const handleChange = ({ target }) => {
     const { value, name } = target;
-    setFormData({ ...formData, [name]: value });
+    setUserInfo({ ...userInfo, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { ok, error } = validateUserInfo(formData);
+    const { ok, error } = validateUserInfo(userInfo);
 
-    // if (!ok) return updateNotification("error", error);
+    if (!ok) return updateNotification("error", error);
 
-    const response = await createUser(formData);
+    const response = await createUser(userInfo);
     if (response.error) return console.log(response.error);
 
-    navigate("/");
+    navigate("/verification", {
+      state: { user: response.user },
+      replace: true,
+    });
   };
-
-  const { authInfo } = useAuth();
-  const { isLoggedIn } = authInfo;
-  const navigate = useNavigate();
 
   React.useEffect(() => {
     // we want to move our user to somewhere else
     if (isLoggedIn) navigate("/");
   }, [isLoggedIn]);
+
+  const { name, email, password, confirmPassword } = userInfo;
 
   return (
     <div className="bg-[#f5f6fa] w-full h-full min-h-[100vh] flex flex-col justify-center items-center">
@@ -124,7 +130,7 @@ export default function SignUp() {
                 autoComplete="name"
                 autoFocus
                 onChange={handleChange}
-                value={formData.name}
+                value={name}
               />
               <TextField
                 margin="normal"
@@ -136,7 +142,7 @@ export default function SignUp() {
                 autoComplete="email"
                 autoFocus
                 onChange={handleChange}
-                value={formData.email}
+                value={email}
               />
               <TextField
                 margin="normal"
@@ -148,7 +154,7 @@ export default function SignUp() {
                 id="password"
                 autoComplete="current-password"
                 onChange={handleChange}
-                value={formData.password}
+                value={password}
               />
               <TextField
                 margin="normal"
@@ -160,7 +166,7 @@ export default function SignUp() {
                 id="confirmPassword"
                 autoComplete="current-password"
                 onChange={handleChange}
-                value={formData.confirmPassword}
+                value={confirmPassword}
               />
 
               <Button
