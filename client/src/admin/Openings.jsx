@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Checkbox,
   FormControlLabel,
@@ -11,28 +11,30 @@ const ParentCheckbox = ({
   parentLabel,
   childrenLabels,
   onParentChange,
-  onChildChange,
+  dataMap,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
-  const [selectedChildren, setSelectedChildren] = useState([]);
 
   const handleParentChange = (event) => {
     const isChecked = event.target.checked;
     setIsChecked(isChecked);
     onParentChange(parentLabel, isChecked);
-
-    if (!isChecked) {
-      setSelectedChildren([]);
-    }
   };
 
   const handleChildChange = (childLabel, isChecked) => {
-    const updatedSelectedChildren = isChecked
-      ? [...selectedChildren, childLabel]
-      : selectedChildren.filter((label) => label !== childLabel);
+    let parentData = dataMap.get(parentLabel) || [];
+    if (isChecked) {
+      if (!parentData.includes(childLabel)) {
+        parentData.push(childLabel);
+      }
+    } else {
+      let index = parentData.indexOf(childLabel);
+      if (index !== -1) {
+        parentData.splice(index, 1);
+      }
+    }
 
-    setSelectedChildren(updatedSelectedChildren);
-    onChildChange(parentLabel, updatedSelectedChildren);
+    dataMap.set(parentLabel, parentData);
   };
 
   return (
@@ -48,7 +50,7 @@ const ParentCheckbox = ({
               control={
                 <Checkbox
                   disabled={!isChecked}
-                  checked={selectedChildren.includes(childLabel)}
+                  checked={dataMap.get(parentLabel)?.includes(childLabel)}
                   onChange={(event) =>
                     handleChildChange(childLabel, event.target.checked)
                   }
@@ -64,56 +66,24 @@ const ParentCheckbox = ({
 };
 
 const CheckboxComponent = () => {
-  const [selectedParents, setSelectedParents] = useState([]);
-  const [selectedChildren, setSelectedChildren] = useState([]);
+  const dataMap = new Map();
 
   const handleParentChange = (parentLabel, isChecked) => {
-    const updatedSelectedParents = isChecked
-      ? [...selectedParents, { name: parentLabel, positions: [] }]
-      : selectedParents.filter((label) => label !== parentLabel);
-
-    setSelectedParents(updatedSelectedParents);
-  };
-
-  const handleChildChange = (parentLabel, selectedChildren) => {
-    // const updatedSelectedChildren = [...selectedChildren];
-
-    // .findIndex(obj => obj.name.includes(parentLabel));
-
-    setSelectedChildren(updatedSelectedChildren);
+    isChecked ? dataMap.set(parentLabel, []) : dataMap.delete(parentLabel);
   };
 
   const parentLabels = [
-    "Parent 1",
-    "Parent 2",
-    "Parent 3",
-    "Parent 4",
-    "Parent 5",
-    "Parent 6",
-    "Parent 7",
-    "Parent 8",
-    "Parent 9",
+    "Graphics",
+    "Media",
+    "Social Media",
+    "Technical",
+    "Outreach",
+    "Events",
+    "Content",
+    "HR",
+    "Logistics",
   ];
-  const childrenLabels = ["Child 1", "Child 2", "Child 3"];
-
-  const handleSaveState = () => {
-    const savedState = selectedParents.map((parent) => {
-      const selectedChildrenForParent = selectedChildren.filter((child) =>
-        child.startsWith(parent)
-      );
-      return {
-        parent,
-        selectedChildren: selectedChildrenForParent,
-      };
-    });
-    console.log(savedState);
-  };
-
-  const selectedData = {
-    selectedParents: selectedParents,
-    selectedChildren: selectedChildren,
-  };
-
+  const childrenLabels = ["Lead", "Executive", "Head"];
   return (
     <div>
       <Typography variant="h6" gutterBottom>
@@ -125,14 +95,13 @@ const CheckboxComponent = () => {
           parentLabel={label}
           childrenLabels={childrenLabels}
           onParentChange={handleParentChange}
-          onChildChange={handleChildChange}
+          dataMap={dataMap}
         />
       ))}
       <Typography variant="h6" gutterBottom>
         Selected Data
       </Typography>
-      <pre>{JSON.stringify(selectedData, null, 2)}</pre>
-      <Button variant="contained" color="primary" onClick={handleSaveState}>
+      <Button variant="contained" color="primary">
         Save the State
       </Button>
     </div>
