@@ -1,10 +1,18 @@
 const axios = require("axios");
 const fs = require("fs");
 const { PDFDocument, rgb } = require("pdf-lib");
+const admin = require("firebase-admin");
+const path = require("path");
+const serviceAccount = require("../firebase.json");
 
-async function addPageToExistingPDF(imageUrl, user) {
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: "gs://job-portal-2d63d.appspot.com",
+});
+
+async function addPageToExistingPDF({imageUrl, user, date}) {
   // Load existing PDF
-  const existingPdfBytes = fs.readFileSync("./uploads/resume.pdf");
+  const existingPdfBytes = fs.readFileSync(`./uploads/resume-${date}.pdf`);
   const pdfDoc = await PDFDocument.load(existingPdfBytes);
 
   const imageResponse = await axios.get(imageUrl, {
@@ -34,12 +42,15 @@ async function addPageToExistingPDF(imageUrl, user) {
 
   const textLines = [
     `Name: ${user.name}`,
-    `Date: ${user.date}`,
-    `Address: ${user.address}`,
     `Roll Number: ${user.roll}`,
     `Email: ${user.email}`,
-    `Applied For: ${user.job}`,
     `Phone Number: ${user.mobile}`,
+    `Branch: ${user.branch}`,
+    `Year: ${user.year}`,
+    `Address: ${user.address}`,
+    `Applied For: ${user.job}`,
+    `Github: ${user.github}`,
+    `LinkedIn: ${user.linkedIn}`,
   ];
 
   textLines.forEach((line, index) => {
@@ -52,10 +63,15 @@ async function addPageToExistingPDF(imageUrl, user) {
 
   // Save the modified PDF
   const modifiedPdfBytes = await pdfDoc.save();
-  fs.writeFileSync("./download/modified.pdf", modifiedPdfBytes);
-  fs.unlink("./uploads/resume.pdf");
-  const filePath = path.join(__dirname, "..", "download", "modified.pdf");
-  const fileName = "modified.pdf";
+  fs.writeFileSync(`./download/modified-${date}.pdf`, modifiedPdfBytes);
+  fs.unlink(`./uploads/resume-${date}.pdf`);
+  const filePath = path.join(
+    __dirname,
+    "..",
+    "download",
+    `modified-${date}.pdf`
+  );
+  const fileName = `modified-${date}.pdf`;
   const bucket = admin.storage().bucket();
   const blob = bucket.file(fileName);
   const blobStream = blob.createWriteStream({
@@ -74,8 +90,15 @@ async function addPageToExistingPDF(imageUrl, user) {
   });
 
   blobStream.on("finish", async () => {
-    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
-    console.log(publicUrl);
+    await blob
+      .getSignedUrl({
+        action: "read",
+        expires: new Date().getTime() + 24 * 6000000 * 100,
+      })
+      .then(([url]) => {
+        fs.unlink(`./download/modified-${date}.pdf`);
+        return url;
+      });
   });
 }
 

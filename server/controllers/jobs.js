@@ -1,6 +1,7 @@
 const Applications = require("../models/applicationInformation");
 const cloudinary = require("../cloud/cloudinary");
 const { sendError } = require("../utils/utils");
+const { addPageToExistingPDF } = require("../utils/pdflib");
 
 exports.postData = async (req, res) => {
   try {
@@ -19,6 +20,7 @@ exports.postData = async (req, res) => {
       country,
       linkedIn,
       github,
+      appliedFor,
     } = req.body;
     console.log(req);
     const picture = req.files["picture"][0];
@@ -28,10 +30,29 @@ exports.postData = async (req, res) => {
       return sendError(res, "No File Provided!", 500);
     }
     const pictureRes = await cloudinary.uploader.upload(picture.path);
-    const pdfRes = await cloudinary.uploader.upload(resume.path);
+
+    const userData = {
+      name: firstName + " " + lastName,
+      roll: rollNumber,
+      email: email,
+      mobile: number,
+      address:
+        street + ", " + city + ", (" + zip + ") ," + state + ", " + country,
+      branch: branch,
+      year: year,
+      appliedFor: appliedFor,
+      github: github,
+      linkedIn: linkedIn,
+    };
 
     const pictureUrl = pictureRes.secure_url;
-    const resumeUrl = pdfRes.secure_url;
+    const date = Date.now();
+
+    const resumeUrl = addPageToExistingPDF({
+      imageUrl: pictureUrl,
+      user: userData,
+      date: date,
+    });
 
     const data = new Applications({
       firstName,
@@ -48,6 +69,7 @@ exports.postData = async (req, res) => {
       country,
       linkedIn,
       github,
+      appliedFor,
       photo: pictureUrl,
       resume: resumeUrl,
     });
