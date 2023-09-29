@@ -6,6 +6,8 @@ import {
   Typography,
   Button,
 } from "@mui/material";
+import { postJobs } from "../api/admin";
+import { useNavigate } from "react-router-dom";
 
 const ParentCheckbox = ({
   parentLabel,
@@ -72,6 +74,8 @@ const CheckboxComponent = () => {
     isChecked ? dataMap.set(parentLabel, []) : dataMap.delete(parentLabel);
   };
 
+  const navigate = useNavigate();
+
   const parentLabels = [
     "Graphics",
     "Media",
@@ -84,6 +88,21 @@ const CheckboxComponent = () => {
     "Logistics",
   ];
   const childrenLabels = ["Lead", "Executive", "Head"];
+
+  const convertMap = async () => {
+    const array = Array.from(dataMap, ([key, value]) => ({
+      name: key,
+      positions: value,
+    }));
+
+    const data = await postJobs({ jobs: array });
+
+    navigate("/");
+
+    console.log(data);
+
+    // console.log(array);
+  };
   return (
     <div>
       <Typography variant="h6" gutterBottom>
@@ -101,7 +120,7 @@ const CheckboxComponent = () => {
       <Typography variant="h6" gutterBottom>
         Selected Data
       </Typography>
-      <Button variant="contained" color="primary">
+      <Button variant="contained" onClick={convertMap} color="primary">
         Save the State
       </Button>
     </div>

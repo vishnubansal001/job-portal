@@ -37,15 +37,7 @@ exports.getAllUsers = async (req, res) => {
 exports.updatePosts = async (req, res) => {
   try {
     const { jobs } = req.body;
-    await Jobs.countDocuments({})
-      .then((count) => {
-        if (count > 0) {
-          Jobs.deleteMany({});
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // console.log(req.body);
 
     const newJobs = new Jobs({
       jobs: jobs,

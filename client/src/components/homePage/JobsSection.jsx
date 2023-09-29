@@ -37,11 +37,11 @@ const JobsSection = ({ jobs }) => {
                           className="hover:underline hover:text-blue-600 cursor-pointer select-none capitalize"
                           onClick={() =>
                             navigate(
-                              `/job/${item.name.toLocaleLowerCase()}/${pos.name.toLocaleLowerCase()}`
+                              `/job/${item.name.toLocaleLowerCase()}/${pos.toLocaleLowerCase()}`
                             )
                           }
                         >
-                          {pos.name}
+                          {pos}
                         </h1>
                       </div>
                     ))}

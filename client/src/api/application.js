@@ -10,7 +10,7 @@ export const sendApplication = async (data) => {
         "content-type": "mulitpart/form-data",
       },
     });
-    return data;
+    // return data;
   } catch (error) {
     return catchError(error);
   }
