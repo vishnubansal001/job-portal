@@ -22,7 +22,7 @@ exports.postData = async (req, res) => {
       github,
       appliedFor,
     } = req.body;
-    console.log(req);
+    // console.log(req.files);
     const picture = req.files["picture"][0];
     const resume = req.files["resume"][0];
 
@@ -46,13 +46,15 @@ exports.postData = async (req, res) => {
     };
 
     const pictureUrl = pictureRes.secure_url;
-    const date = Date.now();
 
-    const resumeUrl = addPageToExistingPDF({
+    const date = resume.filename.split("-")[1].split(".")[0];
+
+    const url = await addPageToExistingPDF({
       imageUrl: pictureUrl,
       user: userData,
-      date: date,
+      date,
     });
+    // console.log("URL:", ));
 
     const data = new Applications({
       firstName,
@@ -71,11 +73,9 @@ exports.postData = async (req, res) => {
       github,
       appliedFor,
       photo: pictureUrl,
-      resume: resumeUrl,
+      resume: url,
     });
-
-    await data.save();
-
+    data.save();
     return res.status(200).json({ message: "Info Data saved successfully" });
   } catch (error) {
     console.log(error);

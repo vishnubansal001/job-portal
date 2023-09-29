@@ -5,7 +5,11 @@ const storage = multer.diskStorage({
     cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + "-" + Date.now());
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, file.fieldname + "-" + Date.now() + `.${file.mimetype.split("/")[1]}`);
+    } else {
+      cb(null, file.fieldname + "-" + Date.now() + ".pdf");
+    }
   },
 });
 
