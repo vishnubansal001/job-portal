@@ -10,9 +10,13 @@ import {
 import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
 import { sendApplication } from "../api/application";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Application = () => {
-  const [formValues, setFormValues] = useState({
+  const { teamName, jobName } = useParams();
+
+  const [data, setData] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -33,26 +37,82 @@ const Application = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormValues((prevFormValues) => ({
-      ...prevFormValues,
+    setData((prevData) => ({
+      ...prevData,
       [name]: value,
     }));
   };
 
+  const navigate = useNavigate();
+
   const handleFileChange = (event) => {
     const { name, files } = event.target;
-    setFormValues((prevFormValues) => ({
-      ...prevFormValues,
+    setData((prevData) => ({
+      ...prevData,
       [name]: files[0],
     }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { error, res } = await sendApplication(formValues);
+    // const { error, res } = await sendApplication(data);
     // if (error) return updateNotification("error", error);
-    console.log(error);
-    console.log(formValues);
+    // console.log(error);
+    // console.log(data);
+    // console.log(res);
+
+    const data1 = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      number: data.number,
+      rollNumber: data.rollNumber,
+      branch: data.branch,
+      year: data.year,
+      street: data.street,
+      city: data.city,
+      state: data.state,
+      zip: data.zip,
+      country: data.country,
+      linkedIn: data.linkedIn,
+      github: data.github,
+      picture: data.picture,
+      resume: data.resume,
+      appliedFor: teamName + "-" + jobName,
+    };
+
+    // console.log(data.resume);
+    axios
+      .post("http://localhost:8000/jobs/info-data", data1, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        setData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          number: "",
+          rollNumber: "",
+          branch: "",
+          year: "",
+          street: "",
+          city: "",
+          state: "",
+          zip: "",
+          country: "",
+          linkedIn: "",
+          github: "",
+          picture: null,
+          resume: null,
+        });
+        navigate("/");
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -69,7 +129,7 @@ const Application = () => {
                 <TextField
                   name="firstName"
                   label="First Name"
-                  value={formValues.firstName}
+                  value={data.firstName}
                   onChange={handleChange}
                   required
                   fullWidth
@@ -79,7 +139,7 @@ const Application = () => {
                 <TextField
                   name="lastName"
                   label="Last Name"
-                  value={formValues.lastName}
+                  value={data.lastName}
                   onChange={handleChange}
                   required
                   fullWidth
@@ -90,7 +150,7 @@ const Application = () => {
                   name="email"
                   label="Email"
                   type="email"
-                  value={formValues.email}
+                  value={data.email}
                   onChange={handleChange}
                   required
                   fullWidth
@@ -98,10 +158,10 @@ const Application = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  name="mobileNumber"
+                  name="number"
                   label="Mobile Number"
                   type="tel"
-                  value={formValues.mobileNumber}
+                  value={data.mobileNumber}
                   onChange={handleChange}
                   required
                   fullWidth
@@ -111,7 +171,7 @@ const Application = () => {
                 <TextField
                   name="rollNumber"
                   label="Roll Number"
-                  value={formValues.rollNumber}
+                  value={data.rollNumber}
                   onChange={handleChange}
                   required
                   fullWidth
@@ -121,7 +181,7 @@ const Application = () => {
                 <TextField
                   name="branch"
                   label="Branch"
-                  value={formValues.branch}
+                  value={data.branch}
                   onChange={handleChange}
                   required
                   fullWidth
@@ -131,7 +191,7 @@ const Application = () => {
                 <TextField
                   name="year"
                   label="Year"
-                  value={formValues.year}
+                  value={data.year}
                   onChange={handleChange}
                   required
                   fullWidth
@@ -141,7 +201,7 @@ const Application = () => {
                 <TextField
                   name="street"
                   label="Street Address"
-                  value={formValues.street}
+                  value={data.street}
                   onChange={handleChange}
                   required
                   fullWidth
@@ -151,7 +211,7 @@ const Application = () => {
                 <TextField
                   name="city"
                   label="City"
-                  value={formValues.city}
+                  value={data.city}
                   onChange={handleChange}
                   required
                   fullWidth
@@ -161,7 +221,7 @@ const Application = () => {
                 <TextField
                   name="state"
                   label="State/Province/Region"
-                  value={formValues.state}
+                  value={data.state}
                   onChange={handleChange}
                   required
                   fullWidth
@@ -171,7 +231,7 @@ const Application = () => {
                 <TextField
                   name="zip"
                   label="Zip / Postal Code"
-                  value={formValues.zip}
+                  value={data.zip}
                   onChange={handleChange}
                   required
                   fullWidth
@@ -181,7 +241,7 @@ const Application = () => {
                 <TextField
                   name="country"
                   label="Country"
-                  value={formValues.country}
+                  value={data.country}
                   onChange={handleChange}
                   required
                   fullWidth
@@ -191,7 +251,7 @@ const Application = () => {
                 <TextField
                   name="linkedIn"
                   label="LinkedIn Profile URL"
-                  value={formValues.linkedIn}
+                  value={data.linkedIn}
                   onChange={handleChange}
                   fullWidth
                 />
@@ -200,7 +260,7 @@ const Application = () => {
                 <TextField
                   name="github"
                   label="GitHub Profile URL"
-                  value={formValues.github}
+                  value={data.github}
                   onChange={handleChange}
                   fullWidth
                 />
@@ -216,12 +276,12 @@ const Application = () => {
                 />
                 <label htmlFor="photo-input">
                   {/* <Button component="span" variant="outlined"> */}
-                    Upload Photo
+                  Upload Photo
                   {/* </Button> */}
                 </label>
-                {/* {formValues.picture && (
+                {/* {data.picture && (
                   <Typography sx={{ mt: 1 }}>
-                    Selected file: {formValues.picture.name}
+                    Selected file: {data.picture.name}
                   </Typography>
                 )} */}
               </Grid>
@@ -236,12 +296,12 @@ const Application = () => {
                 />
                 <label htmlFor="resume-input">
                   {/* <Button component="span" variant="outlined"> */}
-                    Upload Resume
+                  Upload Resume
                   {/* </Button> */}
                 </label>
-                {/* {formValues.resume && (
+                {/* {data.resume && (
                   <Typography sx={{ mt: 1 }}>
-                    Selected file: {formValues.resume.name}
+                    Selected file: {data.resume.name}
                   </Typography>
                 )} */}
               </Grid>

@@ -96,7 +96,8 @@ async function addPageToExistingPDF({ imageUrl, user, date }) {
   });
 
   blobStream.on("finish", () => {
-    console.log("sijdkx");
+    // console.log("sijdkx");
+    console.log("done");
   });
 
   const uri = blob
@@ -105,7 +106,7 @@ async function addPageToExistingPDF({ imageUrl, user, date }) {
       expires: new Date().getTime() + 24 * 6000000 * 100,
     })
     .then(([url]) => {
-      console.log(url);
+      // console.log(url);
       // fs.unlink(`./download/modified-${date}.pdf`, () => console.log("done"));
       return url;
     })

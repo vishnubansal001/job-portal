@@ -9,7 +9,7 @@ exports.getJobs = async (req, res) => {
         name: item.name,
         positions: item.positions,
       }));
-      console.log(result);
+      // console.log(result);
       return res.json({ jobs: result });
     } else {
       return res.json({ jobs: [] });

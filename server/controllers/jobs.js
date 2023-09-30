@@ -22,7 +22,7 @@ exports.postData = async (req, res) => {
       github,
       appliedFor,
     } = req.body;
-    // console.log(req.files);
+    // console.log(req.files["picture"]);
     const picture = req.files["picture"][0];
     const resume = req.files["resume"][0];
 
