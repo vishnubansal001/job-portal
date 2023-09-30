@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+# MERN Stack Job Portal Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a full-stack job portal website built using the MERN (MongoDB, Express.js, React, Node.js) stack. The website allows users to view and apply for open job positions. It also features an admin panel for managing job listings.
 
-## Available Scripts
+## Technologies Used
 
-In the project directory, you can run:
+- React.js
+- Tailwind CSS
+- Material UI
+- Context API
+- Axios
+- Firebase
+- Node.js
+- Express.js
+- MongoDB
+- pdf-lib (for PDF manipulations)
+- PapaParse (for CSV creation)
+- Cloudinary (for image storage)
+- JWT Token (for authentication)
+- Local Storage (for token storage)
+- Query Params and Dynamic Routing (for frontend)
+- Private Routing (for the admin panel)
 
-### `yarn start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Job Listings**: Users can view a list of available job positions.
+- **Job Details**: Users can click on a job to view its details.
+- **Apply for Job**: Users can apply for a job by submitting their application.
+- **Admin Panel**: Admins can log in to manage job listings.
+- **Authentication**: JWT tokens are used for authentication and authorization.
+- **Image Upload**: Cloudinary is used for storing job images.
+- **PDF and CSV**: Users can upload PDF files for their resumes and admins can export data to CSV.
+- **Responsive Design**: The website is designed to be mobile-friendly.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Getting Started
 
-### `yarn test`
+1. Clone the repository:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+git clone https://github.com/yourusername/job-portal.git
+```
 
-### `yarn build`
+2. Install dependencies:
+   ```
+   cd job-portal
+   npm install
+   ```
+3. Set up environment variables (for Firebase, Cloudinary, MongoDB, etc.).
+4. Start the server:
+   ```
+   cd server
+   npm start
+   ```
+5. Start the frontend:
+   ```
+   cd client
+   npm start
+   ```
+6. Open your browser and go to http://localhost:3000 to view the website.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Usage
+   - Users can create an account or log in to apply for jobs.
+   - Admins can log in to manage job listings.
+   
+## Contributing
+If you'd like to contribute, please fork the repository and create a new branch. Pull requests are welcome.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Acknowledgements
+- React Router
+- MongoDB
+- Express.js
+- Node.js
+- Tailwind CSS
+- Material UI
+- Firebase
+- pdf-lib
+- PapaParse
+- Cloudinary
+- JWT.io
+- Local Storage
+   
