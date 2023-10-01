@@ -1,13 +1,13 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "server",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "watch": "nodemon app.js",
   },
-  "author": "",
+  "author": "vishnu",
   "license": "ISC",
   "dependencies": {
     "@google-cloud/storage": "^7.1.0",
