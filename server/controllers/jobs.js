@@ -27,7 +27,7 @@ exports.postData = async (req, res) => {
     const resume = req.files["resume"][0];
 
     if (!picture || !resume) {
-      return sendError(res, "No File Provided!", 500);
+      return sendError(res, error.message, 500);
     }
     const pictureRes = await cloudinary.uploader.upload(picture.path);
 
@@ -79,6 +79,6 @@ exports.postData = async (req, res) => {
     return res.status(200).json({ message: "Info Data saved successfully" });
   } catch (error) {
     console.log(error);
-    return sendError(res, "Server Error!", 500);
+    return sendError(res, error.message, 500);
   }
 };

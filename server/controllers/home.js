@@ -15,6 +15,6 @@ exports.getJobs = async (req, res) => {
       return res.json({ jobs: [] });
     }
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: error.message });
   }
 };
