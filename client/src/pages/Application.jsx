@@ -12,6 +12,7 @@ import Footer from "../components/main/Footer";
 import { sendApplication } from "../api/application";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { useNotification } from "../hooks";
 
 const Application = () => {
   const { teamName, jobName } = useParams();
@@ -20,8 +21,8 @@ const Application = () => {
     firstName: "",
     lastName: "",
     email: "",
-    number: "",
-    rollNumber: "",
+    number: 0,
+    rollNumber: 0,
     branch: "",
     year: "",
     street: "",
@@ -52,33 +53,48 @@ const Application = () => {
       [name]: files[0],
     }));
   };
+  const { updateNotification } = useNotification();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // const { error, res } = await sendApplication(data);
-    // if (error) return updateNotification("error", error);
-    // console.log(error);
-    // console.log(data);
-    // console.log(res);
+
+    if (
+      data.firstName.trim().length == 0 ||
+      data.lastName.trim().length == 0 ||
+      data.email.trim().length == 0 ||
+      data.number < 1111111111 ||
+      data.number > 9999999999 ||
+      data.year.trim().length == 0 ||
+      data.branch.trim().length == 0 ||
+      data.state.trim().length == 0 ||
+      data.city.trim().length == 0 ||
+      data.country.trim().length == 0 ||
+      data.linkedIn.trim().length == 0 ||
+      data.github.trim().length == 0 ||
+      data.picture === null ||
+      data.resume === null
+    ) {
+      return updateNotification("error", "Please Provide Correct Data");
+    }
 
     const data1 = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
+      firstName: data.firstName?.toString(),
+      lastName: data.lastName?.toString(),
+      email: data.email?.toString(),
       number: data.number,
       rollNumber: data.rollNumber,
-      branch: data.branch,
-      year: data.year,
-      street: data.street,
-      city: data.city,
-      state: data.state,
-      zip: data.zip,
-      country: data.country,
-      linkedIn: data.linkedIn,
-      github: data.github,
+      branch: data.branch?.toString(),
+      year: data.year?.toString(),
+      street: data.street?.toString(),
+      city: data.city?.toString(),
+      state: data.state?.toString(),
+      zip: data.zip?.toString(),
+      country: data.country?.toString(),
+      linkedIn: data.linkedIn?.toString(),
+      github: data.github?.toString(),
       picture: data.picture,
       resume: data.resume,
-      appliedFor: teamName + "-" + jobName,
+      appliedFor: teamName?.toString() + "-" + jobName?.toString(),
     };
 
     // console.log(data.resume);
@@ -93,8 +109,8 @@ const Application = () => {
           firstName: "",
           lastName: "",
           email: "",
-          number: "",
-          rollNumber: "",
+          number: 0,
+          rollNumber: 0,
           branch: "",
           year: "",
           street: "",
@@ -160,8 +176,8 @@ const Application = () => {
                 <TextField
                   name="number"
                   label="Mobile Number"
-                  type="tel"
-                  value={data.mobileNumber}
+                  type="number"
+                  value={data.number}
                   onChange={handleChange}
                   required
                   fullWidth
@@ -171,6 +187,7 @@ const Application = () => {
                 <TextField
                   name="rollNumber"
                   label="Roll Number"
+                  type="number"
                   value={data.rollNumber}
                   onChange={handleChange}
                   required

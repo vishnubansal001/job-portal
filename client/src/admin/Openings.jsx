@@ -8,6 +8,8 @@ import {
 } from "@mui/material";
 import { postJobs } from "../api/admin";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/main/Header";
+import Footer from "../components/main/Footer";
 
 const ParentCheckbox = ({
   parentLabel,
@@ -104,26 +106,30 @@ const CheckboxComponent = () => {
     // console.log(array);
   };
   return (
-    <div>
-      <Typography variant="h6" gutterBottom>
-        Parent Checkboxes
-      </Typography>
-      {parentLabels.map((label, index) => (
-        <ParentCheckbox
-          key={index}
-          parentLabel={label}
-          childrenLabels={childrenLabels}
-          onParentChange={handleParentChange}
-          dataMap={dataMap}
-        />
-      ))}
-      <Typography variant="h6" gutterBottom>
-        Selected Data
-      </Typography>
-      <Button variant="contained" onClick={convertMap} color="primary">
-        Save the State
-      </Button>
-    </div>
+    <>
+      <Header />
+      <div className="py-6">
+        <Typography variant="h6" gutterBottom>
+          Parent Checkboxes
+        </Typography>
+        {parentLabels.map((label, index) => (
+          <ParentCheckbox
+            key={index}
+            parentLabel={label}
+            childrenLabels={childrenLabels}
+            onParentChange={handleParentChange}
+            dataMap={dataMap}
+          />
+        ))}
+        <Typography variant="h6" gutterBottom>
+          Selected Data
+        </Typography>
+        <Button variant="contained" onClick={convertMap} color="primary">
+          Save the State
+        </Button>
+      </div>
+      <Footer />
+    </>
   );
 };
 
