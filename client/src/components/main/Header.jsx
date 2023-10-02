@@ -219,8 +219,7 @@ function Header() {
                     alignItems: "center",
                   }}
                 >
-                  {nameUser?.charAt(0)?.toUpperCase() +
-                    nameUser?.split(" ")[1]?.charAt(0)?.toUpperCase()}
+                  {nameUser?.charAt(0)?.toUpperCase()}
                 </Avatar>
               </Box>
             ) : (
