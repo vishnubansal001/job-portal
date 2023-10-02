@@ -30,7 +30,7 @@ exports.getAllUsers = async (req, res) => {
     return res.json({ users: data });
   } catch (error) {
     console.log(error);
-    return sendError(res, "Internal Server Error", 500);
+    return sendError(res, error.message, 500);
   }
 };
 
@@ -48,7 +48,7 @@ exports.updatePosts = async (req, res) => {
     return res.status(200).json({ message: "New Jobs Added Successfully" });
   } catch (error) {
     console.log(error);
-    return sendError(res, "Server Error!", 500);
+    return sendError(res, error.message, 500);
   }
 };
 
@@ -117,6 +117,6 @@ exports.makeCsv = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return sendError(res, "Server Error!", 500);
+    return sendError(res, error.message, 500);
   }
 };
