@@ -16,6 +16,15 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks";
 
+function getRandomColor() {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 const pages = [
   { name: "Home", link: "/" },
   { name: "Jobs", link: "/" },
@@ -40,6 +49,7 @@ function Header() {
   const { authInfo } = useAuth();
   const { isLoggedIn } = authInfo;
   const isAdmin = authInfo.profile?.role === "admin";
+  const nameUser = authInfo.profile?.name;
   return (
     <AppBar position="sticky">
       <Container maxWidth="xl">
@@ -199,17 +209,18 @@ function Header() {
             {isLoggedIn ? (
               <Box sx={{ flexGrow: 0 }}>
                 <Avatar
-                  alt="Vishnu Bansal"
+                  alt={`${nameUser}`}
                   sx={{
                     cursor: "pointer",
-                    bgcolor: "orange",
+                    bgcolor: `${getRandomColor()}`,
                     textAlign: "center",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
-                  VB
+                  {nameUser.charAt(0).toUpperCase() +
+                    nameUser.split(" ")[1].charAt(0).toUpperCase()}
                 </Avatar>
               </Box>
             ) : (

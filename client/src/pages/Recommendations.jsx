@@ -21,7 +21,7 @@ const Recommendations = () => {
     var link = document.createElement("a");
     link.href = url;
     link.target = "_blank";
-    link.download = "downloaded_file.pdf";
+    // link.download = "downloaded_file.pdf";
     // link.download();
     link.click();
   };
@@ -94,12 +94,12 @@ const Recommendations = () => {
                     <p>{item.mobile}</p>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <p>{item.applied}</p>
+                    <p>{item.appliedFor}</p>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <button
                       type="button"
-                      onClick={() => handleDownloadClick(item.link)}
+                      onClick={() => handleDownloadClick(item.resume)}
                       className="text-blue-600"
                     >
                       Resume
