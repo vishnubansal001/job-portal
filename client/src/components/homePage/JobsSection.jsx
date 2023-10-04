@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { teams } from "../../data/data";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const JobsSection = ({ jobs }) => {
@@ -17,7 +16,7 @@ const JobsSection = ({ jobs }) => {
           </p>
         </div>
         <div className="flex flex-col justify-start items-start w-[90%] md:w-[80%] gap-8">
-          {jobs && jobs.length !== 0 ? (
+          {jobs && jobs.length > 0 ? (
             <>
               {jobs?.map((item, index) => (
                 <div

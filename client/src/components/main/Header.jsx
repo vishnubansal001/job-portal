@@ -10,11 +10,11 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks";
+import logo from "../../assets/favicon.png";
 
 function getRandomColor() {
   const letters = "0123456789ABCDEF";
@@ -51,10 +51,10 @@ function Header() {
   const isAdmin = authInfo.profile?.role === "admin";
   const nameUser = authInfo.profile?.name;
   return (
-    <AppBar position="sticky">
-      <Container maxWidth="xl">
+    <AppBar position="sticky" sx={{ bgcolor: "rgba(0, 0, 0, 0.5)" }}>
+      <Container maxWidth="xl" className="p-4">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -72,7 +72,8 @@ function Header() {
             onClick={() => navigate("/")}
           >
             LOGO
-          </Typography>
+          </Typography> */}
+          <img src={logo} alt="" className="md:hidden sm:flex w-20" />
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -129,7 +130,7 @@ function Header() {
               )}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -148,7 +149,8 @@ function Header() {
             onClick={() => navigate("/")}
           >
             LOGO
-          </Typography>
+          </Typography> */}
+          <img src={logo} alt="" className="sm:hidden md:flex w-20 mr-3" />
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page, index) => (
               <Button
@@ -157,7 +159,14 @@ function Header() {
                   handleCloseNavMenu();
                   navigate(`${page.link}`);
                 }}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  fontSize: "1.25rem",
+                  fontWeight: "500",
+                }}
+                className="text-lg font-bold"
               >
                 {page.name}
               </Button>
@@ -189,7 +198,7 @@ function Header() {
                 padding: "6px",
                 borderRadius: "50%",
               }}
-              className="hover:border-red-500 hover:text-red-500 transition-colors duration-300 cursor-pointer"
+              className="hover:border-green-500 hover:text-green-500 transition-colors duration-300 cursor-pointer"
             >
               <LinkedInIcon />
             </Box>
@@ -201,11 +210,12 @@ function Header() {
                 padding: "6px",
                 borderRadius: "50%",
               }}
-              className="hover:border-red-500 hover:text-red-500 transition-colors duration-300 cursor-pointer"
+              className="hover:border-green-500 hover:text-green-500 transition-colors duration-300 cursor-pointer"
             >
               <InstagramIcon />
             </Box>
-
+          </div>
+          <div className="px-5">
             {isLoggedIn ? (
               <Box sx={{ flexGrow: 0 }}>
                 <Avatar
@@ -223,16 +233,17 @@ function Header() {
                 </Avatar>
               </Box>
             ) : (
-              <div className="flex gap-3">
+              <div className="flex justify-center items-center gap-2">
                 <button
                   onClick={() => navigate("/sign-in")}
-                  className="px-7 text-lg font-semibold capitalize py-3 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-gray-600 hover:bg-gray-300 hover:text-black rounded-[12px]"
+                  className="text-lg font-semibold capitalize py-3 cursor-pointer transition-all duration-300 ease-in-out hover:text-black rounded-[12px]"
                 >
                   sign in
                 </button>
+                <p className="text-lg">/</p>
                 <button
                   onClick={() => navigate("/sign-up")}
-                  className="px-7 text-lg font-semibold capitalize py-3 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-gray-600 hover:bg-gray-300 hover:text-black rounded-[12px]"
+                  className="text-lg font-semibold capitalize py-3 cursor-pointer transition-all duration-300 ease-in-out hover:text-black rounded-[12px]"
                 >
                   sign up
                 </button>
