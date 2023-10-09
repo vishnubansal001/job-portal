@@ -15,6 +15,8 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks";
 import logo from "../../assets/favicon.png";
+import HeroHome from "../../components/homePage/HeroHome";
+import heroBg from "../../assets/heroBg.png";
 
 function getRandomColor() {
   const letters = "0123456789ABCDEF";
@@ -34,7 +36,7 @@ const adminPages = [
   { name: "Openings", link: "/openings" },
   { name: "Applications", link: "/applications" },
 ];
-function Header() {
+function Header({ title1, title2, text, btn, teamName, jobName }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -51,10 +53,14 @@ function Header() {
   const isAdmin = authInfo.profile?.role === "admin";
   const nameUser = authInfo.profile?.name;
   return (
-    <AppBar position="sticky" sx={{ bgcolor: "rgba(0, 0, 0, 0.5)" }}>
-      <Container maxWidth="xl" className="p-4">
-        <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+    <div
+      style={{ backgroundImage: `url(${heroBg})` }}
+      className="bg-cover bg-center w-full h-full p-0"
+    >
+      <AppBar position="static" sx={{ bgcolor: "rgba(0, 0, 0, 0.5)" }}>
+        <Container maxWidth="xl" className="p-4">
+          <Toolbar disableGutters>
+            {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -73,64 +79,64 @@ function Header() {
           >
             LOGO
           </Typography> */}
-          <img src={logo} alt="" className="md:hidden sm:flex w-20" />
+            <img src={logo} alt="" className="md:hidden sm:flex w-20" />
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page, index) => (
-                <MenuItem key={index} onClick={handleCloseNavMenu}>
-                  <Typography
-                    textAlign="center"
-                    onClick={() => navigate(`${page.link}`)}
-                  >
-                    {page.name}
-                  </Typography>
-                </MenuItem>
-              ))}
-              {isAdmin && (
-                <>
-                  {adminPages.map((page, index) => (
-                    <MenuItem key={index} onClick={handleCloseNavMenu}>
-                      <Typography
-                        textAlign="center"
-                        onClick={() => navigate(`${page.link}`)}
-                      >
-                        {page.name}
-                      </Typography>
-                    </MenuItem>
-                  ))}
-                </>
-              )}
-            </Menu>
-          </Box>
-          {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: "block", md: "none" },
+                }}
+              >
+                {pages.map((page, index) => (
+                  <MenuItem key={index} onClick={handleCloseNavMenu}>
+                    <Typography
+                      textAlign="center"
+                      onClick={() => navigate(`${page.link}`)}
+                    >
+                      {page.name}
+                    </Typography>
+                  </MenuItem>
+                ))}
+                {isAdmin && (
+                  <>
+                    {adminPages.map((page, index) => (
+                      <MenuItem key={index} onClick={handleCloseNavMenu}>
+                        <Typography
+                          textAlign="center"
+                          onClick={() => navigate(`${page.link}`)}
+                        >
+                          {page.name}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  </>
+                )}
+              </Menu>
+            </Box>
+            {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -150,109 +156,127 @@ function Header() {
           >
             LOGO
           </Typography> */}
-          <img src={logo} alt="" className="sm:hidden md:flex w-20 mr-3" />
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page, index) => (
-              <Button
-                key={index}
-                onClick={() => {
-                  handleCloseNavMenu();
-                  navigate(`${page.link}`);
-                }}
-                sx={{
-                  my: 2,
-                  color: "white",
-                  display: "block",
-                  fontSize: "1.25rem",
-                  fontWeight: "500",
-                }}
-                className="text-lg font-bold"
-              >
-                {page.name}
-              </Button>
-            ))}
-            {isAdmin && (
-              <>
-                {adminPages.map((page, index) => (
-                  <Button
-                    key={index}
-                    onClick={() => {
-                      handleCloseNavMenu();
-                      navigate(`${page.link}`);
-                    }}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    {page.name}
-                  </Button>
-                ))}
-              </>
-            )}
-          </Box>
-
-          <div className="flex flex-row items-center justify-center gap-3">
-            <Box
-              sx={{
-                flexGrow: 0,
-                display: { xs: "none", md: "flex" },
-                border: "2px solid white",
-                padding: "6px",
-                borderRadius: "50%",
-              }}
-              className="hover:border-green-500 hover:text-green-500 transition-colors duration-300 cursor-pointer"
-            >
-              <LinkedInIcon />
-            </Box>
-            <Box
-              sx={{
-                flexGrow: 0,
-                display: { xs: "none", md: "flex" },
-                border: "2px solid white",
-                padding: "6px",
-                borderRadius: "50%",
-              }}
-              className="hover:border-green-500 hover:text-green-500 transition-colors duration-300 cursor-pointer"
-            >
-              <InstagramIcon />
-            </Box>
-          </div>
-          <div className="px-5">
-            {isLoggedIn ? (
-              <Box sx={{ flexGrow: 0 }}>
-                <Avatar
-                  alt={`${nameUser}`}
-                  sx={{
-                    cursor: "pointer",
-                    bgcolor: `${getRandomColor()}`,
-                    textAlign: "center",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+            <img
+              src={logo}
+              alt=""
+              onClick={() => navigate("/")}
+              className="sm:hidden md:flex w-20 mr-3 cursor-pointer"
+            />
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              {pages.map((page, index) => (
+                <Button
+                  key={index}
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    navigate(`${page.link}`);
                   }}
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: "block",
+                    fontSize: "1.25rem",
+                    fontWeight: "500",
+                  }}
+                  className="text-lg font-bold"
                 >
-                  {nameUser?.charAt(0)?.toUpperCase()}
-                </Avatar>
+                  {page.name}
+                </Button>
+              ))}
+              {isAdmin && (
+                <>
+                  {adminPages.map((page, index) => (
+                    <Button
+                      key={index}
+                      onClick={() => {
+                        handleCloseNavMenu();
+                        navigate(`${page.link}`);
+                      }}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                    >
+                      {page.name}
+                    </Button>
+                  ))}
+                </>
+              )}
+            </Box>
+
+            <div className="flex flex-row items-center justify-center gap-3">
+              <Box
+                sx={{
+                  flexGrow: 0,
+                  display: { xs: "none", md: "flex" },
+                  border: "2px solid white",
+                  padding: "6px",
+                  borderRadius: "50%",
+                }}
+                className="hover:border-green-500 hover:text-green-500 transition-colors duration-300 cursor-pointer"
+              >
+                <LinkedInIcon />
               </Box>
-            ) : (
-              <div className="flex justify-center items-center gap-2">
-                <button
-                  onClick={() => navigate("/sign-in")}
-                  className="text-lg font-semibold capitalize py-3 cursor-pointer transition-all duration-300 ease-in-out hover:text-black rounded-[12px]"
-                >
-                  sign in
-                </button>
-                <p className="text-lg">/</p>
-                <button
-                  onClick={() => navigate("/sign-up")}
-                  className="text-lg font-semibold capitalize py-3 cursor-pointer transition-all duration-300 ease-in-out hover:text-black rounded-[12px]"
-                >
-                  sign up
-                </button>
-              </div>
-            )}
-          </div>
-        </Toolbar>
-      </Container>
-    </AppBar>
+              <Box
+                sx={{
+                  flexGrow: 0,
+                  display: { xs: "none", md: "flex" },
+                  border: "2px solid white",
+                  padding: "6px",
+                  borderRadius: "50%",
+                }}
+                className="hover:border-green-500 hover:text-green-500 transition-colors duration-300 cursor-pointer"
+              >
+                <InstagramIcon />
+              </Box>
+            </div>
+            <div className="px-5">
+              {isLoggedIn ? (
+                <Box sx={{ flexGrow: 0 }}>
+                  <Avatar
+                    alt={`${nameUser}`}
+                    sx={{
+                      cursor: "pointer",
+                      bgcolor: `${getRandomColor()}`,
+                      textAlign: "center",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {nameUser?.charAt(0)?.toUpperCase()}
+                  </Avatar>
+                </Box>
+              ) : (
+                <div className="flex justify-center items-center gap-2">
+                  <button
+                    onClick={() => navigate("/sign-in")}
+                    className="text-lg font-semibold capitalize py-3 cursor-pointer transition-all duration-300 ease-in-out hover:text-green-600 rounded-[12px]"
+                  >
+                    sign in
+                  </button>
+                  <p className="text-lg cursor-pointer transition-all duration-300 ease-in-out hover:text-green-600 rounded-[12px]">
+                    /
+                  </p>
+                  <button
+                    onClick={() => navigate("/sign-up")}
+                    className="text-lg font-semibold capitalize py-3 cursor-pointer transition-all duration-300 ease-in-out hover:text-green-600 rounded-[12px]"
+                  >
+                    sign up
+                  </button>
+                </div>
+              )}
+            </div>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      {title1 && (
+        <HeroHome
+          title1={title1}
+          title2={title2}
+          text={text}
+          btn={btn}
+          teamName={teamName}
+          jobName={jobName}
+        />
+      )}
+    </div>
   );
 }
 export default Header;

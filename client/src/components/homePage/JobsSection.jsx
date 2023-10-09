@@ -30,16 +30,14 @@ const JobsSection = ({ jobs }) => {
                     {item?.positions.map((pos, ind) => (
                       <div
                         key={ind}
-                        className="w-full border-2 border-gray-300 rounded-[20px] px-4 py-8"
+                        onClick={() =>
+                          navigate(
+                            `/job/${item.name.toLocaleLowerCase()}/${pos.toLocaleLowerCase()}`
+                          )
+                        }
+                        className="w-full border-2 border-gray-300 rounded-[20px] px-4 py-8 hover:bg-gray-200 transition-all duration-300 ease-in-out cursor-pointer"
                       >
-                        <h1
-                          className="hover:underline hover:text-blue-600 cursor-pointer select-none capitalize"
-                          onClick={() =>
-                            navigate(
-                              `/job/${item.name.toLocaleLowerCase()}/${pos.toLocaleLowerCase()}`
-                            )
-                          }
-                        >
+                        <h1 className=" cursor-pointer select-none capitalize">
                           {pos}
                         </h1>
                       </div>
