@@ -12,7 +12,7 @@ const Footer = () => {
         padding={2} // Reduced the padding
         sx={{ borderTop: "1px solid #ccc" }} // Added top border
       >
-        <Typography sx={{ cursor: "pointer" }} variant="body2" color="blue">
+        <Typography sx={{ cursor: "pointer" }} variant="body2" color="green" className="hover:underline transition-all duration-300 ease-in-out">
           Visit Website
         </Typography>
       </Box>
@@ -26,7 +26,7 @@ const Footer = () => {
         sx={{ borderTop: "1px solid #ccc" }} // Added top border
       >
         <Typography variant="h5" color={"#5c6575"}>
-          Powered By VB
+          Powered By CN-CUIET
         </Typography>
       </Box>
     </div>

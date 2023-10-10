@@ -4,6 +4,7 @@ import Footer from "../components/main/Footer";
 import HeroHome from "../components/homePage/HeroHome";
 import JobsSection from "../components/homePage/JobsSection";
 import { getJobs } from "../api/home";
+import { homeHero } from "../data/data";
 
 const HomePage = () => {
   const [jobs, setJobs] = useState([]);
@@ -23,8 +24,12 @@ const HomePage = () => {
   // console.log(jobs);
   return (
     <>
-      <Header />
-      <HeroHome />
+      <Header
+        title1={homeHero.title1}
+        title2={homeHero.title2}
+        text={homeHero.text}
+        btn={homeHero.btn}
+      />
       <JobsSection jobs={jobs} />
       <Footer />
     </>

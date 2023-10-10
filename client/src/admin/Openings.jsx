@@ -49,7 +49,7 @@ const ParentCheckbox = ({
       />
       <Grid container>
         {childrenLabels.map((childLabel, index) => (
-          <Grid item xs={4} key={index}>
+          <div item xs={4} key={index}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -62,7 +62,7 @@ const ParentCheckbox = ({
               }
               label={childLabel}
             />
-          </Grid>
+          </div>
         ))}
       </Grid>
     </div>
@@ -108,25 +108,33 @@ const CheckboxComponent = () => {
   return (
     <>
       <Header />
-      <div className="py-6">
-        <Typography variant="h6" gutterBottom>
-          Parent Checkboxes
+      <div className="py-6 lg:px-20 px-10">
+        <Typography
+          variant="h3"
+          gutterBottom
+          className="text-center font-bold pb-5 text-green-500 hover:underline transition-all duration-300 ease-in-out cursor-pointer select-none"
+        >
+          Openings
         </Typography>
-        {parentLabels.map((label, index) => (
-          <ParentCheckbox
-            key={index}
-            parentLabel={label}
-            childrenLabels={childrenLabels}
-            onParentChange={handleParentChange}
-            dataMap={dataMap}
-          />
-        ))}
-        <Typography variant="h6" gutterBottom>
-          Selected Data
-        </Typography>
-        <Button variant="contained" onClick={convertMap} color="primary">
-          Save the State
-        </Button>
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-x-5 gap-y-6 pb-7">
+          {parentLabels.map((label, index) => (
+            <ParentCheckbox
+              key={index}
+              parentLabel={label}
+              childrenLabels={childrenLabels}
+              onParentChange={handleParentChange}
+              dataMap={dataMap}
+            />
+          ))}
+        </div>
+        <div className="flex flex-col justify-center items-center pt-3">
+          <button
+            type="submit"
+            className="px-7 text-lg font-semibold capitalize py-3 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-green-600 hover:bg-green-700 text-white rounded-[8px]"
+          >
+            Display to Users
+          </button>
+        </div>
       </div>
       <Footer />
     </>

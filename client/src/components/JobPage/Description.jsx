@@ -60,7 +60,7 @@ const Description = ({ jobName, teamName }) => {
       <div className="flex flex-col justify-center items-center pb-5">
         <button
           type="submit"
-          className="px-7 text-lg font-semibold capitalize py-3 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-blue-600 hover:bg-blue-700 rounded-[12px] text-white"
+          className="px-7 text-lg font-semibold capitalize py-3 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-green-600 hover:bg-green-700 rounded-[8px] text-white"
           onClick={() =>
             navigate(`/job-form?teamName=${teamName}&jobName=${jobName}`)
           }

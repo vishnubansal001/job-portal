@@ -3,14 +3,22 @@ import HeroSection from "../components/JobPage/HeroSection";
 import Description from "../components/JobPage/Description";
 import Footer from "../components/main/Footer";
 import Header from "../components/main/Header";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Job = () => {
   const params = useParams();
+  const navigate = useNavigate();
+  const handleClick = () =>
+    navigate(`/job-form?teamName=${params.teamName}&jobName=${params.jobName}`);
   return (
     <div>
-      <Header />
-      <HeroSection teamName={params.teamName} jobName={params.jobName} />
+      <Header
+        title1={"Coding Ninjas | Full Time"}
+        title2={params.teamName + " " + params.jobName}
+        btn={"I'm Interested"}
+        teamName={params.teamName}
+        jobName={params.jobName}
+      />
       <Description teamName={params.teamName} jobName={params.jobName} />
       <Footer />
     </div>

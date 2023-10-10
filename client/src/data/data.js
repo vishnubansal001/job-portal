@@ -113,3 +113,10 @@ export const bene = [
   "Casual Dress Code",
   "​Work-life Balance",
 ];
+
+export const homeHero = {
+  title1:"One step in the right direction",
+  title2:"Bag a job. Escalate your career.",
+  text:"All you need from a job is to be rewarding and add value to your career timeline, isn’t it? We get it. That ’s why we believe in creating a working environment that caters to your goals. Starting from the process of finding the right role to having you look forward to coming into work every day, we make every step super smooth. Browse available jobs now!",
+  btn:"View Openings",
+}
