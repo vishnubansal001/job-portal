@@ -80,7 +80,7 @@ exports.makeCsv = async (req, res) => {
 
     const csv = papaparse.unparse(data);
     const fileName = "users.csv";
-    const filePath = path.join(__dirname, "..", "uploads", fileName);
+    const filePath = path.join(__dirname, "..", "tmp", fileName);
 
     fs.writeFileSync(filePath, csv);
 
