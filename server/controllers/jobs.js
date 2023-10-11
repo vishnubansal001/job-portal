@@ -78,6 +78,6 @@ exports.postData = async (req, res) => {
     return res.status(200).json({ message: "Info Data saved successfully" });
   } catch (error) {
     console.log(error);
-    return sendError(res, error, 500);
+    return res.status(200).json({ message: error });
   }
 };
