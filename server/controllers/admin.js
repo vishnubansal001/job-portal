@@ -53,7 +53,7 @@ exports.updatePosts = async (req, res) => {
 };
 
 exports.makeCsv = async (req, res) => {
-  try {
+   try {
     const allUsers = await Applications.find();
 
     const data = allUsers.map((item) => ({
@@ -79,9 +79,40 @@ exports.makeCsv = async (req, res) => {
     }));
 
     const csv = papaparse.unparse(data);
-    res.setHeader("Content-Disposition", "attachment; filename=users.csv");
-    res.setHeader("Content-Type", "application/csv");
-    res.status(200).send(csv);
+    const fileName = "users.csv";
+    fs.writeFileSync(`/tmp/${fileName}`, csv);
+
+    const bucket = admin.storage().bucket();
+    const blob = bucket.file(fileName);
+    const blobStream = blob.createWriteStream({
+      resumable: false,
+      metadata: {
+        contentType: "application/csv",
+      },
+    });
+
+    fs.createReadStream('/tmp/users.csv')
+      .on("error", (error) => {
+        console.log(error);
+      })
+      .pipe(blobStream);
+    blobStream.on("error", (error) => {
+      console.log(error);
+    });
+
+    blobStream.on("finish", async () => {
+      await blob
+        .getSignedUrl({
+          action: "read",
+          expires: new Date().getTime() + 24 * 6000000 * 100,
+        })
+        .then(([url]) => {
+          fs.unlink('/tmp/users.csv', () => {
+            console.log("done");
+          });
+          return res.status(200).json({ url: url });
+        });
+    });
   } catch (error) {
     console.log(error);
     return sendError(res, error.message, 500);
