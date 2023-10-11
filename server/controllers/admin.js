@@ -82,20 +82,37 @@ exports.makeCsv = async (req, res) => {
     const filePath = `/tmp/users.csv`;
     fs.writeFileSync(filePath, csv);
 
-    const bucket = admin.storage().bucket();
+    // Upload the CSV to a cloud storage bucket (Google Cloud Storage)
+    const storage = new Storage();
+    const bucket = storage.bucket(bucketName);
     const blob = bucket.file("users.csv");
 
-    await blob.save(fs.createReadStream(filePath), {
-      contentType: "application/csv",
-    });
-    const [url] = await blob.getSignedUrl({
-      action: "read",
-      expires: new Date().getTime() + 24 * 60 * 60 * 1000, // 24 hours
+    const fileStream = fs.createReadStream(filePath);
+    const writeStream = blob.createWriteStream({
+      metadata: {
+        contentType: "application/csv",
+      },
     });
 
-    // Delete the temporary file
-    fs.unlinkSync(filePath);
-    return res.status(200).json({ url });
+    fileStream.pipe(writeStream);
+
+    writeStream.on("error", (err) => {
+      console.error(err);
+      res.status(500).send("Error uploading CSV to storage bucket");
+    });
+
+    writeStream.on("finish", async () => {
+      // Generate a signed URL for the uploaded file
+      const [url] = await blob.getSignedUrl({
+        action: "read",
+        expires: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
+      });
+
+      // Delete the temporary file
+      fs.unlinkSync(filePath);
+
+      res.status(200).json({ url });
+    });
   } catch (error) {
     console.log(error);
     return sendError(res, error.message, 500);
