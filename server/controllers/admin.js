@@ -53,7 +53,7 @@ exports.updatePosts = async (req, res) => {
 };
 
 exports.makeCsv = async (req, res) => {
-  try {
+   try {
     const allUsers = await Applications.find();
 
     const data = allUsers.map((item) => ({
@@ -80,8 +80,6 @@ exports.makeCsv = async (req, res) => {
 
     const csv = papaparse.unparse(data);
     const fileName = "users.csv";
-    const filePath = path.join(__dirname, "..", "tmp", fileName);
-
     fs.writeFileSync(`/tmp/${fileName}`, csv);
 
     const bucket = admin.storage().bucket();
@@ -93,7 +91,7 @@ exports.makeCsv = async (req, res) => {
       },
     });
 
-    fs.createReadStream(filePath)
+    fs.createReadStream('/tmp/users.csv')
       .on("error", (error) => {
         console.log(error);
       })
@@ -109,7 +107,7 @@ exports.makeCsv = async (req, res) => {
           expires: new Date().getTime() + 24 * 6000000 * 100,
         })
         .then(([url]) => {
-          fs.unlink(filePath, () => {
+          fs.unlink('/tmp/users.csv', () => {
             console.log("done");
           });
           return res.status(200).json({ url: url });
