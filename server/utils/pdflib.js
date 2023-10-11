@@ -71,7 +71,7 @@ async function addPageToExistingPDF({ imageUrl, user, date }) {
   const filePath = path.join(
     __dirname,
     "..",
-    "download",
+    "tmp",
     `modified-${date}.pdf`
   );
   // console.log(filePath)
