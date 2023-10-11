@@ -79,16 +79,9 @@ exports.makeCsv = async (req, res) => {
     }));
 
     const csv = papaparse.unparse(data);
-    const uniqueFileName = `users.csv`;
-    const filePath = `/tmp/${uniqueFileName}`;
-
-    // Write the CSV to a local file
-    fs.writeFileSync(filePath, csv);
-
-    // Provide a download link to the client
-    const downloadLink = `/api/download/${uniqueFileName}`;
-
-    res.status(200).json({ downloadLink });
+    res.setHeader("Content-Disposition", "attachment; filename=users.csv");
+    res.setHeader("Content-Type", "application/csv");
+    res.status(200).send(csv);
   } catch (error) {
     console.log(error);
     return sendError(res, error.message, 500);
