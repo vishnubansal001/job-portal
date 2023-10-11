@@ -99,7 +99,7 @@ const Application = () => {
 
     // console.log(data.resume);
     axios
-      .post("http://localhost:8000/jobs/info-data", data1, {
+      .post("https://job-portal-server-seven-xi.vercel.app/jobs/info-data", data1, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

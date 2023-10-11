@@ -7,7 +7,7 @@ const serviceAccount = require("../firebase.json");
 
 async function addPageToExistingPDF({ imageUrl, user, date }) {
   // Load existing PDF
-  const existingPdfBytes = fs.readFileSync(`./uploads/resume-${date}.pdf`);
+  const existingPdfBytes = fs.readFileSync(`/tmp/resume-${date}.pdf`);
   const pdfDoc = await PDFDocument.load(existingPdfBytes);
 
   const imageResponse = await axios.get(imageUrl, {
@@ -66,8 +66,8 @@ async function addPageToExistingPDF({ imageUrl, user, date }) {
 
   // Save the modified PDF
   const modifiedPdfBytes = await pdfDoc.save();
-  fs.writeFileSync(`./download/modified-${date}.pdf`, modifiedPdfBytes);
-  fs.unlink(`./uploads/resume-${date}.pdf`, () => console.log("done"));
+  fs.writeFileSync(`/tmp/modified-${date}.pdf`, modifiedPdfBytes);
+  fs.unlink(`/tmp/resume-${date}.pdf`, () => console.log("done"));
   const filePath = path.join(
     __dirname,
     "..",
