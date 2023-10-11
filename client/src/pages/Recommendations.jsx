@@ -28,10 +28,9 @@ const Recommendations = () => {
 
   const handleClickCsv = async () => {
     const url = await getCsvFile();
-    console.log(url);
     var link = document.createElement("a");
     link.href = url;
-    // link.click();
+    link.click();
   };
   return (
     <div>
