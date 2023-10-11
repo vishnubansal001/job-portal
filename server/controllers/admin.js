@@ -79,42 +79,23 @@ exports.makeCsv = async (req, res) => {
     }));
 
     const csv = papaparse.unparse(data);
-    const fileName = "users.csv";
-    const filePath = path.join(__dirname, "..", "tmp", fileName);
-
-    fs.writeFileSync(`/tmp/${fileName}`, csv);
+    const filePath = `/tmp/users.csv`;
+    fs.writeFileSync(filePath, csv);
 
     const bucket = admin.storage().bucket();
-    const blob = bucket.file(fileName);
-    const blobStream = blob.createWriteStream({
-      resumable: false,
-      metadata: {
-        contentType: "application/csv",
-      },
+    const blob = bucket.file("users.csv");
+
+    await blob.save(fs.createReadStream(filePath), {
+      contentType: "application/csv",
+    });
+    const [url] = await blob.getSignedUrl({
+      action: "read",
+      expires: new Date().getTime() + 24 * 60 * 60 * 1000, // 24 hours
     });
 
-    fs.createReadStream(filePath)
-      .on("error", (error) => {
-        console.log(error);
-      })
-      .pipe(blobStream);
-    blobStream.on("error", (error) => {
-      console.log(error);
-    });
-
-    blobStream.on("finish", async () => {
-      await blob
-        .getSignedUrl({
-          action: "read",
-          expires: new Date().getTime() + 24 * 6000000 * 100,
-        })
-        .then(([url]) => {
-          fs.unlink(filePath, () => {
-            console.log("done");
-          });
-          return res.status(200).json({ url: url });
-        });
-    });
+    // Delete the temporary file
+    fs.unlinkSync(filePath);
+    return res.status(200).json({ url });
   } catch (error) {
     console.log(error);
     return sendError(res, error.message, 500);
