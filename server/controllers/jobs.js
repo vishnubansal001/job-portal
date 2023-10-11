@@ -28,6 +28,9 @@ exports.postData = async (req, res) => {
     const picture = req.files["picture"][0];
     const resume = req.files["resume"][0];
 
+    if (!picture || !resume) {
+      return sendError(res, error.message, 500);
+    }
     const pictureRes = await cloudinary.uploader.upload(picture.path);
 
     const userData = {
