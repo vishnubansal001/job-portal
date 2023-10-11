@@ -79,40 +79,16 @@ exports.makeCsv = async (req, res) => {
     }));
 
     const csv = papaparse.unparse(data);
-    const filePath = `/tmp/users.csv`;
+    const uniqueFileName = `users.csv`;
+    const filePath = `/tmp/${uniqueFileName}`;
+
+    // Write the CSV to a local file
     fs.writeFileSync(filePath, csv);
 
-    // Upload the CSV to a cloud storage bucket (Google Cloud Storage)
-    const storage = new Storage();
-    const bucket = storage.bucket(bucketName);
-    const blob = bucket.file("users.csv");
+    // Provide a download link to the client
+    const downloadLink = `/api/download/${uniqueFileName}`;
 
-    const fileStream = fs.createReadStream(filePath);
-    const writeStream = blob.createWriteStream({
-      metadata: {
-        contentType: "application/csv",
-      },
-    });
-
-    fileStream.pipe(writeStream);
-
-    writeStream.on("error", (err) => {
-      console.error(err);
-      res.status(500).send("Error uploading CSV to storage bucket");
-    });
-
-    writeStream.on("finish", async () => {
-      // Generate a signed URL for the uploaded file
-      const [url] = await blob.getSignedUrl({
-        action: "read",
-        expires: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
-      });
-
-      // Delete the temporary file
-      fs.unlinkSync(filePath);
-
-      res.status(200).json({ url });
-    });
+    res.status(200).json({ downloadLink });
   } catch (error) {
     console.log(error);
     return sendError(res, error.message, 500);
