@@ -68,12 +68,7 @@ async function addPageToExistingPDF({ imageUrl, user, date }) {
   const modifiedPdfBytes = await pdfDoc.save();
   fs.writeFileSync(`/tmp/modified-${date}.pdf`, modifiedPdfBytes);
   fs.unlink(`/tmp/resume-${date}.pdf`, () => console.log("done"));
-  const filePath = path.join(
-    __dirname,
-    "..",
-    "tmp",
-    `modified-${date}.pdf`
-  );
+  const filePath =`/tmp/modified-${date}.pdf`
   // console.log(filePath)
   const fileName = `modified-${date}.pdf`;
   const bucket = admin.storage().bucket();
