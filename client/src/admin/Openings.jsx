@@ -10,6 +10,7 @@ import { postJobs } from "../api/admin";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
+import { useAuth } from "../hooks";
 
 const ParentCheckbox = ({
   parentLabel,
@@ -77,6 +78,7 @@ const CheckboxComponent = () => {
   };
 
   const navigate = useNavigate();
+  const { authInfo } = useAuth();
 
   const parentLabels = [
     "Graphics",
@@ -97,13 +99,11 @@ const CheckboxComponent = () => {
       positions: value,
     }));
 
-    const data = await postJobs({ jobs: array });
+    const data = await postJobs({ jobs: array ,id:authInfo.profile.id});
 
     navigate("/");
 
     console.log(data);
-
-    // console.log(array);
   };
   return (
     <>
@@ -130,6 +130,7 @@ const CheckboxComponent = () => {
         <div className="flex flex-col justify-center items-center pt-3">
           <button
             type="submit"
+            onClick={convertMap}
             className="px-7 text-lg font-semibold capitalize py-3 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-orange-600 hover:bg-orange-700 text-white rounded-[8px]"
           >
             Display to Users

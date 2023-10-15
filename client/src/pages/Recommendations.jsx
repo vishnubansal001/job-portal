@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
 import { getCsvFile, getUsersData } from "../api/applications";
+import { useAuth } from "../hooks";
 
 const Recommendations = () => {
   const [users, setUsers] = useState();
+  const { authInfo } = useAuth();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getUsersData();
+        const data = await getUsersData({ id: authInfo.profile.id });
         setUsers(data);
       } catch (error) {
         console.error("Error fetching jobs:", error);
@@ -27,9 +29,17 @@ const Recommendations = () => {
   };
 
   const handleClickCsv = async () => {
-    const url = await getCsvFile();
+    // const url = await getCsvFile({ id: authInfo.profile.id });
+    const [URL, setURL] = useState("");
+    try {
+      const url = await getCsvFile({ id: authInfo.profile.id });
+      setURL(url);
+    } catch (error) {
+      setURL("");
+      console.error("Error fetching jobs:", error);
+    }
     var link = document.createElement("a");
-    link.href = url;
+    link.href = URL;
     link.click();
   };
   return (

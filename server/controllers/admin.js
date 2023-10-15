@@ -1,4 +1,5 @@
 const Applications = require("../models/applicationInformation");
+const User = require("../models/user");
 const Jobs = require("../models/jobs");
 const { sendError } = require("../utils/utils");
 const path = require("path");
@@ -14,6 +15,16 @@ admin.initializeApp({
 
 exports.getAllUsers = async (req, res) => {
   try {
+    const id = req.query.id;
+    const user = await User.find({_id:id});
+    
+    if(!user){
+      return sendError(res, "User Not Found", 404);
+    }
+    
+    if(!user.isVerified || user.role!=="admin"){
+      return sendError(res, "User Not Authorized", 401);
+    }
     const allUsers = await Applications.find();
 
     const data = allUsers.map((item) => ({
@@ -36,8 +47,18 @@ exports.getAllUsers = async (req, res) => {
 
 exports.updatePosts = async (req, res) => {
   try {
-    const { jobs } = req.body;
+    const { jobs,id } = req.body;
+
+    const user = await User.find({_id:id});
     // console.log(req.body);
+
+    if(!user){
+      return sendError(res, "User Not Found", 404);
+    }
+
+    if(!user.isVerified || user.role!=="admin"){
+      return sendError(res, "User Not Authorized", 401);
+    }
 
     const newJobs = new Jobs({
       jobs: jobs,
@@ -55,6 +76,18 @@ exports.updatePosts = async (req, res) => {
 exports.makeCsv = async (req, res) => {
    try {
     const allUsers = await Applications.find();
+    const { id } = req.body;
+
+    const user = await User.find({_id:id});
+    // console.log(req.body);
+
+    if(!user){
+      return sendError(res, "User Not Found", 404);
+    }
+
+    if(!user.isVerified || user.role!=="admin"){
+      return sendError(res, "User Not Authorized", 401);
+    }
 
     const data = allUsers.map((item) => ({
       name: item.firstName + " " + item.lastName,
