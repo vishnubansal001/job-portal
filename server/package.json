@@ -30,5 +30,8 @@
     "nodemailer": "^6.9.5",
     "papaparse": "^5.4.1",
     "pdf-lib": "^1.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }

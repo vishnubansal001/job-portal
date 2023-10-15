@@ -3,7 +3,7 @@ import client from "./client";
 
 export const postJobs = async ({ jobs, id }) => {
   try {
-    const { data } = await client.post(`/admin/update-post`, { jobs, id });
+    const { data } = await client.post(`/admin/update-posts`, { jobs, id });
     console.log(data);
     return data.message;
   } catch (error) {

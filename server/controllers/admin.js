@@ -17,13 +17,12 @@ exports.getAllUsers = async (req, res) => {
   try {
     // const {id} = req.body;
     const id = req.params.userId;
-    const user = await User.find({_id:id});
-    
+    const user = await User.findOne({_id:id});
     if(!user){
       return sendError(res, "User Not Found", 404);
     }
     
-    if(user.role!=="admin"){
+    if(user?.role !== 'admin'){
       return sendError(res, "User Not Authorized", 401);
     }
     const allUsers = await Applications.find();
@@ -50,14 +49,13 @@ exports.updatePosts = async (req, res) => {
   try {
     const { jobs,id } = req.body;
 
-    const user = await User.find({_id:id});
-    // console.log(req.body);
+    const user = await User.findOne({_id:id});
 
     if(!user){
       return sendError(res, "User Not Found", 404);
     }
 
-    if(!user.isVerified || user.role!=="admin"){
+    if(!user.isVerified || user.role !== 'admin'){
       return sendError(res, "User Not Authorized", 401);
     }
 
@@ -76,12 +74,11 @@ exports.updatePosts = async (req, res) => {
 
 exports.makeCsv = async (req, res) => {
    try {
+    const id = req.params.userId;
     const allUsers = await Applications.find();
-    const { id } = req.body;
 
-    const user = await User.find({_id:id});
-    // console.log(req.body);
-
+    const user = await User.findOne({_id:id});
+    
     if(!user){
       return sendError(res, "User Not Found", 404);
     }
@@ -104,7 +101,7 @@ exports.makeCsv = async (req, res) => {
         item.street +
         ", " +
         item.city +
-        ", (" +
+        "(" +
         item.zip +
         ") ," +
         item.state +
@@ -115,7 +112,6 @@ exports.makeCsv = async (req, res) => {
     const csv = papaparse.unparse(data);
     const fileName = "users.csv";
     fs.writeFileSync(`/tmp/${fileName}`, csv);
-
     const bucket = admin.storage().bucket();
     const blob = bucket.file(fileName);
     const blobStream = blob.createWriteStream({

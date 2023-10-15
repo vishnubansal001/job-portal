@@ -2,10 +2,9 @@ const Applications = require("../models/applicationInformation");
 const cloudinary = require("../cloud/cloudinary");
 const { sendError } = require("../utils/utils");
 const { addPageToExistingPDF } = require("../utils/pdflib");
-const { validationResult } = require("express-validator");
 
 exports.postData = async (req, res) => {
-
+  
   try {
     const {
       firstName,
@@ -24,7 +23,7 @@ exports.postData = async (req, res) => {
       github,
       appliedFor,
     } = req.body;
-    console.log(req);
+    
     const picture = req.files["picture"][0];
     const resume = req.files["resume"][0];
 
