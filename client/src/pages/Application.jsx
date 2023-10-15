@@ -101,7 +101,7 @@ const Application = ({ color }) => {
       appliedFor: teamName?.toString() + "-" + jobName?.toString(),
     };
 
-    // console.log(data.resume);
+    console.log(data1);
     axios
       .post(
         "https://job-portal-server-seven-xi.vercel.app/jobs/info-data",
@@ -145,7 +145,7 @@ const Application = ({ color }) => {
     <>
       <Header color={color} />
       {/* <div className="py-5"> */}
-        <Container maxWidth="md">
+        <Container maxWidth="md" sx={{ py: '2rem' }}>
           <Box sx={{ mb: 2 }}>
             <Typography variant="h4">User Details</Typography>
           </Box>
@@ -293,34 +293,27 @@ const Application = ({ color }) => {
                 />
               </Grid>
               <Grid item xs={12}>
+                <label htmlFor="photo-input"  className="text-sm text-[rgba(0,0,0,0.6)]">Add Image</label>
                 <input
                   type="file"
                   name="picture"
                   id="photo-input"
-                  // className="hidden"
+                  className="w-full border p-3 rounded-[4px] border-[#c4c4c4]"
                   accept=".jpg,.jpeg,.png"
                   onChange={handleFileChange}
                 />
-                <label htmlFor="photo-input">
-                  <button className="text-orange-500 hover:text-orange-400 border-[1px] px-5 py-2 transition-all duration-300 ease-in-out rounded-md hover:bg-[#faf4f4cc] border-orange-500">
-                    Upload Photo
-                  </button>
-                </label>
               </Grid>
               <Grid item xs={12}>
+                <label htmlFor="photo-input" className="text-sm text-[rgba(0,0,0,0.6)]">Add Resume</label>
                 <input
                   type="file"
                   name="resume"
                   id="resume-input"
                   accept=".pdf,.doc,.docx"
                   onChange={handleFileChange}
+                  className="w-full border p-3 rounded-[4px] border-[#c4c4c4]"
                   // className="hidden"
                 />
-                <label htmlFor="resume-input">
-                  <button className="text-orange-500 hover:text-orange-400 border-[1px] px-5 py-2 transition-all duration-300 ease-in-out rounded-md hover:bg-[#faf4f4cc] border-orange-500">
-                    Upload Resume
-                  </button>
-                </label>
               </Grid>
               <div className="flex flex-col w-full justify-center items-center md:pt-10 pt-5">
                 <button

@@ -12,6 +12,7 @@ import Recommendations from "../pages/Recommendations";
 import Openings from "../admin/Openings";
 import { getJobs } from "../api/home";
 import { useJobs } from "../hooks";
+import { Toaster } from "react-hot-toast";
 
 const AdminNavigator = () => {
   const [jobs, setJobs] = useState([]);
@@ -42,6 +43,7 @@ const AdminNavigator = () => {
     fetchData();
   }, []);
   return (
+    <>
     <Routes>
       <Route path="/" element={<HomePage color={color} />} />
       <Route exact path="/sign-in" element={<SignIn />}></Route>
@@ -55,6 +57,8 @@ const AdminNavigator = () => {
       <Route path="/openings" element={<Openings color={color} />} />
       {/* <Route path="*" element={<NotFound />} /> */}
     </Routes>
+    <Toaster/>
+    </>
   );
 };
 

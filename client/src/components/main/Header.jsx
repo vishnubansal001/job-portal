@@ -19,8 +19,7 @@ import HeroHome from "../../components/homePage/HeroHome";
 import heroBg from "../../assets/heroBg.svg";
 
 const pages = [
-  { name: "Home", link: "/" },
-  { name: "Jobs", link: "/" },
+  { name: "Home", link: "/" }
 ];
 
 const adminPages = [
@@ -150,6 +149,7 @@ function Header({
                     ))}
                   </div>
                 )}
+                {!isLoggedIn && (<span>
                 <MenuItem onClick={handleCloseNavMenu}>
                   <Typography
                     textAlign="center"
@@ -167,7 +167,7 @@ function Header({
                   >
                     sign up
                   </Typography>
-                </MenuItem>
+                </MenuItem></span>)}
               </Menu>
             </Box>
             {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />

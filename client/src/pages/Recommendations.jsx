@@ -8,12 +8,10 @@ import toast from "react-hot-toast";
 const Recommendations = ({ color }) => {
   const [users, setUsers] = useState([]);
   const { authInfo } = useAuth();
-  console.log(authInfo)
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getUsersData({ id: authInfo.profile.id });
-        console.log(data);
         setUsers(data);
       } catch (error) {
         console.error("Error fetching jobs:", error);
@@ -34,6 +32,7 @@ const Recommendations = ({ color }) => {
   const [URL, setURL] = useState("");
   const handleClickCsv = async () => {
     // const url = await getCsvFile({ id: authInfo.profile.id });
+   
     try {
       const url = await getCsvFile({ id: authInfo.profile.id });
       setURL(url);
