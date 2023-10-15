@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
-import HeroHome from "../components/homePage/HeroHome";
 import JobsSection from "../components/homePage/JobsSection";
 import { getJobs } from "../api/home";
 import { homeHero } from "../data/data";

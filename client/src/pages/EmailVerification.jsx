@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { resendEmailVerificationToken, verifyUserEmail } from "../api/auth";
 import { useAuth, useNotification } from "../hooks";
 import { MuiOtpInput } from "mui-one-time-password-input";
 
-const OTP_LENGTH = 6;
 
 const isValidOTP = (otp) => {
   let valid = false;
@@ -50,7 +49,6 @@ export default function EmailVerification() {
 
     if (!isValidOTP(otp)) return updateNotification("error", "invalid OTP");
 
-    // submit otp
     const { error, message, userData } = await verifyUserEmail({
       OTP: otp.toString(),
       userId: user.id,

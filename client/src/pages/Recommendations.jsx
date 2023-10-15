@@ -28,9 +28,9 @@ const Recommendations = () => {
     link.click();
   };
 
+  const [URL, setURL] = useState("");
   const handleClickCsv = async () => {
     // const url = await getCsvFile({ id: authInfo.profile.id });
-    const [URL, setURL] = useState("");
     try {
       const url = await getCsvFile({ id: authInfo.profile.id });
       setURL(url);

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   TextField,
-  Button,
   Box,
   Container,
   Grid,
@@ -10,7 +9,7 @@ import {
 import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useNotification } from "../hooks";
 
 const Application = () => {
@@ -301,20 +300,15 @@ const Application = () => {
                   type="file"
                   name="picture"
                   id="photo-input"
-                  // className="hidden"
+                  className="hidden"
                   accept=".jpg,.jpeg,.png"
                   onChange={handleFileChange}
                 />
                 <label htmlFor="photo-input">
-                  {/* <Button component="span" variant="outlined"> */}
-                  Upload Photo
-                  {/* </Button> */}
+                  <button className="text-orange-500 hover:text-orange-400 border-[1px] px-5 py-2 transition-all duration-300 ease-in-out rounded-md hover:bg-[#faf4f4cc] border-orange-500">
+                    Upload Photo
+                  </button>
                 </label>
-                {/* {data.picture && (
-                  <Typography sx={{ mt: 1 }}>
-                    Selected file: {data.picture.name}
-                  </Typography>
-                )} */}
               </Grid>
               <Grid item xs={12}>
                 <input
@@ -323,24 +317,22 @@ const Application = () => {
                   id="resume-input"
                   accept=".pdf,.doc,.docx"
                   onChange={handleFileChange}
-                  // className="hidden"
+                  className="hidden"
                 />
                 <label htmlFor="resume-input">
-                  {/* <Button component="span" variant="outlined"> */}
-                  Upload Resume
-                  {/* </Button> */}
+                  <button className="text-orange-500 hover:text-orange-400 border-[1px] px-5 py-2 transition-all duration-300 ease-in-out rounded-md hover:bg-[#faf4f4cc] border-orange-500">
+                    Upload Resume
+                  </button>
                 </label>
-                {/* {data.resume && (
-                  <Typography sx={{ mt: 1 }}>
-                    Selected file: {data.resume.name}
-                  </Typography>
-                )} */}
               </Grid>
-              <Grid item xs={12}>
-                <Button type="submit" variant="contained" color="primary">
+              <div className="flex flex-col w-full justify-center items-center md:pt-10 pt-5">
+                <button
+                  type="submit"
+                  className="px-8 text-white text-base md:text-lg font-semibold capitalize py-2 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-orange-600 hover:bg-orange-700 rounded-[8px]"
+                >
                   Submit
-                </Button>
-              </Grid>
+                </button>
+              </div>
             </Grid>
           </form>
         </Container>

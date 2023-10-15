@@ -17,8 +17,6 @@ export default function ConfirmPassword() {
   const { updateNotification } = useNotification();
   const navigate = useNavigate();
 
-  // isValid,  !isValid
-
   useEffect(() => {
     isValidToken();
   }, []);
@@ -76,7 +74,6 @@ export default function ConfirmPassword() {
             <h1 className="text-4xl font-semibold text-primary">
               Please wait we are verifying your token!
             </h1>
-            {/* <ImSpinner3 className="animate-spin text-4xl dark:text-white text-primary" /> */}
           </div>
         </Container>
       </FormContainer>
