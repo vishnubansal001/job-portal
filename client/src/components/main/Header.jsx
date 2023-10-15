@@ -28,7 +28,7 @@ const adminPages = [
   { name: "Applications", link: "/applications" },
 ];
 
-function Header({ title1, title2, text, btn, teamName, jobName ,color}) {
+function Header({ title1, title2, text, btn, teamName, jobName ,color,onclick}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -53,7 +53,7 @@ function Header({ title1, title2, text, btn, teamName, jobName ,color}) {
       }}
       className="bg-cover bg-center w-full h-full p-0"
     >
-      <AppBar position="static" sx={{ bgcolor: "rgba(0, 0, 0, 0.5)" }}>
+      <AppBar position="static" sx={{ bgcolor: "rgba(0, 0, 0, 0.7)" }}>
         <Container maxWidth="xl" className="p-4">
           <Toolbar disableGutters>
             {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -292,6 +292,7 @@ function Header({ title1, title2, text, btn, teamName, jobName ,color}) {
           btn={btn}
           teamName={teamName}
           jobName={jobName}
+          onclick={onclick}
         />
       )}
     </div>

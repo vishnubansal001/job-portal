@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
 import JobsSection from "../components/homePage/JobsSection";
 import { getJobs } from "../api/home";
 import { homeHero } from "../data/data";
 
-const HomePage = ({color}) => {
+const HomePage = ({ color }) => {
   const [jobs, setJobs] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -20,17 +20,25 @@ const HomePage = ({color}) => {
     fetchData();
   }, []);
 
+  const targetRef = useRef(null);
+  const scrollToElement = () => {
+    targetRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   // console.log(jobs);
   return (
     <>
       <Header
-      color={color}
+        color={color}
         title1={homeHero.title1}
         title2={homeHero.title2}
         text={homeHero.text}
         btn={homeHero.btn}
+        onclick={scrollToElement}
       />
-      <JobsSection jobs={jobs} />
+      <div ref={targetRef}>
+        <JobsSection jobs={jobs} />
+      </div>
       <Footer />
     </>
   );
