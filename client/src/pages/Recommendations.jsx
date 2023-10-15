@@ -29,20 +29,19 @@ const Recommendations = ({ color }) => {
     link.click();
   };
 
-  const [URL, setURL] = useState("");
+ 
   const handleClickCsv = async () => {
     // const url = await getCsvFile({ id: authInfo.profile.id });
    
     try {
       const url = await getCsvFile({ id: authInfo.profile.id });
-      setURL(url);
+      
       toast.success("CSV file downloading");
       var link = document.createElement("a");
-    link.href = URL;
+    link.href = url;
     link.target = "_blank";
     link.click();
     } catch (error) {
-      setURL("");
       toast.error("Something went wrong");
       console.error("Error fetching jobs:", error);
     }
