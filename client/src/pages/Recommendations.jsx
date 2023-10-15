@@ -36,6 +36,7 @@ const Recommendations = ({ color }) => {
     try {
       const url = await getCsvFile({ id: authInfo.profile.id });
       setURL(url);
+      console.log(url);
       toast.success("CSV file downloading");
     } catch (error) {
       setURL("");
@@ -44,7 +45,7 @@ const Recommendations = ({ color }) => {
     }
     var link = document.createElement("a");
     link.href = URL;
-    link.click();
+    // link.click();
   };
   return (
     <div>
