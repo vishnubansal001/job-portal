@@ -3,8 +3,9 @@ import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
 import { getCsvFile, getUsersData } from "../api/applications";
 import { useAuth } from "../hooks";
+import toast from "react-hot-toast";
 
-const Recommendations = ({color}) => {
+const Recommendations = ({ color }) => {
   const [users, setUsers] = useState();
   const { authInfo } = useAuth();
   useEffect(() => {
@@ -34,8 +35,10 @@ const Recommendations = ({color}) => {
     try {
       const url = await getCsvFile({ id: authInfo.profile.id });
       setURL(url);
+      toast.success("CSV file downloading");
     } catch (error) {
       setURL("");
+      toast.error("Something went wrong");
       console.error("Error fetching jobs:", error);
     }
     var link = document.createElement("a");

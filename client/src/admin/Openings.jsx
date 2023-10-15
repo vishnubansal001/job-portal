@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
 import { useAuth } from "../hooks";
+import toast from "react-hot-toast";
 
 const ParentCheckbox = ({
   parentLabel,
@@ -94,16 +95,18 @@ const CheckboxComponent = ({ color }) => {
   const childrenLabels = ["Lead", "Executive", "Head"];
 
   const convertMap = async () => {
-    const array = Array.from(dataMap, ([key, value]) => ({
-      name: key,
-      positions: value,
-    }));
-
-    const data = await postJobs({ jobs: array, id: authInfo.profile.id });
-
-    navigate("/");
-
-    console.log(data);
+    try {
+      const array = Array.from(dataMap, ([key, value]) => ({
+        name: key,
+        positions: value,
+      }));
+      const data = await postJobs({ jobs: array, id: authInfo.profile.id });
+      toast.success("Openings Edited");
+      navigate("/");
+    } catch (error) {
+      toast.error(`something went wrong`);
+      console.log(error.message);
+    }
   };
   return (
     <>

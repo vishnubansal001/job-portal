@@ -5,6 +5,7 @@ import Footer from "../components/main/Footer";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../hooks";
+import toast from "react-hot-toast";
 
 const Application = ({ color }) => {
   const [teamName, setTeamName] = useState("");
@@ -130,10 +131,12 @@ const Application = ({ color }) => {
           picture: null,
           resume: null,
         });
+        toast.success("Application Submitted");
         navigate("/");
         console.log(res);
       })
       .catch((err) => {
+        toast.error("Some thing went wrong");
         console.log(err);
       });
   };
