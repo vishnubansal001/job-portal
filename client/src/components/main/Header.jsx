@@ -28,7 +28,16 @@ const adminPages = [
   { name: "Applications", link: "/applications" },
 ];
 
-function Header({ title1, title2, text, btn, teamName, jobName ,color,onclick}) {
+function Header({
+  title1,
+  title2,
+  text,
+  btn,
+  teamName,
+  jobName,
+  color,
+  onclick,
+}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -128,7 +137,7 @@ function Header({ title1, title2, text, btn, teamName, jobName ,color,onclick}) 
                   </MenuItem>
                 ))}
                 {isAdmin && (
-                  <>
+                  <div>
                     {adminPages.map((page, index) => (
                       <MenuItem key={index} onClick={handleCloseNavMenu}>
                         <Typography
@@ -139,7 +148,7 @@ function Header({ title1, title2, text, btn, teamName, jobName ,color,onclick}) 
                         </Typography>
                       </MenuItem>
                     ))}
-                  </>
+                  </div>
                 )}
                 <MenuItem onClick={handleCloseNavMenu}>
                   <Typography

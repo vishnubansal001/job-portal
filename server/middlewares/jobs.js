@@ -55,10 +55,11 @@ exports.validateFormInput = [
   check("state").trim().not().isEmpty().withMessage("State Name is missing!"),
 ];
 
-exports.validateFormInputMiddleware = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-  next();
-};
+// exports.validateFormInputMiddleware = (req, res, next) => {
+//   const errors = validationResult(req);
+//   console.log(req);
+//   if (!errors.isEmpty()) {
+//     return res.status(400).json({ errors: errors.array() });
+//   }
+//   next();
+// };

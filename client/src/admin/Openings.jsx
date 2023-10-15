@@ -1,29 +1,41 @@
 import React, { useEffect, useState } from "react";
-import {
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  Typography,
-  Button,
-} from "@mui/material";
+import { Checkbox, FormControlLabel, Grid, Typography } from "@mui/material";
 import { postJobs } from "../api/admin";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
-import { useAuth } from "../hooks";
+import { useAuth, useJobs } from "../hooks";
 import toast from "react-hot-toast";
+import { getJobs } from "../api/home";
 
 const ParentCheckbox = ({
   parentLabel,
   childrenLabels,
   onParentChange,
   dataMap,
+  ischeck,
+  positions,
 }) => {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(ischeck);
+
+  // console.log()
+  const [ar, setAr] = useState([]);
+
+  useEffect(() => {
+    let parentData = positions;
+    if (parentData) {
+      dataMap.set(parentLabel, parentData);
+      setAr(parentData);
+    }
+    console.log(dataMap);
+  }, []);
 
   const handleParentChange = (event) => {
     const isChecked = event.target.checked;
     setIsChecked(isChecked);
+    if(!isChecked){
+      setAr([]);
+    }
     onParentChange(parentLabel, isChecked);
   };
 
@@ -33,14 +45,19 @@ const ParentCheckbox = ({
       if (!parentData.includes(childLabel)) {
         parentData.push(childLabel);
       }
+      if(!ar.includes(childLabel)){
+        setAr([...ar,childLabel]);
+      }
     } else {
       let index = parentData.indexOf(childLabel);
       if (index !== -1) {
         parentData.splice(index, 1);
       }
+      setAr(prev => prev.filter(item => item!==childLabel))
     }
 
     dataMap.set(parentLabel, parentData);
+    
   };
 
   return (
@@ -56,7 +73,8 @@ const ParentCheckbox = ({
               control={
                 <Checkbox
                   disabled={!isChecked}
-                  checked={dataMap.get(parentLabel)?.includes(childLabel)}
+                  // value={jobs.some((item) => item.name === parentLabel)?.positions?.includes(childLabel) || false}
+                  checked={ar.includes(childLabel)}
                   onChange={(event) =>
                     handleChildChange(childLabel, event.target.checked)
                   }
@@ -80,6 +98,7 @@ const CheckboxComponent = ({ color }) => {
 
   const navigate = useNavigate();
   const { authInfo } = useAuth();
+  const { array } = useJobs();
 
   const parentLabels = [
     "Graphics",
@@ -108,6 +127,11 @@ const CheckboxComponent = ({ color }) => {
       console.log(error.message);
     }
   };
+  const dataMap1 = new Map();
+  array.forEach((element) => {
+    dataMap1.set(element.name, element.positions);
+  });
+
   return (
     <>
       <Header color={color} />
@@ -127,6 +151,9 @@ const CheckboxComponent = ({ color }) => {
               childrenLabels={childrenLabels}
               onParentChange={handleParentChange}
               dataMap={dataMap}
+              // jobs={array}
+              ischeck={dataMap1.has(label)}
+              positions={dataMap1.get(label)}
             />
           ))}
         </div>

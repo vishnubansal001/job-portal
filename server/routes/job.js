@@ -3,14 +3,14 @@ const { uploadFields } = require("../middlewares/multer");
 const { postData } = require("../controllers/jobs");
 const {
   validateFormInput,
-  validateFormInputMiddleware,
+  // validateFormInputMiddleware,
 } = require("../middlewares/jobs");
 const router = express.Router();
 
 router.post(
   "/info-data",
-//   validateFormInput,
-//   validateFormInputMiddleware,
+  validateFormInput,
+  // validateFormInputMiddleware,
   uploadFields,
   postData
 );

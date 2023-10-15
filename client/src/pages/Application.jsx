@@ -62,24 +62,24 @@ const Application = ({ color }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (
-      data.firstName.trim().length == 0 ||
-      data.lastName.trim().length == 0 ||
-      data.email.trim().length == 0 ||
-      data.number < 1111111111 ||
-      data.number > 9999999999 ||
-      data.year.trim().length == 0 ||
-      data.branch.trim().length == 0 ||
-      data.state.trim().length == 0 ||
-      data.city.trim().length == 0 ||
-      data.country.trim().length == 0 ||
-      data.linkedIn.trim().length == 0 ||
-      data.github.trim().length == 0 ||
-      data.picture === null ||
-      data.resume === null
-    ) {
-      return updateNotification("error", "Please Provide Correct Data");
-    }
+    // if (
+    //   data.firstName.trim().length == 0 ||
+    //   data.lastName.trim().length == 0 ||
+    //   data.email.trim().length == 0 ||
+    //   data.number < 1111111111 ||
+    //   data.number > 9999999999 ||
+    //   data.year.trim().length == 0 ||
+    //   data.branch.trim().length == 0 ||
+    //   data.state.trim().length == 0 ||
+    //   data.city.trim().length == 0 ||
+    //   data.country.trim().length == 0 ||
+    //   data.linkedIn.trim().length == 0 ||
+    //   data.github.trim().length == 0 ||
+    //   data.picture === null ||
+    //   data.resume === null
+    // ) {
+    //   return updateNotification("error", "Please Provide Correct Data");
+    // }
 
     const data1 = {
       firstName: data.firstName?.toString(),
@@ -104,8 +104,8 @@ const Application = ({ color }) => {
     // console.log(data.resume);
     axios
       .post(
-        "https://job-portal-server-seven-xi.vercel.app/jobs/info-data",
-        data1,
+        "http://localhost:8000/jobs/info-data",
+        {...data1},
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -144,7 +144,7 @@ const Application = ({ color }) => {
   return (
     <>
       <Header color={color} />
-      <div className="py-5">
+      {/* <div className="py-5"> */}
         <Container maxWidth="md">
           <Box sx={{ mb: 2 }}>
             <Typography variant="h4">User Details</Typography>
@@ -297,7 +297,7 @@ const Application = ({ color }) => {
                   type="file"
                   name="picture"
                   id="photo-input"
-                  className="hidden"
+                  // className="hidden"
                   accept=".jpg,.jpeg,.png"
                   onChange={handleFileChange}
                 />
@@ -314,7 +314,7 @@ const Application = ({ color }) => {
                   id="resume-input"
                   accept=".pdf,.doc,.docx"
                   onChange={handleFileChange}
-                  className="hidden"
+                  // className="hidden"
                 />
                 <label htmlFor="resume-input">
                   <button className="text-orange-500 hover:text-orange-400 border-[1px] px-5 py-2 transition-all duration-300 ease-in-out rounded-md hover:bg-[#faf4f4cc] border-orange-500">
@@ -333,7 +333,7 @@ const Application = ({ color }) => {
             </Grid>
           </form>
         </Container>
-      </div>
+      {/* </div> */}
       <Footer />
     </>
   );

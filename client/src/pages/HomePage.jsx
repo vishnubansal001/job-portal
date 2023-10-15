@@ -4,22 +4,10 @@ import Footer from "../components/main/Footer";
 import JobsSection from "../components/homePage/JobsSection";
 import { getJobs } from "../api/home";
 import { homeHero } from "../data/data";
+import { useJobs } from "../hooks";
 
 const HomePage = ({ color }) => {
-  const [jobs, setJobs] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getJobs();
-        setJobs(data);
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  const {array} = useJobs();
   const targetRef = useRef(null);
   const scrollToElement = () => {
     targetRef.current.scrollIntoView({ behavior: "smooth" });
@@ -37,7 +25,7 @@ const HomePage = ({ color }) => {
         onclick={scrollToElement}
       />
       <div ref={targetRef}>
-        <JobsSection jobs={jobs} />
+        <JobsSection jobs={array} />
       </div>
       <Footer />
     </>

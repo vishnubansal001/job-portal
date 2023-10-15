@@ -15,14 +15,15 @@ admin.initializeApp({
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const id = req.query.id;
+    // const {id} = req.body;
+    const id = req.params.userId;
     const user = await User.find({_id:id});
     
     if(!user){
       return sendError(res, "User Not Found", 404);
     }
     
-    if(!user.isVerified || user.role!=="admin"){
+    if(user.role!=="admin"){
       return sendError(res, "User Not Authorized", 401);
     }
     const allUsers = await Applications.find();
