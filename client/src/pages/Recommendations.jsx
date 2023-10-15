@@ -36,16 +36,17 @@ const Recommendations = ({ color }) => {
     try {
       const url = await getCsvFile({ id: authInfo.profile.id });
       setURL(url);
-      console.log(url);
       toast.success("CSV file downloading");
+      var link = document.createElement("a");
+    link.href = URL;
+    link.target = "_blank";
+    link.click();
     } catch (error) {
       setURL("");
       toast.error("Something went wrong");
       console.error("Error fetching jobs:", error);
     }
-    var link = document.createElement("a");
-    link.href = URL;
-    // link.click();
+    
   };
   return (
     <div>
