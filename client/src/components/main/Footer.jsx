@@ -12,8 +12,15 @@ const Footer = () => {
         padding={2} // Reduced the padding
         sx={{ borderTop: "1px solid #ccc" }} // Added top border
       >
-        <Typography sx={{ cursor: "pointer" }} variant="body2" color="orange" className="hover:underline transition-all duration-300 ease-in-out">
-          Visit Website
+        <Typography
+          sx={{ cursor: "pointer" }}
+          variant="body2"
+          color="orange"
+          className="hover:underline transition-all duration-300 ease-in-out"
+        >
+          <a href="https://codingninjas-cuiet.in/" target="_blank">
+            Visit Website
+          </a>
         </Typography>
       </Box>
 
