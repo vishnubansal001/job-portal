@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
-import {
-  TextField,
-  Box,
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { TextField, Box, Container, Grid, Typography } from "@mui/material";
 import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../hooks";
 
-const Application = () => {
+const Application = ({ color }) => {
   const [teamName, setTeamName] = useState("");
   const [jobName, setJobName] = useState("");
   const [data, setData] = useState({
@@ -146,7 +140,7 @@ const Application = () => {
 
   return (
     <>
-      <Header />
+      <Header color={color} />
       <div className="py-5">
         <Container maxWidth="md">
           <Box sx={{ mb: 2 }}>

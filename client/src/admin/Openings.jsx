@@ -70,7 +70,7 @@ const ParentCheckbox = ({
   );
 };
 
-const CheckboxComponent = () => {
+const CheckboxComponent = ({ color }) => {
   const dataMap = new Map();
 
   const handleParentChange = (parentLabel, isChecked) => {
@@ -99,7 +99,7 @@ const CheckboxComponent = () => {
       positions: value,
     }));
 
-    const data = await postJobs({ jobs: array ,id:authInfo.profile.id});
+    const data = await postJobs({ jobs: array, id: authInfo.profile.id });
 
     navigate("/");
 
@@ -107,7 +107,7 @@ const CheckboxComponent = () => {
   };
   return (
     <>
-      <Header />
+      <Header color={color} />
       <div className="py-6 lg:px-20 px-10">
         <Typography
           variant="h3"

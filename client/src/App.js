@@ -1,6 +1,3 @@
-import Openings from "./admin/Openings";
-import Footer from "./components/main/Footer";
-import Header from "./components/main/Header";
 import ForgotPassword from "./pages/ForgotPassword";
 import HomePage from "./pages/HomePage";
 import Job from "./pages/Job";
@@ -9,29 +6,40 @@ import SignUp from "./pages/SignUp";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./routes/PrivateRoute";
 import Application from "./pages/Application";
-import Recommendations from "./pages/Recommendations";
 import ConfirmPassword from "./pages/ConfirmPassword";
 import EmailVerification from "./pages/EmailVerification";
 import { useAuth } from "./hooks";
 import AdminNavigator from "./navigator/AdminNavigator";
+import { useEffect, useState } from "react";
 
 function App() {
   const { authInfo } = useAuth();
-  // console.log(authInfo);
+
+  const [color, setColor] = useState(null);
+  useEffect(() => {
+    function getRandomColor() {
+      const letters = "0123456789ABCDEF";
+      let color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      setColor(color);
+    }
+    getRandomColor();
+  }, []);
   const isAdmin = authInfo.profile?.role === "admin";
-  // console.log(isAdmin);
   if (isAdmin) return <AdminNavigator />;
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<HomePage color={color} />} />
       <Route exact path="/sign-in" element={<SignIn />}></Route>
       <Route exact path="/sign-up" element={<SignUp />}></Route>
       <Route path="/verification" element={<EmailVerification />} />
       <Route path="/forget-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ConfirmPassword />} />
-      <Route path="/job/:teamName/:jobName" element={<Job />} />
+      <Route path="/job/:teamName/:jobName" element={<Job color={color} />} />
       <Route path="/job-form" element={<PrivateRoute />}>
-        <Route path="/job-form" element={<Application />} />
+        <Route path="/job-form" element={<Application color={color} />} />
       </Route>
       {/* <Route path="*" element={<NotFound />} /> */}
     </Routes>

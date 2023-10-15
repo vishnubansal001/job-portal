@@ -4,7 +4,7 @@ import Footer from "../components/main/Footer";
 import { getCsvFile, getUsersData } from "../api/applications";
 import { useAuth } from "../hooks";
 
-const Recommendations = () => {
+const Recommendations = ({color}) => {
   const [users, setUsers] = useState();
   const { authInfo } = useAuth();
   useEffect(() => {
@@ -44,7 +44,7 @@ const Recommendations = () => {
   };
   return (
     <div>
-      <Header />
+      <Header color={color} />
       <section className="w-full min-h-[80vh] py-5 flex flex-col  items-center">
         <div className="overflow-x-auto w-full">
           <table className="min-w-full bg-white border divide-y divide-gray-200">

@@ -5,7 +5,7 @@ import JobsSection from "../components/homePage/JobsSection";
 import { getJobs } from "../api/home";
 import { homeHero } from "../data/data";
 
-const HomePage = () => {
+const HomePage = ({color}) => {
   const [jobs, setJobs] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +24,7 @@ const HomePage = () => {
   return (
     <>
       <Header
+      color={color}
         title1={homeHero.title1}
         title2={homeHero.title2}
         text={homeHero.text}

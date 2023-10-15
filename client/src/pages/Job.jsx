@@ -4,7 +4,7 @@ import Footer from "../components/main/Footer";
 import Header from "../components/main/Header";
 import { useNavigate, useParams } from "react-router-dom";
 
-const Job = () => {
+const Job = ({color}) => {
   const params = useParams();
   const navigate = useNavigate();
   const handleClick = () =>
@@ -17,6 +17,7 @@ const Job = () => {
         btn={"I'm Interested"}
         teamName={params.teamName}
         jobName={params.jobName}
+        color={color}
       />
       <Description teamName={params.teamName} jobName={params.jobName} />
       <Footer />
