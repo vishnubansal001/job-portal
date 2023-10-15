@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -16,16 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks";
 import logo from "../../assets/favicon.png";
 import HeroHome from "../../components/homePage/HeroHome";
-import heroBg from "../../assets/heroBg.png";
-
-function getRandomColor() {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
+import heroBg from "../../assets/heroBg.svg";
 
 const pages = [
   { name: "Home", link: "/" },
@@ -36,8 +27,21 @@ const adminPages = [
   { name: "Openings", link: "/openings" },
   { name: "Applications", link: "/applications" },
 ];
+
 function Header({ title1, title2, text, btn, teamName, jobName }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [color, setColor] = React.useState(null);
+  useEffect(() => {
+    function getRandomColor() {
+      const letters = "0123456789ABCDEF";
+      let color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      setColor(color);
+    }
+    getRandomColor();
+  }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -54,7 +58,11 @@ function Header({ title1, title2, text, btn, teamName, jobName }) {
   const nameUser = authInfo.profile?.name;
   return (
     <div
-      style={{ backgroundImage: `url(${heroBg})` }}
+      style={{
+        backgroundImage: `url(${heroBg})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
       className="bg-cover bg-center w-full h-full p-0"
     >
       <AppBar position="static" sx={{ bgcolor: "rgba(0, 0, 0, 0.5)" }}>
@@ -79,9 +87,20 @@ function Header({ title1, title2, text, btn, teamName, jobName }) {
           >
             LOGO
           </Typography> */}
-            <img src={logo} alt="" className="md:hidden sm:flex w-20" />
-
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <Box
+              sx={{
+                flexGrow: { xs: 1, md: 0 },
+                display: { xs: "flex", md: "flex" },
+              }}
+            >
+              <img
+                src={logo}
+                onClick={() => navigate("/")}
+                alt="logo"
+                className="flex w-20 mr-3 cursor-pointer"
+              />
+            </Box>
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -134,6 +153,24 @@ function Header({ title1, title2, text, btn, teamName, jobName }) {
                     ))}
                   </>
                 )}
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography
+                    textAlign="center"
+                    onClick={() => navigate(`/sign-in`)}
+                    className="capitalize"
+                  >
+                    sign in
+                  </Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography
+                    textAlign="center"
+                    className="capitalize"
+                    onClick={() => navigate(`/sign-in`)}
+                  >
+                    sign up
+                  </Typography>
+                </MenuItem>
               </Menu>
             </Box>
             {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -156,12 +193,6 @@ function Header({ title1, title2, text, btn, teamName, jobName }) {
           >
             LOGO
           </Typography> */}
-            <img
-              src={logo}
-              alt=""
-              onClick={() => navigate("/")}
-              className="sm:hidden md:flex w-20 mr-3 cursor-pointer"
-            />
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page, index) => (
                 <Button
@@ -174,10 +205,9 @@ function Header({ title1, title2, text, btn, teamName, jobName }) {
                     my: 2,
                     color: "white",
                     display: "block",
-                    fontSize: "1.25rem",
-                    fontWeight: "500",
+                    fontSize: "1rem",
                   }}
-                  className="text-lg font-bold"
+                  className="text-base"
                 >
                   {page.name}
                 </Button>
@@ -200,16 +230,16 @@ function Header({ title1, title2, text, btn, teamName, jobName }) {
               )}
             </Box>
 
-            <div className="flex flex-row items-center justify-center gap-3">
+            <div className="hidden md:flex flex-row items-center justify-center gap-3">
               <Box
                 sx={{
                   flexGrow: 0,
                   display: { xs: "none", md: "flex" },
                   border: "2px solid white",
-                  padding: "6px",
+                  padding: "8px",
                   borderRadius: "50%",
                 }}
-                className="hover:border-green-500 hover:text-green-500 transition-colors duration-300 cursor-pointer"
+                className="hover:border-orange-500 hover:text-orange-500 transition-colors duration-300 cursor-pointer"
               >
                 <LinkedInIcon />
               </Box>
@@ -218,22 +248,22 @@ function Header({ title1, title2, text, btn, teamName, jobName }) {
                   flexGrow: 0,
                   display: { xs: "none", md: "flex" },
                   border: "2px solid white",
-                  padding: "6px",
+                  padding: "8px",
                   borderRadius: "50%",
                 }}
-                className="hover:border-green-500 hover:text-green-500 transition-colors duration-300 cursor-pointer"
+                className="hover:border-orange-500 hover:text-orange-500 transition-colors duration-300 cursor-pointer"
               >
                 <InstagramIcon />
               </Box>
             </div>
-            <div className="px-5">
+            <div className="px-4 hidden md:block">
               {isLoggedIn ? (
                 <Box sx={{ flexGrow: 0 }}>
                   <Avatar
                     alt={`${nameUser}`}
                     sx={{
                       cursor: "pointer",
-                      bgcolor: `${getRandomColor()}`,
+                      bgcolor: `${color}`,
                       textAlign: "center",
                       display: "flex",
                       justifyContent: "center",
@@ -244,21 +274,21 @@ function Header({ title1, title2, text, btn, teamName, jobName }) {
                   </Avatar>
                 </Box>
               ) : (
-                <div className="flex justify-center items-center gap-2">
+                <div className="hidden sm:flex justify-center items-center gap-2">
                   <button
                     onClick={() => navigate("/sign-in")}
-                    className="text-lg font-semibold capitalize py-3 cursor-pointer transition-all duration-300 ease-in-out hover:text-green-600 rounded-[12px]"
+                    className="text-base font-semibold capitalize py-3 cursor-pointer transition-all duration-300 ease-in-out hover:text-orange-600 rounded-[12px]"
                   >
-                    sign in
+                    Sign in
                   </button>
-                  <p className="text-lg cursor-pointer transition-all duration-300 ease-in-out hover:text-green-600 rounded-[12px]">
+                  <p className="text-base cursor-pointer transition-all duration-300 ease-in-out hover:text-orange-600 rounded-[12px]">
                     /
                   </p>
                   <button
                     onClick={() => navigate("/sign-up")}
-                    className="text-lg font-semibold capitalize py-3 cursor-pointer transition-all duration-300 ease-in-out hover:text-green-600 rounded-[12px]"
+                    className="text-base font-semibold capitalize py-3 cursor-pointer transition-all duration-300 ease-in-out hover:text-orange-600 rounded-[12px]"
                   >
-                    sign up
+                    Sign up
                   </button>
                 </div>
               )}

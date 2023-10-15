@@ -8,14 +8,14 @@ const HeroHome = ({ title1, title2, text, btn, teamName, jobName }) => {
   };
   return (
     <div className="flex flex-col justify-center items-center w-full h-full bg-black bg-opacity-50 text-white">
-      <div className="flex flex-col justify-center items-center h-auto md:w-[60%] sm:w-[50%] w-[90%] gap-10 py-20">
+      <div className="flex flex-col justify-center items-center h-auto md:w-[60%] sm:w-[50%] w-[90%] md:gap-10 gap-5 md:py-20 py-10">
         <div className="flex flex-col justify-center items-center">
           <h1 className="lg:text-2xl md:text-xl sm:text-lg text-base font-semibold">
             {title1}
           </h1>
         </div>
         <div className="flex flex-col justify-center items-center gap-5 md:w-[80%]">
-          <h1 className="lg:text-5xl md:text-3xl sm:text-2xl text-lg font-semibold capitalize">
+          <h1 className="lg:text-5xl text-3xl font-semibold capitalize text-center">
             {title2}
           </h1>
           {text && (
@@ -24,7 +24,7 @@ const HeroHome = ({ title1, title2, text, btn, teamName, jobName }) => {
             </p>
           )}
         </div>
-        <div className="flex flex-col justify-center items-center pt-10">
+        <div className="flex flex-col justify-center items-center md:pt-10 pt-5">
           <button
             type="submit"
             onClick={() => {
@@ -32,7 +32,7 @@ const HeroHome = ({ title1, title2, text, btn, teamName, jobName }) => {
                 handleClick(teamName, jobName);
               }
             }}
-            className="px-7 text-lg font-semibold capitalize py-3 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-green-600 hover:bg-green-700 rounded-[8px]"
+            className="px-5 text-base md:text-lg font-semibold capitalize py-2 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-orange-600 hover:bg-orange-700 rounded-[8px]"
           >
             {btn}
           </button>

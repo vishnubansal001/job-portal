@@ -86,120 +86,126 @@ export default function SignUp() {
         flexDirection="column"
         alignItems="center"
         gap={1}
-        marginBottom={4}
+        marginBottom={2}
       >
-        <Typography variant="h5" color={"#5c6575"}>
-          Welcome to the
-        </Typography>
-        <Typography variant="h5" fontWeight="bold" color={"#5c6575"}>
-          Candidate Portal
+        <Typography
+          variant="h5"
+          color={"#5c6575"}
+          className="px-3 text-center md:pt-0 pt-4"
+        >
+          Welcome to the Candidate Portal
         </Typography>
       </Box>
-      <ThemeProvider theme={defaultTheme}>
-        <Container
-          component="main"
-          maxWidth="xs"
-          className="bg-white rounded-[20px] shadow-lg pt-8"
-        >
-          <CssBaseline />
-          <LockOutlinedIcon />
-          <Box
-            sx={{
-              marginTop: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-            }}
+      <div className="px-2">
+        <ThemeProvider theme={defaultTheme}>
+          <Container
+            component="main"
+            maxWidth="xs"
+            className="bg-white rounded-[20px] shadow-lg pt-2"
           >
-            <Typography component="h1" variant="h5">
-              Sign Up
-            </Typography>
             <Box
-              component="form"
-              onSubmit={handleSubmit}
-              noValidate
-              sx={{ mt: 1 }}
+              sx={{
+                marginTop: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
+              }}
             >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="name"
-                label="Full Name"
-                name="name"
-                autoComplete="name"
-                autoFocus
-                onChange={handleChange}
-                value={name}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                onChange={handleChange}
-                value={email}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={handleChange}
-                value={password}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="confirmPassword"
-                label="Confirm Password"
-                type="password"
-                id="confirmPassword"
-                autoComplete="current-password"
-                onChange={handleChange}
-                value={confirmPassword}
-              />
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 2, mb: 2 }}
-                onClick={handleSubmit}
+              <Typography
+                component="h1"
+                variant="h5"
+                className="flex justify-between w-full items-center"
               >
                 Sign Up
-              </Button>
-            </Box>
-          </Box>
-          <Box
-            marginTop={3}
-            textAlign="center"
-            borderTop="1px dotted"
-            borderColor="grey.500"
-            p={3}
-          >
-            <Typography variant="body1">
-              Already have an account?{" "}
-              <span
-                style={{ color: "blue" }}
-                onClick={() => navigate("/sign-in")}
-                className="cursor-pointer hover:underline"
+                <LockOutlinedIcon />
+              </Typography>
+              <Box
+                component="form"
+                onSubmit={handleSubmit}
+                noValidate
+                sx={{ mt: 1 }}
               >
-                Login
-              </span>
-            </Typography>
-          </Box>
-        </Container>
-      </ThemeProvider>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Full Name"
+                  name="name"
+                  autoComplete="name"
+                  autoFocus
+                  onChange={handleChange}
+                  value={name}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={handleChange}
+                  value={email}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={handleChange}
+                  value={password}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="confirmPassword"
+                  label="Confirm Password"
+                  type="password"
+                  id="confirmPassword"
+                  autoComplete="current-password"
+                  onChange={handleChange}
+                  value={confirmPassword}
+                />
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 2, mb: 2 }}
+                  onClick={handleSubmit}
+                >
+                  Sign Up
+                </Button>
+              </Box>
+            </Box>
+            <Box
+              marginTop={3}
+              textAlign="center"
+              borderTop="1px dotted"
+              borderColor="grey.500"
+              p={3}
+            >
+              <Typography variant="body1">
+                Already have an account?{" "}
+                <span
+                  style={{ color: "blue" }}
+                  onClick={() => navigate("/sign-in")}
+                  className="cursor-pointer hover:underline"
+                >
+                  Login
+                </span>
+              </Typography>
+            </Box>
+          </Container>
+        </ThemeProvider>
+      </div>
       <Box
         display="flex"
         flexDirection="column"
@@ -207,8 +213,12 @@ export default function SignUp() {
         gap={3}
         marginTop={3}
       >
-        <Typography variant="h5" color={"#5c6575"}>
-          Powered By VB
+        <Typography
+          variant="h5"
+          color={"#5c6575"}
+          className="px-3 text-center md:pb-0 pb-4"
+        >
+          Powered By CN_CUIET
         </Typography>
       </Box>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -9,14 +9,13 @@ import {
 } from "@mui/material";
 import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
-import { sendApplication } from "../api/application";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useNotification } from "../hooks";
 
 const Application = () => {
-  const { teamName, jobName } = useParams();
-
+  const [teamName, setTeamName] = useState("");
+  const [jobName, setJobName] = useState("");
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -35,6 +34,17 @@ const Application = () => {
     picture: null,
     resume: null,
   });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const teamNameParam = params.get("teamName");
+    const jobNameParam = params.get("jobName");
+
+    if (teamNameParam && jobNameParam) {
+      setTeamName(teamNameParam);
+      setJobName(jobNameParam);
+    }
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -99,11 +109,15 @@ const Application = () => {
 
     // console.log(data.resume);
     axios
-      .post("https://job-portal-server-seven-xi.vercel.app/jobs/info-data", data1, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      .post(
+        "https://job-portal-server-seven-xi.vercel.app/jobs/info-data",
+        data1,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
       .then((res) => {
         setData({
           firstName: "",

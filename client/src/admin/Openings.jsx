@@ -112,7 +112,7 @@ const CheckboxComponent = () => {
         <Typography
           variant="h3"
           gutterBottom
-          className="text-center font-bold pb-5 text-green-500 hover:underline transition-all duration-300 ease-in-out cursor-pointer select-none"
+          className="text-center font-bold pb-5 text-orange-500 hover:underline transition-all duration-300 ease-in-out cursor-pointer select-none"
         >
           Openings
         </Typography>
@@ -130,7 +130,7 @@ const CheckboxComponent = () => {
         <div className="flex flex-col justify-center items-center pt-3">
           <button
             type="submit"
-            className="px-7 text-lg font-semibold capitalize py-3 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-green-600 hover:bg-green-700 text-white rounded-[8px]"
+            className="px-7 text-lg font-semibold capitalize py-3 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-orange-600 hover:bg-orange-700 text-white rounded-[8px]"
           >
             Display to Users
           </button>

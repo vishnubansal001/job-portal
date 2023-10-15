@@ -10,6 +10,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { forgetPassword } from "../api/auth";
 import { useNotification } from "../hooks";
 import { isValidEmail } from "../utils/validator";
+import { useNavigate } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
@@ -17,7 +18,7 @@ export default function ForgotPassword() {
   const [email, setEmail] = React.useState("");
 
   const { updateNotification } = useNotification();
-
+  const navigate = useNavigate();
   const handleChange = ({ target }) => {
     const { value } = target;
     setEmail(value);
@@ -108,7 +109,7 @@ export default function ForgotPassword() {
             p={2}
           >
             <Typography variant="body1">
-              <span style={{ color: "blue" }}>Back To Sign In</span>
+              <span style={{ color: "grey",cursor: "pointer" }} onClick={() => navigate("/sign-in")} >Back To Sign In</span>
             </Typography>
           </Box>
         </Container>
@@ -121,7 +122,7 @@ export default function ForgotPassword() {
         marginTop={3}
       >
         <Typography variant="h5" color={"#5c6575"}>
-          Powered By VB
+          Powered By CN-CUIET
         </Typography>
       </Box>
     </div>
