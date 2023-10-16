@@ -267,7 +267,12 @@ function Header({
                 }}
                 className="hover:border-orange-500 hover:text-orange-500 transition-colors duration-300 cursor-pointer"
               >
-                <LinkedInIcon />
+                <a
+                  href="https://www.linkedin.com/company/codingninjas-cuiet/"
+                  target="_blank"
+                >
+                  <LinkedInIcon />
+                </a>
               </Box>
               <Box
                 sx={{
@@ -279,7 +284,12 @@ function Header({
                 }}
                 className="hover:border-orange-500 hover:text-orange-500 transition-colors duration-300 cursor-pointer"
               >
-                <InstagramIcon />
+                <a
+                  href="https://instagram.com/codingninjas_cuiet?igshid=MzRlODBiNWFlZA=="
+                  target="_blank"
+                >
+                  <InstagramIcon />
+                </a>
               </Box>
             </div>
             <div className="px-4 hidden md:block">
