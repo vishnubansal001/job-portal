@@ -1,5 +1,5 @@
 import React from "react";
-import { bene, req, resp } from "../../data/data";
+import { benes, reqs, resps } from "../../data/data";
 import { useNavigate } from "react-router-dom";
 
 const Description = ({ jobName, teamName }) => {
@@ -30,7 +30,7 @@ const Description = ({ jobName, teamName }) => {
             Roles and Responsibilities:
           </h1>
           <ul className="flex flex-col justify-center items-start gap-2 list-disc pl-5">
-            {resp?.map((item, index) => (
+            {resps.get(teamName + "-" + jobName)?.map((item, index) => (
               <li key={index}>{item}</li>
             ))}
           </ul>
@@ -41,7 +41,7 @@ const Description = ({ jobName, teamName }) => {
             Requirements:
           </h1>
           <ul className="flex flex-col justify-center items-start gap-2 list-disc pl-5">
-            {req?.map((item, index) => (
+            {reqs.get(teamName + "-" + jobName)?.map((item, index) => (
               <li key={index}>{item}</li>
             ))}
           </ul>
@@ -51,7 +51,7 @@ const Description = ({ jobName, teamName }) => {
             Benefits:
           </h1>
           <ul className="flex flex-col justify-center items-start gap-2 list-disc pl-5">
-            {bene?.map((item, index) => (
+            {benes.get(teamName + "-" + jobName)?.map((item, index) => (
               <li key={index}>{item}</li>
             ))}
           </ul>

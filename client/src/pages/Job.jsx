@@ -4,7 +4,20 @@ import Footer from "../components/main/Footer";
 import Header from "../components/main/Header";
 import { useNavigate, useParams } from "react-router-dom";
 
-const Job = ({color}) => {
+function capitalizeString(input) {
+  let words = input.split(" ");
+  if (words.length === 2) {
+    words = words.map(
+      (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    );
+  } else if (words.length === 1) {
+    words[0] =
+      words[0].charAt(0).toUpperCase() + words[0].slice(1).toLowerCase();
+  }
+  return words.join(" ");
+}
+
+const Job = ({ color }) => {
   const params = useParams();
   const navigate = useNavigate();
   const handleClick = () =>
@@ -19,7 +32,10 @@ const Job = ({color}) => {
         jobName={params.jobName}
         color={color}
       />
-      <Description teamName={params.teamName} jobName={params.jobName} />
+      <Description
+        teamName={capitalizeString(params.teamName)}
+        jobName={capitalizeString(params.jobName)}
+      />
       <Footer />
     </div>
   );
