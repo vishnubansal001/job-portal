@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -18,9 +18,7 @@ import logo from "../../assets/favicon.png";
 import HeroHome from "../../components/homePage/HeroHome";
 import heroBg from "../../assets/heroBg.svg";
 
-const pages = [
-  { name: "Home", link: "/" }
-];
+const pages = [{ name: "Home", link: "/" }];
 
 const adminPages = [
   { name: "Openings", link: "/openings" },
@@ -52,6 +50,25 @@ function Header({
   const { isLoggedIn } = authInfo;
   const isAdmin = authInfo.profile?.role === "admin";
   const nameUser = authInfo.profile?.name;
+
+  const [anchorEl, setAnchorEl] = useState(false);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const { handleLogout } = useAuth();
+
+  const handleLog = () => {
+    // Add your logout logic here
+    handleLogout();
+    // console.log("skdhfbekj");
+    handleClose();
+  };
   return (
     <div
       style={{
@@ -149,25 +166,28 @@ function Header({
                     ))}
                   </div>
                 )}
-                {!isLoggedIn && (<span>
-                <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography
-                    textAlign="center"
-                    onClick={() => navigate(`/sign-in`)}
-                    className="capitalize"
-                  >
-                    sign in
-                  </Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography
-                    textAlign="center"
-                    className="capitalize"
-                    onClick={() => navigate(`/sign-in`)}
-                  >
-                    sign up
-                  </Typography>
-                </MenuItem></span>)}
+                {!isLoggedIn && (
+                  <span>
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Typography
+                        textAlign="center"
+                        onClick={() => navigate(`/sign-in`)}
+                        className="capitalize"
+                      >
+                        sign in
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Typography
+                        textAlign="center"
+                        className="capitalize"
+                        onClick={() => navigate(`/sign-in`)}
+                      >
+                        sign up
+                      </Typography>
+                    </MenuItem>
+                  </span>
+                )}
               </Menu>
             </Box>
             {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -257,7 +277,7 @@ function Header({
               {isLoggedIn ? (
                 <Box sx={{ flexGrow: 0 }}>
                   <Avatar
-                    alt={`${nameUser}`}
+                    alt={nameUser}
                     sx={{
                       cursor: "pointer",
                       bgcolor: `${color}`,
@@ -266,9 +286,19 @@ function Header({
                       justifyContent: "center",
                       alignItems: "center",
                     }}
+                    onClick={handleClick}
                   >
                     {nameUser?.charAt(0)?.toUpperCase()}
                   </Avatar>
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    <MenuItem className="bg-white" onClick={handleLog}>
+                      Logout
+                    </MenuItem>
+                  </Menu>
                 </Box>
               ) : (
                 <div className="hidden sm:flex justify-center items-center gap-2">
