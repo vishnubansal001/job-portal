@@ -52,12 +52,15 @@ exports.signUp = async (req, res) => {
     to: email,
     subject: "Verification Token",
     text: `Your Verification Token is ${OTP}`,
+    priority:"high"
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
+      console.log(error);
       res.send(error);
     } else {
+      console.log(info);
       res.send(info);
     }
   });

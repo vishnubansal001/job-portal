@@ -106,7 +106,7 @@ const Application = ({ color }) => {
     // console.log(data1);
     axios
       .post(
-        "https://job-portal-server-seven-xi.vercel.app/jobs/info-data",
+        "http://localhost:8000/jobs/info-data",
         { ...data1 },
         {
           headers: {
