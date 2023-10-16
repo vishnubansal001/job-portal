@@ -52,7 +52,7 @@ exports.signUp = async (req, res) => {
     to: email,
     subject: "Verification Token",
     text: `Your Verification Token is ${OTP}`,
-    priority:"high"
+    priority: "high",
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -132,6 +132,7 @@ exports.forgetPassword = async (req, res) => {
       <p>Click here to reset password</p>
       <a href='${resetPasswordUrl}'>Change Password</a>
     `,
+    priority: "high",
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -178,6 +179,7 @@ exports.resetPassword = async (req, res) => {
     to: user.email,
     subject: "Password Reset Successfully",
     text: `Now you can use new password`,
+    priority: "high",
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -233,6 +235,7 @@ exports.verifyEmail = async (req, res) => {
     to: user.email,
     subject: "Welcome Email",
     text: `Welcome to our app and thanks for choosing us.`,
+    priority: "high",
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -302,6 +305,7 @@ exports.resendEmailVerificationToken = async (req, res) => {
     to: email,
     subject: "Verification Token",
     text: `Your Verification Token is ${OTP}`,
+    priority: "high",
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
