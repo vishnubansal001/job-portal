@@ -114,7 +114,7 @@ resps.set("Logistics-Head", [
   "Assisting in handling logistical issues or emergencies during events.",
 ]);
 
-resps.set("HR-Lead", [
+resps.set("Hr-Lead", [
   "Leading the HR team and overseeing all HR-related activities.",
   "Developing and implementing HR policies and procedures.",
   "Conducting recruitment processes, including interviews and onboarding.",
@@ -124,7 +124,7 @@ resps.set("HR-Lead", [
   "Creating a positive and inclusive work environment within the club.",
 ]);
 
-resps.set("HR-Executive", [
+resps.set("Hr-Executive", [
   "Assisting in HR activities and initiatives.",
   "Supporting the implementation of HR policies and procedures.",
   "Participating in recruitment and onboarding processes.",
@@ -134,7 +134,7 @@ resps.set("HR-Executive", [
   "Contributing to a positive and inclusive work environment within the club.",
 ]);
 
-resps.set("HR-Head", [
+resps.set("Hr-Head", [
   "Assisting the HR Team Lead in overseeing HR activities.",
   "Implementing HR policies and procedures in line with club objectives.",
   "Assisting in recruitment processes and onboarding activities.",
@@ -382,7 +382,7 @@ reqs.set("Logistics-Head", [
   "Collaborating with the Logistics Team Lead to achieve logistical goals aligned with club objectives.",
 ]);
 
-reqs.set("HR-Lead", [
+reqs.set("Hr-Lead", [
   "Providing strategic direction for HR-related initiatives.",
   "Actively participating in club-wide decision-making processes.",
   "Serving as a liaison between the HR team and other teams for seamless coordination.",
@@ -391,7 +391,7 @@ reqs.set("HR-Lead", [
   "Collaborating with the leadership team to align HR strategies with club objectives.",
 ]);
 
-reqs.set("HR-Executive", [
+reqs.set("Hr-Executive", [
   "Playing a crucial role in HR-related functions.",
   "Actively participating in club-wide HR discussions.",
   "Serving as a link between the HR team and other teams for seamless coordination.",
@@ -400,7 +400,7 @@ reqs.set("HR-Executive", [
   "Collaborating with HR leaders to achieve HR goals aligned with club objectives.",
 ]);
 
-reqs.set("HR-Head", [
+reqs.set("Hr-Head", [
   "Playing a key role in HR-related initiatives.",
   "Actively participating in club-wide HR discussions.",
   "Serving as a bridge between the HR team and other teams for seamless coordination.",
@@ -630,7 +630,7 @@ benes.set("Logistics-Head", [
   "Recognition for your contributions to the club's success.",
 ]);
 
-benes.set("HR-Lead", [
+benes.set("Hr-Lead", [
   "Opportunity to lead and shape the HR function of the club.",
   "Gain valuable leadership experience in managing a team.",
   "Enhance your HR and management skills for future career opportunities.",
@@ -640,7 +640,7 @@ benes.set("HR-Lead", [
   "Contribute to creating a positive club culture and work environment.",
 ]);
 
-benes.set("HR-Executive", [
+benes.set("Hr-Executive", [
   "Gain practical experience in HR-related activities.",
   "Contribute to the messaging and communication efforts of the club.",
   "Build a portfolio showcasing your HR work for future career opportunities.",
@@ -650,7 +650,7 @@ benes.set("HR-Executive", [
   "Recognition for your contributions to the club's success.",
 ]);
 
-benes.set("HR-Head", [
+benes.set("Hr-Head", [
   "Opportunity to contribute significantly to HR functions.",
   "Gain experience in HR management and coordination.",
   "Showcase your HR expertise for future career opportunities.",

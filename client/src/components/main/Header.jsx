@@ -166,7 +166,7 @@ function Header({
                     ))}
                   </div>
                 )}
-                {!isLoggedIn && (
+                {!isLoggedIn ? (
                   <span>
                     <MenuItem onClick={handleCloseNavMenu}>
                       <Typography
@@ -187,6 +187,15 @@ function Header({
                       </Typography>
                     </MenuItem>
                   </span>
+                ) : (
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <button
+                      className="text-lg font-semibold capitalize py-3 cursor-pointer transition-all duration-300 ease-in-out hover:text-orange-600 rounded-[12px]"
+                      onClick={handleLog}
+                    >
+                      Logout
+                    </button>
+                  </MenuItem>
                 )}
               </Menu>
             </Box>

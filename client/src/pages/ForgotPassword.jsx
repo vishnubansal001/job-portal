@@ -26,8 +26,8 @@ export default function ForgotPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isValidEmail(email))
-      return updateNotification("error", "Invalid email!");
+    if (!isValidEmail(email))
+      return updateNotification("error", "Chitkara Email Only!");
 
     const { error, message } = await forgetPassword(email);
     if (error) return updateNotification("error", error);
