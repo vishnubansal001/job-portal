@@ -51,15 +51,15 @@ function Header({
   const isAdmin = authInfo.profile?.role === "admin";
   const nameUser = authInfo.profile?.name;
 
-  const [anchorEl, setAnchorEl] = useState(false);
+  // const [anchorEl, setAnchorEl] = useState(false);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
   const { handleLogout } = useAuth();
 
@@ -67,7 +67,7 @@ function Header({
     // Add your logout logic here
     handleLogout();
     // console.log("skdhfbekj");
-    handleClose();
+    // handleClose();
   };
   return (
     <div
@@ -275,7 +275,16 @@ function Header({
             </div>
             <div className="px-4 hidden md:block">
               {isLoggedIn ? (
-                <Box sx={{ flexGrow: 0 }}>
+                <Box
+                  sx={{
+                    flexGrow: 0,
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyItems: "center",
+                    alignItems: "center",
+                    gap: "1rem",
+                  }}
+                >
                   <Avatar
                     alt={nameUser}
                     sx={{
@@ -286,19 +295,18 @@ function Header({
                       justifyContent: "center",
                       alignItems: "center",
                     }}
-                    onClick={handleClick}
+                    // onClick={handleClick}
                   >
                     {nameUser?.charAt(0)?.toUpperCase()}
                   </Avatar>
-                  <Menu
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                  >
-                    <MenuItem className="bg-white" onClick={handleLog}>
+                  <div>
+                    <button
+                      className="text-lg font-semibold capitalize py-3 cursor-pointer transition-all duration-300 ease-in-out hover:text-orange-600 rounded-[12px]"
+                      onClick={handleLog}
+                    >
                       Logout
-                    </MenuItem>
-                  </Menu>
+                    </button>
+                  </div>
                 </Box>
               ) : (
                 <div className="hidden sm:flex justify-center items-center gap-2">
