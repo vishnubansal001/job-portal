@@ -13,6 +13,7 @@ import AdminNavigator from "./navigator/AdminNavigator";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { getJobs } from "./api/home";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const { authInfo } = useAuth();
@@ -60,7 +61,7 @@ function App() {
         <Route path="/job-form" element={<PrivateRoute />}>
           <Route path="/job-form" element={<Application color={color} />} />
         </Route>
-        {/* <Route path="*" element={<NotFound />} /> */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
     </>
