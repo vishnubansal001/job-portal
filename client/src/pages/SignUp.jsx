@@ -63,9 +63,9 @@ export default function SignUp() {
     if (!ok) return updateNotification("error", error);
 
     const response = await createUser(userInfo);
-    if (response.error) return console.log(response.error);
+    if (response.error) return updateNotification("error", response.error);
 
-    navigate("/verification", {
+    navigate("/sign-in", {
       state: { user: response.user },
       replace: true,
     });

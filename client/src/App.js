@@ -54,7 +54,7 @@ function App() {
         <Route path="/" element={<HomePage color={color} />} />
         <Route exact path="/sign-in" element={<SignIn />}></Route>
         <Route exact path="/sign-up" element={<SignUp />}></Route>
-        <Route path="/verification" element={<EmailVerification />} />
+        {/* <Route path="/verification" element={<EmailVerification />} /> */}
         <Route path="/forget-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ConfirmPassword />} />
         <Route path="/job/:teamName/:jobName" element={<Job color={color} />} />

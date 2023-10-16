@@ -126,7 +126,7 @@ export default function SignIn() {
                   onChange={handleChange}
                   value={password}
                 />
-                <Grid container>
+                {/* <Grid container>
                   <Grid
                     item
                     xs={12}
@@ -141,7 +141,7 @@ export default function SignIn() {
                       Forgot password?
                     </Link>
                   </Grid>
-                </Grid>
+                </Grid> */}
 
                 <Button
                   type="submit"

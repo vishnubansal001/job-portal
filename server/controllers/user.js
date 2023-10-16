@@ -30,40 +30,40 @@ exports.signUp = async (req, res) => {
   const newUser = new User({ name, email, password });
   await newUser.save();
 
-  let OTP = generateOTP();
+  // let OTP = generateOTP();
 
-  const newEmailVerificationToken = new EmailVerificationToken({
-    owner: newUser._id,
-    token: OTP,
-  });
+  // const newEmailVerificationToken = new EmailVerificationToken({
+  //   owner: newUser._id,
+  //   token: OTP,
+  // });
 
-  await newEmailVerificationToken.save();
+  // await newEmailVerificationToken.save();
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.USER_EMAIL,
-      pass: process.env.USER_PASSWORD,
-    },
-  });
+  // const transporter = nodemailer.createTransport({
+  //   service: "gmail",
+  //   auth: {
+  //     user: process.env.USER_EMAIL,
+  //     pass: process.env.USER_PASSWORD,
+  //   },
+  // });
 
-  var mailOptions = {
-    from: process.env.USER_EMAIL,
-    to: email,
-    subject: "Verification Token",
-    text: `Your Verification Token is ${OTP}`,
-    priority: "high",
-  };
+  // var mailOptions = {
+  //   from: process.env.USER_EMAIL,
+  //   to: email,
+  //   subject: "Verification Token",
+  //   text: `Your Verification Token is ${OTP}`,
+  //   priority: "high",
+  // };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-      res.send(error);
-    } else {
-      console.log(info);
-      res.send(info);
-    }
-  });
+  // transporter.sendMail(mailOptions, (error, info) => {
+  //   if (error) {
+  //     console.log(error);
+  //     res.send(error);
+  //   } else {
+  //     console.log(info);
+  //     res.send(info);
+  //   }
+  // });
 
   res.status(201).json({
     user: {

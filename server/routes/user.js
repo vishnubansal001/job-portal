@@ -28,8 +28,8 @@ router.post(
   isValidPassResetToken,
   resetPassword
 );
-router.post("/verify-email", verifyEmail);
-router.post("/resend-email-verification-token", resendEmailVerificationToken);
+// router.post("/verify-email", verifyEmail);
+// router.post("/resend-email-verification-token", resendEmailVerificationToken);
 router.post(
   "/verify-pass-reset-token",
   isValidPassResetToken,
