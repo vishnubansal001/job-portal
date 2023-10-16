@@ -17,11 +17,13 @@ const Description = ({ jobName, teamName }) => {
             About Us:
           </h1>
           <p className="lg:text-xl md:text-lg sm:text-base text-sm font-normal">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda
-            voluptatum beatae ipsa pariatur eius deserunt odio laudantium
-            tempora necessitatibus veniam saepe voluptates at vitae, dolores
-            harum sit maiores dicta nobis blanditiis repellendus quos. Aliquam
-            ab dolores eligendi, provident quod fugiat.
+            Coding Ninjas is a dynamic and innovative club dedicated to
+            nurturing a passion for coding and technology. With a community of
+            avid learners and experienced mentors, we provide a platform for
+            students to dive deep into the world of programming, algorithms, and
+            software development. Join us in exploring the endless possibilities
+            that coding offers and embark on a journey of continuous learning
+            and growth.
           </p>
         </div>
 

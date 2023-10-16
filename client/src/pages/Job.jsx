@@ -3,6 +3,8 @@ import Description from "../components/JobPage/Description";
 import Footer from "../components/main/Footer";
 import Header from "../components/main/Header";
 import { useNavigate, useParams } from "react-router-dom";
+import NotFound from "./NotFound";
+import { useJobs } from "../hooks";
 
 function capitalizeString(input) {
   let words = input.split(" ");
@@ -22,6 +24,19 @@ const Job = ({ color }) => {
   const navigate = useNavigate();
   const handleClick = () =>
     navigate(`/job-form?teamName=${params.teamName}&jobName=${params.jobName}`);
+  const { array, setArray } = useJobs();
+  const dataMap1 = new Map();
+  array.forEach((element) => {
+    dataMap1.set(element.name, element.positions);
+  });
+  if (
+    !dataMap1?.has(capitalizeString(params.teamName)) ||
+    !dataMap1
+      ?.get(capitalizeString(params.teamName))
+      ?.includes(capitalizeString(params.jobName))
+  ) {
+    return <NotFound />;
+  }
   return (
     <div>
       <Header
