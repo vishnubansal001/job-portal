@@ -27,7 +27,7 @@ const ParentCheckbox = ({
       dataMap.set(parentLabel, parentData);
       setAr(parentData);
     }
-    console.log(dataMap);
+    // console.log(dataMap);
   }, []);
 
   const handleParentChange = (event) => {
@@ -98,7 +98,7 @@ const CheckboxComponent = ({ color }) => {
 
   const navigate = useNavigate();
   const { authInfo } = useAuth();
-  const { array } = useJobs();
+  const { array , setArray } = useJobs();
 
   const parentLabels = [
     "Graphics",
@@ -108,19 +108,20 @@ const CheckboxComponent = ({ color }) => {
     "Outreach",
     "Events",
     "Content",
-    "HR",
+    "Hr",
     "Logistics",
   ];
   const childrenLabels = ["Lead", "Executive", "Head"];
 
   const convertMap = async () => {
     try {
-      const array = Array.from(dataMap, ([key, value]) => ({
+      const arr = Array.from(dataMap, ([key, value]) => ({
         name: key,
         positions: value,
       }));
-      const data = await postJobs({ jobs: array, id: authInfo.profile.id });
+      const data = await postJobs({ jobs: arr, id: authInfo.profile.id });
       toast.success("Openings Edited");
+      setArray(arr)
       navigate("/");
     } catch (error) {
       toast.error(`something went wrong`);
