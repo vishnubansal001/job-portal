@@ -16,7 +16,7 @@ const defaultTheme = createTheme();
 
 const validateUserInfo = ({ email, password }) => {
   if (!email.trim()) return { ok: false, error: "Email is missing!" };
-  if (!isValidEmail(email)) return { ok: false, error: "Invalid email!" };
+  if (!isValidEmail(email)) return { ok: false, error: "Chitkara Email Only!" };
 
   if (!password.trim()) return { ok: false, error: "Password is missing!" };
   if (password.length < 8)
