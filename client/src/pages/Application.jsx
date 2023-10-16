@@ -4,7 +4,7 @@ import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useNotification } from "../hooks";
+// import { useNotification } from "../hooks";
 import toast from "react-hot-toast";
 
 const Application = ({ color }) => {
@@ -57,7 +57,7 @@ const Application = ({ color }) => {
       [name]: files[0],
     }));
   };
-  const { updateNotification } = useNotification();
+  // const { updateNotification } = useNotification();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -101,7 +101,7 @@ const Application = ({ color }) => {
       appliedFor: teamName?.toString() + "-" + jobName?.toString(),
     };
 
-    console.log(data1);
+    // console.log(data1);
     axios
       .post(
         "https://job-portal-server-seven-xi.vercel.app/jobs/info-data",
@@ -133,7 +133,7 @@ const Application = ({ color }) => {
         });
         toast.success("Application Submitted");
         navigate("/");
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
         toast.error("Some thing went wrong");
