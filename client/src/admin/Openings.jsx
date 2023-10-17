@@ -24,7 +24,7 @@ const ParentCheckbox = ({
   useEffect(() => {
     let parentData = positions;
     if (parentData) {
-      // dataMap.set(parentLabel, parentData);
+      dataMap.set(parentLabel, parentData);
       setAr(parentData);
     }
     // console.log(dataMap);
@@ -33,31 +33,29 @@ const ParentCheckbox = ({
   const handleParentChange = (event) => {
     const isChecked = event.target.checked;
     setIsChecked(isChecked);
-    if(!isChecked){
+    if (!isChecked) {
       setAr([]);
     }
     onParentChange(parentLabel, isChecked);
   };
 
   const handleChildChange = (childLabel, isChecked) => {
-    let parentData = dataMap.get(parentLabel) || [];
+    console.log(isChecked);
     if (isChecked) {
-      if (!parentData.includes(childLabel)) {
-        parentData.push(childLabel);
-      }
-      if(!ar.includes(childLabel)){
-        setAr([...ar,childLabel]);
+      if (ar.length == 0 || (ar.length > 0 && !ar.includes(childLabel))) {
+        const arr = [...ar];
+        arr.push(childLabel);
+        setAr(arr);
+        dataMap.set(parentLabel, arr);
+        console.log(arr);
       }
     } else {
-      let index = parentData.indexOf(childLabel);
-      if (index !== -1) {
-        parentData.splice(index, 1);
-      }
-      setAr(prev => prev.filter(item => item!==childLabel))
+      const arr = ar.filter((item) => item !== childLabel);
+      dataMap.set(parentLabel, arr);
+      setAr(arr);
+      console.log(arr);
     }
-
-    dataMap.set(parentLabel, parentData);
-    
+    // console.log(ar);
   };
 
   return (
@@ -73,7 +71,6 @@ const ParentCheckbox = ({
               control={
                 <Checkbox
                   disabled={!isChecked}
-                  // value={jobs.some((item) => item.name === parentLabel)?.positions?.includes(childLabel) || false}
                   checked={ar.includes(childLabel)}
                   onChange={(event) =>
                     handleChildChange(childLabel, event.target.checked)
@@ -98,7 +95,7 @@ const CheckboxComponent = ({ color }) => {
 
   const navigate = useNavigate();
   const { authInfo } = useAuth();
-  const { array , setArray } = useJobs();
+  const { array, setArray } = useJobs();
 
   const parentLabels = [
     "Graphics",
@@ -121,7 +118,7 @@ const CheckboxComponent = ({ color }) => {
       }));
       const data = await postJobs({ jobs: arr, id: authInfo.profile.id });
       toast.success("Openings Edited");
-      setArray(arr)
+      setArray(arr);
       navigate("/");
     } catch (error) {
       toast.error(`something went wrong`);

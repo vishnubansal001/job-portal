@@ -19,37 +19,41 @@ const JobsSection = ({ jobs }) => {
           {jobs && jobs.length > 0 ? (
             <>
               {jobs?.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col justify-start items-start gap-6 w-full"
-                >
-                  <h1 className="lg:text-2xl md:text-xl font-semibold sm:text-lg text-base w-full md:text-start text-center text-black select-none capitalize">
-                    {item.name}
-                  </h1>
-                  <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:gap-x-6 w-full gap-y-4">
-                    {item?.positions.map((pos, ind) => (
-                      <div
-                        key={ind}
-                        onClick={() =>
-                          navigate(
-                            `/job/${item.name.toLocaleLowerCase()}/${pos.toLocaleLowerCase()}`
-                          )
-                        }
-                        className="w-full border-2 border-gray-300 rounded-[20px] px-4 py-8 hover:bg-gray-200 transition-all duration-300 ease-in-out cursor-pointer"
-                      >
-                        <h1 className="text-slate-400 text-xs cursor-pointer select-none capitalize">
-                          Apprentiship
-                        </h1>
-                        <h1 className="text-orange-500 font-bold cursor-pointer select-none capitalize">
-                          {pos}
-                        </h1>
-                        <h1 className="text-slate-400 text-xs cursor-pointer select-none capitalize">
-                          Chitkara University, Rajpura
-                        </h1>
+                <>
+                  {item?.positions?.length > 0 && (
+                    <div
+                      key={index}
+                      className="flex flex-col justify-start items-start gap-6 w-full"
+                    >
+                      <h1 className="lg:text-2xl md:text-xl font-semibold sm:text-lg text-base w-full md:text-start text-center text-black select-none capitalize">
+                        {item.name}
+                      </h1>
+                      <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:gap-x-6 w-full gap-y-4">
+                        {item?.positions.map((pos, ind) => (
+                          <div
+                            key={ind}
+                            onClick={() =>
+                              navigate(
+                                `/job/${item.name.toLocaleLowerCase()}/${pos.toLocaleLowerCase()}`
+                              )
+                            }
+                            className="w-full border-2 border-gray-300 rounded-[20px] px-4 py-8 hover:bg-gray-200 transition-all duration-300 ease-in-out cursor-pointer"
+                          >
+                            <h1 className="text-slate-400 text-xs cursor-pointer select-none capitalize">
+                              Apprentiship
+                            </h1>
+                            <h1 className="text-orange-500 font-bold cursor-pointer select-none capitalize">
+                              {pos}
+                            </h1>
+                            <h1 className="text-slate-400 text-xs cursor-pointer select-none capitalize">
+                              Chitkara University, Rajpura
+                            </h1>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </div>
+                    </div>
+                  )}
+                </>
               ))}
             </>
           ) : (
