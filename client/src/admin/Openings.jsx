@@ -24,7 +24,7 @@ const ParentCheckbox = ({
   useEffect(() => {
     let parentData = positions;
     if (parentData) {
-      dataMap.set(parentLabel, parentData);
+      // dataMap.set(parentLabel, parentData);
       setAr(parentData);
     }
     // console.log(dataMap);
