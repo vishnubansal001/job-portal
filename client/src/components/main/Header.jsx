@@ -78,7 +78,7 @@ function Header({
       }}
       className="bg-cover bg-center w-full h-full p-0"
     >
-      <AppBar position="static" sx={{ bgcolor: "rgba(0, 0, 0, 0.7)" }}>
+      <AppBar position="static" sx={{ bgcolor: "rgba(0, 0, 0, 0.75)" }}>
         <Container maxWidth="xl" className="p-4">
           <Toolbar disableGutters>
             {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
