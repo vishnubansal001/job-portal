@@ -871,8 +871,8 @@ benes.set("Graphics-Head", [
 ]);
 
 export const homeHero = {
-  title1: "One step in the right direction",
-  title2: "Bag a job. Escalate your career.",
-  text: "All you need from a job is to be rewarding and add value to your career timeline, isn’t it? We get it. That ’s why we believe in creating a working environment that caters to your goals. Starting from the process of finding the right role to having you look forward to coming into work every day, we make every step super smooth. Browse available jobs now!",
+  title1: "Are you ready to take your career to the next level?",
+  title2: "Bag an Apprenticeship. Escalate your career",
+  text: "At Coding Ninjas CUIET, we're committed to helping you learn, grow, and succeed in the tech world. Explore a world of opportunities, gain hands-on experience, and learn from industry experts as you set out on a path to success. Don't miss out on this chance to bag an apprenticeship and accelerate your career. Apply today and unlock the door to a bright and promising future!",
   btn: "View Openings",
 };

@@ -40,20 +40,20 @@ const ParentCheckbox = ({
   };
 
   const handleChildChange = (childLabel, isChecked) => {
-    console.log(isChecked);
+    // console.log(isChecked);
     if (isChecked) {
       if (ar.length == 0 || (ar.length > 0 && !ar.includes(childLabel))) {
         const arr = [...ar];
         arr.push(childLabel);
         setAr(arr);
         dataMap.set(parentLabel, arr);
-        console.log(arr);
+        // console.log(arr);
       }
     } else {
       const arr = ar.filter((item) => item !== childLabel);
       dataMap.set(parentLabel, arr);
       setAr(arr);
-      console.log(arr);
+      // console.log(arr);
     }
     // console.log(ar);
   };

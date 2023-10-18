@@ -14,7 +14,7 @@ const HeroHome = ({ title1, title2, text, btn, teamName, jobName,onclick }) => {
             {title1}
           </h1>
         </div>
-        <div className="flex flex-col justify-center items-center gap-5 md:w-[80%]">
+        <div className="flex flex-col justify-center items-center gap-5">
           <h1 className="lg:text-5xl text-3xl font-semibold capitalize text-center">
             {title2}
           </h1>
