@@ -106,12 +106,14 @@ function Header({
                 display: { xs: "flex", md: "flex" },
               }}
             >
-              <img
-                src={logo}
-                onClick={() => navigate("/")}
-                alt="logo"
-                className="flex w-20 mr-3 cursor-pointer"
-              />
+              <a href="https://codingninjas-cuiet.in/" target="_blank">
+                <img
+                  src={logo}
+                  onClick={() => navigate("/")}
+                  alt="logo"
+                  className="flex w-20 mr-3 cursor-pointer"
+                />
+              </a>
             </Box>
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
               <IconButton
