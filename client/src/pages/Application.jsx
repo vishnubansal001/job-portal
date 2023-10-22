@@ -12,6 +12,7 @@ const Application = ({ color }) => {
   const { authInfo } = useAuth();
   const [teamName, setTeamName] = useState("");
   const [jobName, setJobName] = useState("");
+  const [isLoading,setLoading] = useState(false);
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -62,6 +63,7 @@ const Application = ({ color }) => {
   // const { updateNotification } = useNotification();
 
   const handleSubmit = async (event) => {
+    setLoading(true);
     event.preventDefault();
 
     // if (
@@ -134,11 +136,13 @@ const Application = ({ color }) => {
           resume: null,
         });
         toast.success("Application Submitted");
+        setLoading(false);
         navigate("/");
         // console.log(res);
       })
       .catch((err) => {
         toast.error("Some thing went wrong");
+        setLoading(false);
         console.log(err);
       });
   };
@@ -331,6 +335,7 @@ const Application = ({ color }) => {
             <div className="flex flex-col w-full justify-center items-center md:pt-10 pt-5">
               <button
                 type="submit"
+                disabled={isLoading}
                 className="px-8 text-white text-base md:text-lg font-semibold capitalize py-2 cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 ease-in-out bg-orange-600 hover:bg-orange-700 rounded-[8px]"
               >
                 Submit
