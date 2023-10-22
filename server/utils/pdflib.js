@@ -98,7 +98,7 @@ async function addPageToExistingPDF({ imageUrl, user, date }) {
   const uri = blob
     .getSignedUrl({
       action: "read",
-      expires: new Date().getTime() + 24 * 6000000 * 100,
+      expires: new Date().getTime() + 604800000*100000,
     })
     .then(([url]) => {
       // console.log(url);
